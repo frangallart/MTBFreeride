@@ -86,7 +86,7 @@
                         android:textAppearance="@android:style/TextAppearance"
                         android:text="@string/txt_o_login"
                         android:id="@+id/tvSeparador"
-                        android:textColor="@color/button_material_dark" />
+                        android:textColor="@color/DarkGray" />
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -104,7 +104,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/login_sign_up"
-                    android:background="@drawable/customapptheme_btn_default_holo_light_dis" />
+                    android:background="@drawable/customapptheme_btn_default_holo_light_dis"
+                    android:textColor="@color/DarkGray" />
             </LinearLayout>
 
         </LinearLayout>
@@ -119,6 +120,6 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_marginTop="85dp" />
 
 </RelativeLayout>
