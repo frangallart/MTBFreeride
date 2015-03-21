@@ -35,7 +35,8 @@
                     android:hint="@string/login_usuari"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
 
                 <EditText
                     android:id="@+id/etPassword"
@@ -46,7 +47,8 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
 
             </LinearLayout>
 
