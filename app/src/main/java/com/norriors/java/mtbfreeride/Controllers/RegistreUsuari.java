@@ -2,8 +2,10 @@ package com.norriors.java.mtbfreeride.Controllers;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.norriors.java.mtbfreeride.R;
 
@@ -13,6 +15,7 @@ import com.norriors.java.mtbfreeride.R;
 public class RegistreUsuari extends ActionBarActivity {
 
     private MLRoundedImageView roundedImageView;
+    private LinearLayout linearImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,23 @@ public class RegistreUsuari extends ActionBarActivity {
         setContentView(R.layout.activity_registre_usuari);
 
 
+        //Instanciem el linear de la vista que contindrà la imatge
+         linearImage = (LinearLayout) findViewById(R.id.linearImage);
+
+        //Instanciem un objecte del tipus MLRoundedImageView(Exten de ImageView) que ens permetrà tenir un imageView Rodó
+        roundedImageView = new MLRoundedImageView(this);
+
+
+        //Assignem la imatge al imageView
+        roundedImageView.setImageResource(R.drawable.img_splash_screen);
+
+        //Afegim l'ImageView al Linear
+        linearImage.addView(roundedImageView);
+        //Paràmetres per decidir la mida
+        roundedImageView.getLayoutParams().height = 300;
+        roundedImageView.getLayoutParams().width = 300;
+        //Paràmetre per indicar la gravetat
+        linearImage.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
 
