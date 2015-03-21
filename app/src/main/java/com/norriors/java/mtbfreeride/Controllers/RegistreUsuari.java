@@ -46,13 +46,14 @@ public class RegistreUsuari extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registre_usuari);
 
-
         //Instanciem el linear de la vista que contindrà la imatge
         linearImage = (LinearLayout) findViewById(R.id.linearImage);
 
         //Instanciem un objecte del tipus MLRoundedImageView(Exten de ImageView) que ens permetrà tenir un imageView Rodó
         roundedImageView = new MLRoundedImageView(this);
 
+        //Assignant el menu Contextual a la ImageView
+        registerForContextMenu(roundedImageView);
 
         //Assignem la imatge al imageView
         roundedImageView.setImageResource(R.drawable.img_splash_screen);
@@ -60,7 +61,7 @@ public class RegistreUsuari extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0) {
-                registerForContextMenu(roundedImageView);
+                    openContextMenu(roundedImageView);
             }
         });
 
