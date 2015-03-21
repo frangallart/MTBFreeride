@@ -1,0 +1,5 @@
+// TODO : Fer una classe per guardar els id's de les vistes del fragment i recarregar les seves dades
+// TODO : Al haver entrat a l'aplicació i tirar enrrera surt de l'aplicació i al tornar a obrir-la torna a apareixer l'splash screen.
+         No hauria d'anar directament al main de la app?
+// TODO :
+// TODO :
