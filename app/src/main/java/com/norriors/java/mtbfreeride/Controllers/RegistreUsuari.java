@@ -38,6 +38,7 @@ public class RegistreUsuari extends ActionBarActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int TAKE_PHOTO_CODE = 100;
+    private static final String PATH_IMATGES = Environment.getExternalStorageDirectory() + File.separator + "mtbfreeride";
 
     private MLRoundedImageView roundedImageView;
 
@@ -139,9 +140,15 @@ public class RegistreUsuari extends ActionBarActivity {
 
     private void accessCamara() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Comprovo si existeix la carpeta de l'aplicació
+        comprovaPath();
+
+        // instancia de date per guardar les imatges amb la data i hora
+        // que s'ha tirat la imatge
         Date date = new Date() ;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
-        imgCamera = new File(Environment.getExternalStorageDirectory() + File.separator + dateFormat.format(date) + "image.jpg");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss") ;
+        imgCamera = new File(PATH_IMATGES + File.separator + dateFormat.format(date) + "imgPerfil.jpg");
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imgCamera));
         startActivityForResult(takePictureIntent, TAKE_PHOTO_CODE);
     }
@@ -190,6 +197,19 @@ public class RegistreUsuari extends ActionBarActivity {
             Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    /**
+     * Mètode que comprova si existeix la carpeta de l'aplicació i sinó
+     * existeix la crea per poder-hi guardar les fotos obtingudes de
+     * la càmera
+     */
+    private void comprovaPath(){
+        File dir=new File(PATH_IMATGES);
+
+        if (!dir.exists()){
+            dir.mkdir();
+        }
     }
 
     /**
