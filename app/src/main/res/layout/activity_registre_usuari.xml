@@ -1,6 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,141 +13,96 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
+        android:id="@+id/scrollView">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/linearImage"></LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:layout_marginTop="30dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nom usuari"
-                    android:id="@+id/txtNomUser" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="usuari"
-                    android:ems="10"
-                    android:id="@+id/editNomUsuari" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/DarkGray"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contrasenya"
-                    android:id="@+id/txtPass" />
+                android:layout_height="fill_parent"
+                android:id="@+id/editTxtsRegistre">
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="@string/nom_usuari_registre"
+                    android:ems="10"
+                    android:id="@+id/editNomUsuari"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
+
+                <EditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
-                    android:id="@+id/editPassword" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nom"
-                    android:id="@+id/txtNom" />
+                    android:id="@+id/editPassword"
+                    android:hint="@string/contrasenya_registre"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Nom"
+                    android:hint="@string/nom_persona_registre"
                     android:ems="10"
-                    android:id="@+id/editNom" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Primero Cognom"
-                    android:id="@+id/txtPrimerCognom" />
+                    android:id="@+id/editNom"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Primer Cognom"
+                    android:hint="@string/cognom1_registre"
                     android:ems="10"
-                    android:id="@+id/editPrimerCognom" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Segon Cognom"
-                    android:id="@+id/txtSegonCognom" />
+                    android:id="@+id/editPrimerCognom"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Segon Cognom"
+                    android:hint="@string/cognom2_registre"
                     android:ems="10"
-                    android:id="@+id/editSegonCognom" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:id="@+id/txtEmail" />
+                    android:id="@+id/editSegonCognom"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:ems="10"
                     android:id="@+id/editEmail"
-                    android:text="Email" />
+                    android:hint="@string/correu_registre"
+                    android:background="@drawable/customapptheme_edit_text_holo_light" />
             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/DarkGray"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -154,11 +111,12 @@
                 android:layout_gravity="center_horizontal">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Registrar-se"
+                    android:text="@string/btn_registrar"
                     android:id="@+id/btnRegistre"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/White" />
             </LinearLayout>
 
         </LinearLayout>

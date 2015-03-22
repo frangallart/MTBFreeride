@@ -70,7 +70,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
     }
 
     /**
-     * Mètode que recupera els controls de la GUI
+     * Mètode que recupera els controls de la GUI i toca espectes de disseny
      */
     private void setupGui() {
         etUsuari = (EditText) findViewById(R.id.etUsuari);

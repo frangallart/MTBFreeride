@@ -3,6 +3,7 @@ package com.norriors.java.mtbfreeride.Controllers;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,7 +15,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -34,7 +38,7 @@ import java.util.Date;
  * Un cop fet clic al botó registrar, si les dades són vàlides, les dades es traspassen amb JSON fins
  * A una base de dades MySQL allotjada en un servidor extern.
  */
-public class RegistreUsuari extends ActionBarActivity {
+public class RegistreUsuari extends ActionBarActivity implements OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int TAKE_PHOTO_CODE = 100;
@@ -43,6 +47,7 @@ public class RegistreUsuari extends ActionBarActivity {
     private MLRoundedImageView roundedImageView;
 
     private LinearLayout linearImage;
+    private ViewGroup editText;
 
     private ImageTool imgTool;
 
@@ -56,6 +61,15 @@ public class RegistreUsuari extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registre_usuari);
         this.imgTool = new ImageTool();
+
+        setupGui();
+
+    }
+
+    /**
+     * Mètode que recupera els controls de la GUI i toca espectes de disseny
+     */
+    private void setupGui() {
         //Instanciem el linear de la vista que contindrà la imatge
         linearImage = (LinearLayout) findViewById(R.id.linearImage);
 
@@ -71,7 +85,7 @@ public class RegistreUsuari extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0) {
-                    openContextMenu(roundedImageView);
+                openContextMenu(roundedImageView);
             }
         });
 
@@ -82,6 +96,33 @@ public class RegistreUsuari extends ActionBarActivity {
         roundedImageView.getLayoutParams().width = 300;
         //Paràmetre per indicar la gravetat
         linearImage.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
+
+        // Mitjançant el següent recorregut assignem una font a tots els editText d'un layout
+        editText = (ViewGroup) findViewById(R.id.editTxtsRegistre);
+        for (int i = 0, count = editText.getChildCount(); i < count; ++i) {
+            View view = editText.getChildAt(i);
+            if (view instanceof EditText) {
+                ((EditText) view).setTypeface(font);
+            }
+        }
+
+    }
+
+    /**
+     * Mètode que controla l'event onClick
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        /*switch (v.getId()) {
+            case (R.id.linearImage):
+                openContextMenu(roundedImageView);
+                System.out.println("puta");
+                break;
+        }*/
     }
 
 
@@ -146,8 +187,8 @@ public class RegistreUsuari extends ActionBarActivity {
 
         // instancia de date per guardar les imatges amb la data i hora
         // que s'ha tirat la imatge
-        Date date = new Date() ;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss") ;
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         imgCamera = new File(PATH_IMATGES + File.separator + dateFormat.format(date) + "imgPerfil.jpg");
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imgCamera));
         startActivityForResult(takePictureIntent, TAKE_PHOTO_CODE);
@@ -157,6 +198,7 @@ public class RegistreUsuari extends ActionBarActivity {
      * Mètode que s'exeuta en retornar a aquesta activitat
      * En auqest cas, comprova si s'ha carregat una imatge de la galeria de fotos o de la
      * càmara per així poder assignar-la com a fons del botó.
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -204,10 +246,10 @@ public class RegistreUsuari extends ActionBarActivity {
      * existeix la crea per poder-hi guardar les fotos obtingudes de
      * la càmera
      */
-    private void comprovaPath(){
-        File dir=new File(PATH_IMATGES);
+    private void comprovaPath() {
+        File dir = new File(PATH_IMATGES);
 
-        if (!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdir();
         }
     }
@@ -215,9 +257,10 @@ public class RegistreUsuari extends ActionBarActivity {
     /**
      * Mètode que pinta la imatge a dintre l'imageView cridant els
      * mètodes per reduir la seva mida
+     *
      * @param path path de la imatge
      */
-    private void pintaImatge(String path){
+    private void pintaImatge(String path) {
         Bitmap imgPerfil;
         Bitmap resized;
 
@@ -242,9 +285,9 @@ public class RegistreUsuari extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
