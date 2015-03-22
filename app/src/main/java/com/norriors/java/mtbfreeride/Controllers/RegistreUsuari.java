@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
@@ -15,8 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Classe RegistreUsuari
@@ -30,8 +36,8 @@ import com.norriors.java.mtbfreeride.R;
  */
 public class RegistreUsuari extends ActionBarActivity {
 
-    private static int RESULT_LOAD_IMAGE = 1;
-    private static int TAKE_PHOTO_CODE = 100;
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int TAKE_PHOTO_CODE = 100;
 
     private MLRoundedImageView roundedImageView;
 
@@ -41,11 +47,14 @@ public class RegistreUsuari extends ActionBarActivity {
 
     private byte[] imatgeArray;
 
+    private File imgCamera;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registre_usuari);
-
+        this.imgTool = new ImageTool();
         //Instanciem el linear de la vista que contindrà la imatge
         linearImage = (LinearLayout) findViewById(R.id.linearImage);
 
@@ -128,9 +137,12 @@ public class RegistreUsuari extends ActionBarActivity {
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
-
     private void accessCamara() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Date date = new Date() ;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
+        imgCamera = new File(Environment.getExternalStorageDirectory() + File.separator + dateFormat.format(date) + "image.jpg");
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imgCamera));
         startActivityForResult(takePictureIntent, TAKE_PHOTO_CODE);
     }
 
@@ -146,34 +158,54 @@ public class RegistreUsuari extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if ((requestCode == RESULT_LOAD_IMAGE || requestCode == TAKE_PHOTO_CODE)&& resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            String result;
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            if (cursor == null) {
-                result = selectedImage.getPath();
-            } else {
-                cursor.moveToFirst();
-                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                result = cursor.getString(idx);
-                cursor.close();
+        if (resultCode == RESULT_OK) {
+
+            switch (requestCode) {
+
+                case RESULT_LOAD_IMAGE:
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    String result;
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    if (cursor == null) {
+                        result = selectedImage.getPath();
+                    } else {
+                        cursor.moveToFirst();
+                        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                        result = cursor.getString(idx);
+                        cursor.close();
+                    }
+
+                    cursor.close();
+
+                    pintaImatge(result);
+                    break;
+
+                case TAKE_PHOTO_CODE:
+                    pintaImatge(imgCamera.getAbsolutePath());
+                    break;
             }
-
-            cursor.close();
-            this.imgTool = new ImageTool();
-
-            Bitmap imgPerfil = this.imgTool.convertImageToByte(result);
-            Bitmap resized = Bitmap.createScaledBitmap(imgPerfil, 200, 200, true);
-
-            imatgeArray = this.imgTool.getBytes(resized);
-
-            roundedImageView.setImageBitmap(resized);
-
+        } else {
+            Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
         }
+
     }
 
+    /**
+     * Mètode que pinta la imatge a dintre l'imageView cridant els
+     * mètodes per reduir la seva mida
+     * @param path path de la imatge
+     */
+    private void pintaImatge(String path){
+        Bitmap imgPerfil;
+        Bitmap resized;
+
+        imgPerfil = this.imgTool.convertImageToByte(path);
+        resized = Bitmap.createScaledBitmap(imgPerfil, 200, 200, true);
+        imatgeArray = this.imgTool.getBytes(resized);
+        roundedImageView.setImageBitmap(resized);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

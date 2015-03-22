@@ -120,7 +120,6 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
                 case (R.id.btnRegistre):
                     Intent intent = new Intent(LoginUsuari.this, RegistreUsuari.class);
                     startActivity(intent);
-                    finish();
                     break;
             }
         } else {

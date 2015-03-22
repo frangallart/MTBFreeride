@@ -154,8 +154,7 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+            return null;
         }
 
         @Override
@@ -194,23 +193,23 @@ public class MainActivity extends ActionBarActivity
         @Override
         public Fragment getItem(int position) {
 
-            ScrollTabHolderFragment fragment = (SampleListFragment) SampleListFragment.newInstance(position);
+            /*ScrollTabHolderFragment fragment = (SampleListFragment) SampleListFragment.newInstance(position);
 
             mScrollTabHolders.put(position, fragment);
             if (mListener != null) {
                 fragment.setScrollTabHolder(mListener);
             }
-            return fragment;
+            return fragment;*/
 
             // Si volem crear els fragments en diferents opcions li assignem una classe diferent
-           /* ScrollTabHolderFragment fragment;
+            ScrollTabHolderFragment fragment;
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
                     fragment =  (SampleListFragment) SampleListFragment.newInstance(0);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    fragment =  (SampleListFragment) SampleListFragment.newInstance(1);
+                    fragment =  (SampleListFragment2) SampleListFragment2.newInstance(1);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 2: // Fragment # 1 - This will show SecondFragment
@@ -227,7 +226,7 @@ public class MainActivity extends ActionBarActivity
                     return fragment;
                 default:
                     return null;
-            }*/
+            }
         }
 
         public SparseArrayCompat<ScrollTabHolder> getScrollTabHolders() {

@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Classe SampleListFragment
  */
-public class SampleListFragment extends ScrollTabHolderFragment {
+public class SampleListFragment2 extends ScrollTabHolderFragment {
 
     private static final String ARG_POSITION = "position";
     private static final String URL = "http://www.infobosccoma.net/pmdm/pois.php";
@@ -35,7 +35,7 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     private int mPosition;
 
     public static Fragment newInstance(int position) {
-        SampleListFragment f = new SampleListFragment();
+        SampleListFragment2 f = new SampleListFragment2();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);
@@ -56,10 +56,10 @@ public class SampleListFragment extends ScrollTabHolderFragment {
         //View v = inflater.inflate(R.layout.fragment_list, null);
 
         // fem referència a la vista
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         // textView on mostro el contingut del json
-        tvView = (TextView) rootView.findViewById(R.id.tvModalitat);
+        tvView = (TextView) rootView.findViewById(R.id.textView);
 
         return rootView;
     }
