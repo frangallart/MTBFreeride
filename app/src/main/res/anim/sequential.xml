@@ -7,40 +7,46 @@
 
     <!-- Move -->
     <translate
-        android:duration="500"
+        android:duration="2400"
         android:fillAfter="true"
         android:fromXDelta="0%p"
         android:startOffset="0"
-        android:toXDelta="85%p" />
+        android:toXDelta="5%p"
+        />
     <translate
-        android:duration="500"
+        android:duration="2400"
         android:fillAfter="true"
         android:fromYDelta="0%p"
-        android:startOffset="1000"
-        android:toYDelta="65%p" />
+        android:startOffset="0"
+        android:toYDelta="-5%p"
+        />
     <translate
-        android:duration="500"
+        android:duration="2400"
         android:fillAfter="true"
         android:fromXDelta="0%p"
-        android:startOffset="1500"
-        android:toXDelta="-85%p" />
+        android:startOffset="1200"
+        android:toXDelta="-5%p"
+         />
     <translate
-        android:duration="500"
+        android:duration="2400"
         android:fillAfter="true"
         android:fromYDelta="0%p"
-        android:startOffset="2000"
-        android:toYDelta="-65%p" />
+        android:startOffset="1200"
+        android:toYDelta="5%p"
+         />
 
-    <!-- Rotate 360 degrees -->
+    <!--Rotate 360 degrees -->
     <rotate
-        android:duration="1000"
+        android:duration="800"
         android:fromDegrees="0"
         android:interpolator="@android:anim/cycle_interpolator"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:startOffset="500"
-        android:toDegrees="360"
-        android:repeatCount="1" />
-    <!--android:repeatMode="restart"-->
+        android:toDegrees="-360"
+        android:repeatCount="2" />
+
+    <!--android:repeatMode="restart"
+    android:repeatCount="1"
+     android:startOffset="1000"-->
 
 </set>
