@@ -92,8 +92,8 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         //Afegim l'ImageView al Linear
         linearImage.addView(roundedImageView);
         //Paràmetres per decidir la mida
-        roundedImageView.getLayoutParams().height = 300;
-        roundedImageView.getLayoutParams().width = 300;
+        roundedImageView.getLayoutParams().height = (int)getResources().getDimension(R.dimen.photo_user_registerH);
+        roundedImageView.getLayoutParams().width = (int)getResources().getDimension(R.dimen.photo_user_registerW);
         //Paràmetre per indicar la gravetat
         linearImage.setGravity(Gravity.CENTER_HORIZONTAL);
 
