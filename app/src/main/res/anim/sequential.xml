@@ -3,50 +3,41 @@
     android:fillAfter="true"
     android:interpolator="@android:anim/linear_interpolator">
 
-    <!-- Use startOffset to give delay between animations -->
+    <!-- Fer servir startOffset per donar una espera entre animacions -->
 
     <!-- Move -->
     <translate
-        android:duration="2400"
-        android:fillAfter="true"
-        android:fromXDelta="0%p"
-        android:startOffset="0"
-        android:toXDelta="5%p"
-        />
-    <translate
-        android:duration="2400"
-        android:fillAfter="true"
-        android:fromYDelta="0%p"
-        android:startOffset="0"
-        android:toYDelta="-5%p"
-        />
-    <translate
-        android:duration="2400"
-        android:fillAfter="true"
-        android:fromXDelta="0%p"
-        android:startOffset="1200"
-        android:toXDelta="-5%p"
-         />
-    <translate
-        android:duration="2400"
-        android:fillAfter="true"
-        android:fromYDelta="0%p"
-        android:startOffset="1200"
-        android:toYDelta="5%p"
-         />
-
-    <!--Rotate 360 degrees -->
-    <rotate
         android:duration="800"
+        android:fillAfter="true"
+        android:fromXDelta="0%p"
+        android:startOffset="300"
+        android:toXDelta="75%p" />
+    <translate
+        android:duration="100"
+        android:fillAfter="true"
+        android:fromYDelta="0%p"
+        android:startOffset="1100"
+        android:toYDelta="70%p" />
+    <translate
+        android:duration="100"
+        android:fillAfter="true"
+        android:fromXDelta="0%p"
+        android:startOffset="1200"
+        android:toXDelta="-75%p" />
+    <translate
+        android:duration="800"
+        android:fillAfter="true"
+        android:fromYDelta="0%p"
+        android:startOffset="1300"
+        android:toYDelta="-70%p" />
+
+    <!-- Rotate 360 degrees -->
+    <rotate
+        android:duration="1000"
         android:fromDegrees="0"
         android:interpolator="@android:anim/cycle_interpolator"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:toDegrees="-360"
-        android:repeatCount="2" />
-
-    <!--android:repeatMode="restart"
-    android:repeatCount="1"
-     android:startOffset="1000"-->
-
+        android:startOffset="2200"
+        android:toDegrees="-365" />
 </set>

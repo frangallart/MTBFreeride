@@ -8,7 +8,7 @@
 
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/imageSplashB"
         android:contentDescription="@string/img_inici"
         android:src="@drawable/img_ci_splash_screen"

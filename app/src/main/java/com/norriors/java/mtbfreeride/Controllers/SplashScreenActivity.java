@@ -22,7 +22,7 @@ import com.norriors.java.mtbfreeride.R;
 public class SplashScreenActivity extends Activity implements AnimationListener {
 
     // Duració de l'splash screen
-    private static final long SPLASH_SCREEN_DELAY = 6000;
+    private static final long SPLASH_SCREEN_DELAY = 7000;
 
     // Animation
     Animation animFadein, animFadeOut, animSequen;
