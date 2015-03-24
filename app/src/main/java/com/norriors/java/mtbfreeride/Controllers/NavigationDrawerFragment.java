@@ -133,7 +133,7 @@ public class NavigationDrawerFragment extends Fragment {
         dataList.add(new DrawerItems("Vistes Mapa"));
         dataList.add(new DrawerItems("Normal"));
         dataList.add(new DrawerItems("Híbrid"));
-        dataList.add(new DrawerItems("Localització"));
+        dataList.add(new DrawerItems("Llibre visites"));
 
         adapter = new PersonalDrawerAdapter(getActivity(), R.layout.personal_drawer_item,
                 dataList);
@@ -230,7 +230,9 @@ public class NavigationDrawerFragment extends Fragment {
         } else if (position == 2) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         } else if (position == 3) {
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
             mCallbacks.onNavigationDrawerItemSelected(position);
+
         }
 
         /*if (mDrawerListView != null) {

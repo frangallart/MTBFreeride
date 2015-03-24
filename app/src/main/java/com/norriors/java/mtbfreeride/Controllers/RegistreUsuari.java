@@ -80,7 +80,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         registerForContextMenu(roundedImageView);
 
         //Assignem la imatge al imageView
-        roundedImageView.setImageResource(R.drawable.img_splash_screen);
+        roundedImageView.setImageResource(R.drawable.ic_camera);
         roundedImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
