@@ -1,5 +1,7 @@
 // TODO : Fer una classe per guardar els id's de les vistes del fragment i recarregar les seves dades
 // TODO : Al haver entrat a l'aplicació i tirar enrrera surt de l'aplicació i al tornar a obrir-la torna a apareixer l'splash screen.
          No hauria d'anar directament al main de la app?
-// TODO :
-// TODO :
+// TODO : Gestionar que un cop registrat i identificat s'entri a l'alpicació sense passar per el registre d'usuari
+// TODO : Validar els camps del registre d'usuari, com a minínim que les contrasenyes coicideixin, que el correu sigui vàlid
+// TODO : Carregar les imatges i la descripció de la modalitat des de la base de dades?
+//

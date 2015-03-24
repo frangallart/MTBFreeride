@@ -168,7 +168,7 @@ public class MainActivity extends ActionBarActivity
     public class PagerAdapter extends FragmentPagerAdapter {
 
         private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
-        private final String[] TITLES = {"BMX", "FreeStyle", "Page 3", "Page 4"};
+        private final String[] TITLES = {"North Shore", "Dirt Jump", "Street", "Big Air", "Park"};
         private ScrollTabHolder mListener;
 
         public PagerAdapter(FragmentManager fm) {

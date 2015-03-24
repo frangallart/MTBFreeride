@@ -68,6 +68,12 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"></LinearLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/detalls_modalitat"
+                        android:id="@+id/tvModalitatDetall" />
 
                     <ImageButton
                         android:layout_width="wrap_content"
