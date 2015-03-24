@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
@@ -23,13 +24,13 @@ import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
  * Classe MainActivity
  */
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, LlibreVisitesFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
+    private Fragment currentFragment;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -69,11 +70,23 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        // update the main content by replacing fragments
+        switch (position) {
+
+            case 3:
+                //this.getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.container)).commit();
+
+                mPagerSlidingTabStrip.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.GONE);
+                currentFragment = LlibreVisitesFragment.newInstance();
+                t.replace(R.id.container, currentFragment).addToBackStack( "tag" ).commit();
+                break;
+
+        }
+
+
     }
 
     public void onSectionAttached(int number) {
@@ -124,6 +137,11 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(String id) {
+        Toast.makeText(this,"Has accedit al llibre de visistes", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -205,23 +223,23 @@ public class MainActivity extends ActionBarActivity
             ScrollTabHolderFragment fragment;
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    fragment =  (SampleListFragment) SampleListFragment.newInstance(0);
+                    fragment = (SampleListFragment) SampleListFragment.newInstance(0);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    fragment =  (SampleListFragment2) SampleListFragment2.newInstance(1);
+                    fragment = (SampleListFragment2) SampleListFragment2.newInstance(1);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 2: // Fragment # 1 - This will show SecondFragment
-                    fragment =  (SampleListFragment) SampleListFragment.newInstance(2);
+                    fragment = (SampleListFragment) SampleListFragment.newInstance(2);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 3: // Fragment # 1 - This will show SecondFragment
-                    fragment =  (SampleListFragment) SampleListFragment.newInstance(3);
+                    fragment = (SampleListFragment) SampleListFragment.newInstance(3);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 4: // Fragment # 1 - This will show SecondFragment
-                    fragment =  (SampleListFragment) SampleListFragment.newInstance(4);
+                    fragment = (SampleListFragment) SampleListFragment.newInstance(4);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 default:
