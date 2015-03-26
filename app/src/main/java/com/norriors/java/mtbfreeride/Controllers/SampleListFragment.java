@@ -79,10 +79,6 @@ public class SampleListFragment extends ScrollTabHolderFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Mostro la progressbar
-            // bar.setVisibility(View.VISIBLE);
-            // Netejo el mapa
-            //mMap.clear();
         }
 
         /**
@@ -99,9 +95,6 @@ public class SampleListFragment extends ScrollTabHolderFragment {
             HttpResponse httpresponse = null;
             try {
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-                // Com a paràmetre li dic que només descarregui els punts de les ciutats
-                // que tinguin el valor entrat al buscador
-
                 parametres.add(new BasicNameValuePair("city", params[0]));
                 httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
 
