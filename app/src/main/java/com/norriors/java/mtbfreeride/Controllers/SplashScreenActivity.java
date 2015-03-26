@@ -60,7 +60,7 @@ public class SplashScreenActivity extends Activity implements AnimationListener 
 
                 // Start the next activity
                 Intent mainIntent = new Intent().setClass(
-                        SplashScreenActivity.this, LoginUsuari.class);
+                        SplashScreenActivity.this, MainActivity.class);
                 startActivity(mainIntent);
 
                 // Close the activity so the user won't able to go back this

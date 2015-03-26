@@ -1,12 +1,8 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -50,6 +46,8 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
 
     private UserLoginTask mAuthTask = null;
 
+    private UsuariSessionManager sessioUsuari;
+
     // UI references.
     private EditText etUsuari;
     private EditText etPassword;
@@ -65,6 +63,9 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // User Session Manager
+        sessioUsuari = new UsuariSessionManager(getApplicationContext());
 
         setupGui();
     }
@@ -96,12 +97,12 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
      *
      * @return true en cas afirmatiu, false en cas contrari
      */
-    public boolean isOnline() {
+    /*public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
+    }*/
 
     /**
      * Mètode que controla l'event onClick
@@ -112,7 +113,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
     public void onClick(View v) {
 
         // Si hi ha conexiò a internet
-        if (isOnline()) {
+        if (InternetUtil.isOnline(LoginUsuari.this)) {
             switch (v.getId()) {
                 case (R.id.btnLogin):
                     new UserLoginTask(etUsuari.getText().toString(), etPassword.getText().toString()).execute();
@@ -123,8 +124,8 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
                     break;
             }
         } else {
-            showAlertDialogInternet(LoginUsuari.this, "Servei de connexió",
-                    "El teu dispositiu no té connexió a Internet.", false);
+            InternetUtil.showAlertDialog(LoginUsuari.this, "Servei de connexió",
+                    "El teu dispositiu no té connexió a Internet.");
         }
     }
 
@@ -159,8 +160,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
             HttpResponse httpresponse = null;
             try {
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-                // Com a paràmetre li dic que només descarregui els punts de les ciutats
-                // que tinguin el valor entrat al buscador
+                // Com només ha de descarregar l'usuari que s'ha identificat
                 parametres.add(new BasicNameValuePair("nom", usuari));
                 parametres.add(new BasicNameValuePair("password", contrasenya));
 
@@ -180,12 +180,19 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
         protected void onPostExecute(ArrayList<User> usuaris) {
 
             if (usuaris != null) {
-                Intent act = new Intent(LoginUsuari.this, MainActivity.class);
+                // Crear user login session
+                sessioUsuari.createUserLoginSession(usuaris.get(0).getNom(), usuaris.get(0).getEmail());
+
+                Intent act = new Intent(getApplicationContext(), MainActivity.class);
+                act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                // Add new Flag to start new Activity
+                act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(act);
                 finish();
             } else {
                 err_login();
-                Toast toast = Toast.makeText(LoginUsuari.this, "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 200);
                 toast.show();
             }
@@ -217,7 +224,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
      * @param message
      * @param status
      */
-    public void showAlertDialogInternet(Context context, String title, String message, Boolean status) {
+    /*public void showAlertDialogInternet(Context context, String title, String message, Boolean status) {
         final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
@@ -235,5 +242,5 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
         });
 
         alertDialog.show();
-    }
+    }*/
 }
