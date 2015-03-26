@@ -13,31 +13,50 @@
         android:startOffset="300"
         android:toXDelta="75%p" />
     <translate
-        android:duration="100"
+        android:duration="1"
         android:fillAfter="true"
         android:fromYDelta="0%p"
         android:startOffset="1100"
         android:toYDelta="70%p" />
     <translate
-        android:duration="100"
+        android:duration="1"
         android:fillAfter="true"
         android:fromXDelta="0%p"
-        android:startOffset="1200"
-        android:toXDelta="-75%p" />
+        android:startOffset="1101"
+        android:toXDelta="-150%p" />
     <translate
-        android:duration="800"
+        android:duration="1"
         android:fillAfter="true"
         android:fromYDelta="0%p"
-        android:startOffset="1300"
+        android:startOffset="1102"
         android:toYDelta="-70%p" />
+
+    <translate
+        android:duration="600"
+        android:fillAfter="true"
+        android:fromXDelta="0%p"
+        android:startOffset="1103"
+        android:toXDelta="75%p" />
+    <translate
+        android:duration="500"
+        android:fillAfter="true"
+        android:fromYDelta="0%p"
+        android:startOffset="1403"
+        android:toYDelta="-50%p" />
+    <translate
+        android:duration="500"
+        android:fillAfter="true"
+        android:fromYDelta="0%p"
+        android:startOffset="1403"
+        android:toYDelta="50%p" />
 
     <!-- Rotate 360 degrees -->
     <rotate
-        android:duration="1000"
+        android:duration="500"
         android:fromDegrees="0"
         android:interpolator="@android:anim/cycle_interpolator"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:startOffset="2200"
-        android:toDegrees="-365" />
+        android:startOffset="1303"
+        android:toDegrees="-360" />
 </set>
