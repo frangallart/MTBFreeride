@@ -335,7 +335,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
     /**
      * Mètode que pinta la imatge a dintre l'imageView cridant els
-     * mètodes per reduir la seva mida
+     * mètodes per reduir la seva mida.
      *
      * @param path path de la imatge
      */
