@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
+
     private Button btnProvaSortir;
     private TextView tvNomUsuari;
 
@@ -65,12 +66,11 @@ public class MainActivity extends ActionBarActivity
         // and finish current activity from activity stack.
         if (!sessioUsuari.checkLogin()) {
             finish();
-        } else {
-            dadesUsuari = sessioUsuari.getUserDetails();
         }
 
         // Si hi ha conexiò a internet
         if (InternetUtil.isOnline(MainActivity.this)) {
+            dadesUsuari = sessioUsuari.getUserDetails();
             setupGui();
         } else {
             InternetUtil.showAlertDialog(MainActivity.this, "Servei de connexió",
@@ -310,6 +310,5 @@ public class MainActivity extends ActionBarActivity
         }
 
     }
-
 
 }

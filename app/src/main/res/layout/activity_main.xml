@@ -42,6 +42,7 @@
             android:text="Sortir"
             android:id="@+id/btnProvaSoritr"
             android:layout_gravity="bottom" />
+
     </FrameLayout>
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right
@@ -55,5 +56,7 @@
         android:layout_gravity="start"
         android:name="com.norriors.java.mtbfreeride.Controllers.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
+
+    <!-- Main progress -->
 
 </android.support.v4.widget.DrawerLayout>

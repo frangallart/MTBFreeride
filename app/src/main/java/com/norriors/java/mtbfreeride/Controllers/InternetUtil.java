@@ -31,7 +31,7 @@ public class InternetUtil {
      *
      * @param context activity on es mostrarà
      * @param title   títol del dialeg
-     * @param message missatge del dialeg     *
+     * @param message missatge del dialeg
      */
     public static void showAlertDialog(final Context context, String title, String message) {
         final AlertDialog alertDialog = new AlertDialog.Builder(context).create();

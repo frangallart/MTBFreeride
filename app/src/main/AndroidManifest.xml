@@ -37,6 +37,11 @@
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".Controllers.LoginUsuari">
         </activity>
+        <activity
+            android:name=".Controllers.ModalitatDetallActivity"
+            android:label="@string/title_activity_detall_modalitat"
+            android:parentActivityName=".Controllers.MainActivity">
+        </activity>
     </application>
 
 </manifest>
