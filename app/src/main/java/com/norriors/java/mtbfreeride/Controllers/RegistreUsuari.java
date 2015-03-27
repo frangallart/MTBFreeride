@@ -344,7 +344,6 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
         imgPerfil = this.imgTool.convertImageToByte(path);
         resized = Bitmap.createScaledBitmap(imgPerfil, 200, 200, true);
-        //imatgeArray = this.imgTool.getBytes(resized);
         roundedImageView.setImageBitmap(resized);
     }
 
