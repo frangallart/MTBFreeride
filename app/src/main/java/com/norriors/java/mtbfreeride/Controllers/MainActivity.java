@@ -14,17 +14,27 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
 
+import java.util.HashMap;
+
 /**
  * Classe MainActivity
  */
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, LlibreVisitesFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, LlibreVisitesFragment.OnFragmentInteractionListener, OnClickListener {
+
+    // User Session Manager Class
+    private UsuariSessionManager sessioUsuari;
+    // get user data from session
+    private HashMap<String, String> dadesUsuari;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -40,10 +50,38 @@ public class MainActivity extends ActionBarActivity
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
 
+    private Button btnProvaSortir;
+    private TextView tvNomUsuari;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Instanciar la sessió
+        sessioUsuari = new UsuariSessionManager(getApplicationContext());
+
+        // Check user login (this is the important point)
+        // If User is not logged in , This will redirect user to LoginActivity
+        // and finish current activity from activity stack.
+        if (!sessioUsuari.checkLogin()) {
+            finish();
+        }
+
+        // Si hi ha conexiò a internet
+        if (InternetUtil.isOnline(MainActivity.this)) {
+            dadesUsuari = sessioUsuari.getUserDetails();
+            setupGui();
+        } else {
+            InternetUtil.showAlertDialog(MainActivity.this, "Servei de connexió",
+                    "El teu dispositiu no té connexió a Internet.");
+        }
+    }
+
+    /**
+     * Mètode que recupera els controls de la GUI i toca espectes de disseny
+     */
+    public void setupGui() {
 
         // Creació del drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -66,6 +104,19 @@ public class MainActivity extends ActionBarActivity
         mViewPager.setAdapter(mPagerAdapter);
 
         mPagerSlidingTabStrip.setViewPager(mViewPager);
+
+        tvNomUsuari = (TextView) findViewById(R.id.tvNomUsuari);
+        btnProvaSortir = (Button) findViewById(R.id.btnProvaSoritr);
+        btnProvaSortir.setOnClickListener(this);
+
+        // TODO : Carregar el nom i el mail al component corresponent
+        // get name
+        String name = dadesUsuari.get(UsuariSessionManager.KEY_NAME);
+
+        // get email
+        String email = dadesUsuari.get(UsuariSessionManager.KEY_EMAIL);
+
+        tvNomUsuari.setText("nom: " + name + ", email: " + email);
     }
 
     @Override
@@ -81,12 +132,9 @@ public class MainActivity extends ActionBarActivity
                 mPagerSlidingTabStrip.setVisibility(View.GONE);
                 mViewPager.setVisibility(View.GONE);
                 currentFragment = LlibreVisitesFragment.newInstance();
-                t.replace(R.id.container, currentFragment).addToBackStack( "tag" ).commit();
+                t.replace(R.id.container, currentFragment).addToBackStack("tag").commit();
                 break;
-
         }
-
-
     }
 
     public void onSectionAttached(int number) {
@@ -141,7 +189,17 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onFragmentInteraction(String id) {
-        Toast.makeText(this,"Has accedit al llibre de visistes", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Has accedit al llibre de visistes", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.btnProvaSoritr):
+                sessioUsuari.logoutUser();
+                finish();
+                break;
+        }
     }
 
     /**

@@ -1,67 +1,30 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.VideoView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.norriors.java.mtbfreeride.Models.User;
 import com.norriors.java.mtbfreeride.R;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-// TODO : Que entri Alhora de entrar mitjançant el teclat
-// TODO : Per a la tasca que permet acccedir a un usuari intentar que no sigui una llista ArrayList
 /**
- * Classe LoginUsuaris
- * <p/>
- * Classe que controla l'entrada d'un usuari o el registre d'un usuari nou
+ * Classe ModalitatDetallActivity
  */
-public class LoginUsuari extends ActionBarActivity implements OnClickListener {
-
-    private static final String URL = "http://provesrasp.ddns.net/aplicacio/usuaris.php";
-
-    private UserLoginTask mAuthTask = null;
-
-    private UsuariSessionManager sessioUsuari;
+public class ModalitatDetallActivity extends ActionBarActivity implements View.OnClickListener {
 
     // UI references.
-    private EditText etUsuari;
-    private EditText etPassword;
-    private View mProgressView;
-    private TextView tvSeparador;
-    private Button btnLogin;
-    private Button btnSignUp;
+    private TextView tvModalTitol, tvModalDetall;
+    private VideoView videoModal;
+    private ImageView ivModal;
+    private Typeface font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        // User Session Manager
-        sessioUsuari = new UsuariSessionManager(getApplicationContext());
+        setContentView(R.layout.activity_modal_detall);
 
         setupGui();
     }
@@ -70,20 +33,14 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
      * Mètode que recupera els controls de la GUI i toca espectes de disseny
      */
     private void setupGui() {
-        etUsuari = (EditText) findViewById(R.id.etUsuari);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        mProgressView = findViewById(R.id.login_progress);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnSignUp = (Button) findViewById(R.id.btnRegistre);
-        tvSeparador = (TextView) findViewById(R.id.tvSeparador);
 
-        btnLogin.setOnClickListener(this);
-        btnSignUp.setOnClickListener(this);
+        tvModalTitol = (TextView) findViewById(R.id.tvModalitatTitol);
+        tvModalDetall = (TextView) findViewById(R.id.tvModalitatDetall);
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
-        etUsuari.setTypeface(font);
-        etPassword.setTypeface(font);
-        tvSeparador.setTypeface(font);
+        font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
+        tvModalTitol.setTypeface(font);
+        tvModalDetall.setTypeface(font);
+
     }
 
     /**
@@ -95,10 +52,10 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
     public void onClick(View v) {
 
         // Si hi ha conexiò a internet
-        if (InternetUtil.isOnline(LoginUsuari.this)) {
+        /*if (InternetUtil.isOnline(LoginUsuari.this)) {
             switch (v.getId()) {
                 case (R.id.btnLogin):
-                    new UserLoginTask(etUsuari.getText().toString(), etPassword.getText().toString()).execute();
+                    //new UserLoginTask(etUsuari.getText().toString(), etPassword.getText().toString()).execute();
                     break;
                 case (R.id.btnRegistre):
                     Intent intent = new Intent(LoginUsuari.this, RegistreUsuari.class);
@@ -108,14 +65,14 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
         } else {
             InternetUtil.showAlertDialog(LoginUsuari.this, "Servei de connexió",
                     "El teu dispositiu no té connexió a Internet.");
-        }
+        }*/
     }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<String, Void, ArrayList<User>> {
+   /* public class UserLoginTask extends AsyncTask<String, Void, ArrayList<User>> {
 
         private String usuari;
         private String contrasenya;
@@ -123,12 +80,12 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
         UserLoginTask(String usuari, String contrasenya) {
             this.usuari = usuari;
             this.contrasenya = contrasenya;
-        }
+        }*/
 
         /**
          * Mètode que s'executa abans de començar amb la tasca
          */
-        @Override
+       /* @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressView.setVisibility(View.VISIBLE);
@@ -188,13 +145,5 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
             return converter.fromJson(json, new TypeToken<ArrayList<User>>() {
             }.getType());
         }
-    }
-
-    /**
-     * Mètode que fa vibrar el mòbil
-     */
-    public void err_login() {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(200);
-    }
+    }*/
 }

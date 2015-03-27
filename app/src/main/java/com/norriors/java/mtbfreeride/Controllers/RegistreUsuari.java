@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
@@ -18,15 +20,31 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe RegistreUsuari
@@ -51,9 +69,26 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
     private ImageTool imgTool;
 
-    private byte[] imatgeArray;
+    private Bitmap resized;
+
+    private byte[] byteArray;
 
     private File imgCamera;
+
+    private EditText editNomUsuari;
+    private EditText editPassword;
+    private EditText editPassword2;
+    private EditText editNom;
+    private EditText editPrimerCognom;
+    private EditText editSegonCognom;
+    private EditText editEmail;
+
+    private Button btnRegistre;
+
+    private ProgressBar bar;
+
+    private final String URL = "http://provesrasp.ddns.net/aplicacio/insertUsuari.php";
+    private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
     @Override
@@ -61,15 +96,26 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registre_usuari);
         this.imgTool = new ImageTool();
-
         setupGui();
-
     }
 
     /**
      * Mètode que recupera els controls de la GUI i toca espectes de disseny
      */
     private void setupGui() {
+
+        editNomUsuari = (EditText) findViewById(R.id.editNomUsuari);
+        editPassword = (EditText) findViewById(R.id.editPassword);
+        editPassword2 = (EditText) findViewById(R.id.editPassword2);
+        editNom = (EditText) findViewById(R.id.editNom);
+        editPrimerCognom = (EditText) findViewById(R.id.editPrimerCognom);
+        editSegonCognom = (EditText) findViewById(R.id.editSegonCognom);
+        editEmail = (EditText) findViewById(R.id.editEmail);
+        btnRegistre = (Button) findViewById(R.id.btnRegistre);
+        bar = (ProgressBar) this.findViewById(R.id.progressBar);
+
+        btnRegistre.setOnClickListener(this);
+
         //Instanciem el linear de la vista que contindrà la imatge
         linearImage = (LinearLayout) findViewById(R.id.linearImage);
 
@@ -92,8 +138,8 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         //Afegim l'ImageView al Linear
         linearImage.addView(roundedImageView);
         //Paràmetres per decidir la mida
-        roundedImageView.getLayoutParams().height = (int)getResources().getDimension(R.dimen.photo_user_registerH);
-        roundedImageView.getLayoutParams().width = (int)getResources().getDimension(R.dimen.photo_user_registerW);
+        roundedImageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.photo_user_registerH);
+        roundedImageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.photo_user_registerW);
         //Paràmetre per indicar la gravetat
         linearImage.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -117,12 +163,45 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
      */
     @Override
     public void onClick(View v) {
-        /*switch (v.getId()) {
-            case (R.id.linearImage):
-                openContextMenu(roundedImageView);
-                System.out.println("puta");
+        switch (v.getId()) {
+
+            // onClick registre
+            case (R.id.btnRegistre):
+
+                // Control que tots els editText estiguin plens
+                if (!this.editNom.getText().toString().matches("") && !this.editEmail.getText().toString().matches("") &&
+                        !this.editNomUsuari.getText().toString().matches("") && !this.editPassword.getText().toString().matches("")
+                        && !this.editPassword2.getText().toString().matches("") && !this.editPrimerCognom.getText().toString().matches("")
+                        && !this.editSegonCognom.getText().toString().matches("")) {
+
+                    // Control si hi ha imatge
+                    if (resized != null) {
+
+                        // Control que les contrasenyes siguin iguals
+                        if (this.editPassword.getText().toString().matches(this.editPassword2.getText().toString())) {
+
+                            // Utilitzem expressions regulars per verificar l'email
+                            Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+                            Matcher matcher = pattern.matcher(this.editEmail.getText().toString());
+                            if (matcher.matches()) {
+                                new InsertaUsuari().execute(this.editNomUsuari.getText().toString(), this.editNom.getText().toString(),
+                                        this.editEmail.getText().toString(), this.editPassword.getText().toString(),
+                                        this.editPrimerCognom.getText().toString(), this.editSegonCognom.getText().toString());
+                                btnRegistre.setEnabled(false);
+                            } else {
+                                Toast.makeText(RegistreUsuari.this, "L'email no es correcta.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(RegistreUsuari.this, "Les contrasenyes no són iguals.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(RegistreUsuari.this, "Has d'insertar una imatge.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(RegistreUsuari.this, "S'han d'omplir tots els camps.", Toast.LENGTH_SHORT).show();
+                }
                 break;
-        }*/
+        }
     }
 
 
@@ -256,17 +335,16 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
     /**
      * Mètode que pinta la imatge a dintre l'imageView cridant els
-     * mètodes per reduir la seva mida
+     * mètodes per reduir la seva mida.
      *
-     * @param path path de la imatge
+     * @param path path de la imatge.
      */
     private void pintaImatge(String path) {
         Bitmap imgPerfil;
-        Bitmap resized;
 
         imgPerfil = this.imgTool.convertImageToByte(path);
         resized = Bitmap.createScaledBitmap(imgPerfil, 200, 200, true);
-        imatgeArray = this.imgTool.getBytes(resized);
+        //imatgeArray = this.imgTool.getBytes(resized);
         roundedImageView.setImageBitmap(resized);
     }
 
@@ -290,5 +368,85 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         }*/
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Classe que registre l'usuari paral·lelament
+     */
+    class InsertaUsuari extends AsyncTask<String, Void, String> {
+
+        String responseText;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Pintem el progressbar
+            bar.setVisibility(View.VISIBLE);
+
+            // Passem la imatge a una cadena de bytes
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            resized.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byteArray = stream.toByteArray();
+        }
+
+        /**
+         * Procés que envia les dades dels editText i la imatge
+         * a un json que fa l'insert a la base de dades
+         *
+         * @param params
+         * @return una string true o false
+         */
+        @Override
+        protected String doInBackground(String... params) {
+            DefaultHttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppostreq = new HttpPost(URL);
+            HttpResponse httpresponse = null;
+            try {
+                List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
+                parametres.add(new BasicNameValuePair("user", params[0]));
+                parametres.add(new BasicNameValuePair("password", params[3]));
+                parametres.add(new BasicNameValuePair("img", Base64.encodeToString(byteArray, Base64.DEFAULT)));
+                parametres.add(new BasicNameValuePair("nom", params[1]));
+                parametres.add(new BasicNameValuePair("cognom1", params[4]));
+                parametres.add(new BasicNameValuePair("cognom2", params[5]));
+                parametres.add(new BasicNameValuePair("email", params[2]));
+
+                httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
+
+                httpresponse = httpclient.execute(httppostreq);
+
+                // Resposta del json
+                responseText = EntityUtils.toString(httpresponse.getEntity());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return responseText;
+        }
+
+        /**
+         * Mètode que recull la resposta del json. Si es true tornem al login sinó
+         * mostrem el missatge d'error
+         * @param resposta
+         */
+        @Override
+        protected void onPostExecute(String resposta) {
+
+            // Si es true retornem al login
+            if (resposta.trim().equals("true")) {
+                Toast.makeText(RegistreUsuari.this, "Usuari registrat correctament", Toast.LENGTH_SHORT).show();
+                Intent mainIntent = new Intent().setClass(
+                        RegistreUsuari.this, LoginUsuari.class);
+                startActivity(mainIntent);
+                finish();
+            }
+            // Sinó mostrem el missatge de l'error
+            else {
+                Toast.makeText(RegistreUsuari.this, "S'ha produït un error", Toast.LENGTH_SHORT).show();
+                btnRegistre.setEnabled(true);
+            }
+            bar.setVisibility(View.GONE);
+        }
     }
 }

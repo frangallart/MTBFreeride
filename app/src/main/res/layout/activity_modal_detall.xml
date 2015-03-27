@@ -27,7 +27,6 @@
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
                 android:padding="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/White">
@@ -51,14 +50,15 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="@string/titol_modalitat"
-                        android:id="@+id/tvModalitat" />
+                        android:id="@+id/tvModalitatTitol" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -75,14 +75,17 @@
                         android:text="@string/detalls_modalitat"
                         android:id="@+id/tvModalitatDetall" />
 
-                    <ImageButton
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <VideoView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnDetallsModalitat"
-                        android:layout_gravity="right"
-                        android:background="@drawable/gradien_gray"
-                        android:src="@android:drawable/ic_menu_view"
-                        android:contentDescription="@string/detalls_modalitat" />
+                        android:layout_height="200dp"
+                        android:id="@+id/videoModalitatDetall" />
                 </LinearLayout>
 
             </LinearLayout>

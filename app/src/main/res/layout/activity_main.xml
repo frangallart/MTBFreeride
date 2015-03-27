@@ -19,13 +19,30 @@
             android:layout_width="match_parent"
             android:layout_height="58dp" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/tvNomUsuari"
+                android:layout_gravity="bottom" />
+
             <com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="48dip"
                 android:layout_gravity="bottom"
                 android:background="@android:color/transparent" />
+
         </FrameLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sortir"
+            android:id="@+id/btnProvaSoritr"
+            android:layout_gravity="bottom" />
+
     </FrameLayout>
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right
@@ -39,5 +56,7 @@
         android:layout_gravity="start"
         android:name="com.norriors.java.mtbfreeride.Controllers.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
+
+    <!-- Main progress -->
 
 </android.support.v4.widget.DrawerLayout>

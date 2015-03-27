@@ -24,8 +24,9 @@
     <string name="txt_o_login">O</string>
 
     <string name="title_activity_registre_usuari">RegistreUsuari</string>
+    <string name="title_activity_detall_modalitat">Detall modalitat</string>
     <string name="im_login">img login</string>
     <string name="img_modal">image modal</string>
-    <string name="titol_modalitat">Títol modalitat</string>
-    <string name="detalls_modalitat">Detalls modalitat</string>
+    <string name="titol_modalitat"></string>
+    <string name="detalls_modalitat"></string>
 </resources>
