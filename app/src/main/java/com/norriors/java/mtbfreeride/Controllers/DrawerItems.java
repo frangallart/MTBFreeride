@@ -8,6 +8,7 @@ public class DrawerItems {
 	String ItemName;
 	int imgResID;
 	String title;
+    MLRoundedImageView imgUser;
 
 	public DrawerItems(String itemName, int imgResID) {
 		ItemName = itemName;
@@ -22,6 +23,10 @@ public class DrawerItems {
     public DrawerItems(int imgResID) {
         this(null, 0);
         this.imgResID = imgResID;
+    }
+
+    public DrawerItems(MLRoundedImageView img){
+        this.imgUser = img;
     }
 
 	public String getItemName() {
@@ -48,4 +53,11 @@ public class DrawerItems {
 		this.title = title;
 	}
 
+    public MLRoundedImageView getImgUser() {
+        return imgUser;
+    }
+
+    public void setImgUser(MLRoundedImageView imgUser) {
+        this.imgUser = imgUser;
+    }
 }
