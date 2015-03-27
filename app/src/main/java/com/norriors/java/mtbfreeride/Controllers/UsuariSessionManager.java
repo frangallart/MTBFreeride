@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.norriors.java.mtbfreeride.Controllers.LoginUsuari;
-
 import java.util.HashMap;
 
 /**
  * Classe UsuariSessionManager
  * <p/>
- * Classe que desa l'usuari en sessió i que controla si hi ha algun usuari en sessió o no
+ * Classe que desa l'usuari en sessió; el seu nom em@il i imatge d'usuari.
+ * També controla si hi ha algun usuari en sessió o no per dirigir-se a l'activitat de LoginUsuari
+ * o anarl a l'activitat MainActivity
  */
 public class UsuariSessionManager {
 
-    // Shared Preferences reference
+    // Shared Preferences referencia
     private SharedPreferences preferencies;
 
     // Editor referenciat a Shared preferences
@@ -28,10 +28,10 @@ public class UsuariSessionManager {
     // Shared pref mode
     private int PRIVATE_MODE = 0;
 
-    // Sharedpref file name
+    // Sharedpref nom del fitxer de preferències
     private static final String PREFER_NAME = "UserMTBFreeridePref";
 
-    // All Shared Preferences Keys
+    // (Clau per a validar si hi ha prefències desades) All Shared Preferences Keys
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
 
     // User name (make variable public to access from outside)
@@ -39,6 +39,9 @@ public class UsuariSessionManager {
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
+
+    // User image
+    public static final String KEW_IMAGE = "image";
 
     /**
      * Constructor amb paràmetres
@@ -53,13 +56,14 @@ public class UsuariSessionManager {
 
     /**
      * Crea el login de sessió
-     *
+     * <p/>
      * Aquest mètode s'ha de crear al entrar com a un usuari vàlid
      *
      * @param name
      * @param email
+     * @param image
      */
-    public void createUserLoginSession(String name, String email) {
+    public void createUserLoginSession(String name, String email, String image) {
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
@@ -68,6 +72,9 @@ public class UsuariSessionManager {
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
+
+        // Stroing image in pref
+        editor.putString(KEW_IMAGE, image);
 
         // commit changes
         editor.commit();
@@ -112,6 +119,9 @@ public class UsuariSessionManager {
 
         // user email id
         user.put(KEY_EMAIL, preferencies.getString(KEY_EMAIL, null));
+
+        // user image
+        user.put(KEW_IMAGE, preferencies.getString(KEW_IMAGE, null));
 
         // return user
         return user;

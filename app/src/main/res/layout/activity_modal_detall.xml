@@ -8,11 +8,6 @@
     tools:context="com.norriors.java.mtbfreeride.Controllers.MainActivity$PlaceholderFragment"
     android:background="@drawable/gradien_lightblue">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -20,7 +15,7 @@
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/svMainFragment"
+            android:id="@+id/svModalDetall"
             android:scrollbars="none">
 
             <LinearLayout
@@ -28,8 +23,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/White">
+                android:background="@color/White"
+                android:focusableInTouchMode="true">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -40,9 +35,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView"
+                        android:id="@+id/ivModalDetall"
                         android:src="@drawable/img_sign_up_default"
-                        android:nestedScrollingEnabled="false"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/img_modal" />
                 </LinearLayout>
@@ -58,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="@string/titol_modalitat"
-                        android:id="@+id/tvModalitatTitol" />
+                        android:id="@+id/tvModalitatDetallTitol" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -66,21 +60,22 @@
                         android:layout_height="1dp"
                         android:background="@color/DarkGray"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"></LinearLayout>
+                        android:layout_marginBottom="20dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/detalls_modalitat"
-                        android:id="@+id/tvModalitatDetall" />
+                        android:id="@+id/tvModalitatDetallDescripcio" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="20dp">
 
                     <VideoView
                         android:layout_width="wrap_content"
