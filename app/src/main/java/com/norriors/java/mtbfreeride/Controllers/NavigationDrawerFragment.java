@@ -66,6 +66,8 @@ public class NavigationDrawerFragment extends Fragment {
     private List<DrawerItems> dataList;
     private PersonalDrawerAdapter adapter;
 
+    private MLRoundedImageView imgUsuariPerfil;
+
 
     public NavigationDrawerFragment() {
     }
@@ -128,12 +130,17 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        dataList.add(new DrawerItems(R.drawable.abc_ic_menu_share_mtrl_alpha));
 
-        dataList.add(new DrawerItems("Vistes Mapa"));
-        dataList.add(new DrawerItems("Normal"));
-        dataList.add(new DrawerItems("Híbrid"));
-        dataList.add(new DrawerItems("Llibre visites"));
+
+        imgUsuariPerfil = new MLRoundedImageView(getActivity().getBaseContext());
+        imgUsuariPerfil.setImageResource(R.drawable.img_splash_screen);
+
+        dataList.add(new DrawerItems(imgUsuariPerfil));
+        dataList.add(new DrawerItems("Aqui Anira l'usuari"));
+        dataList.add(new DrawerItems("Modalitats"));
+        dataList.add(new DrawerItems("Llibre Visites"));
+        dataList.add(new DrawerItems("Grava la teva opinió"));
+        dataList.add(new DrawerItems("Tanca la sessió"));
 
         adapter = new PersonalDrawerAdapter(getActivity(), R.layout.personal_drawer_item,
                 dataList);
@@ -145,6 +152,7 @@ public class NavigationDrawerFragment extends Fragment {
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
+
 
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.

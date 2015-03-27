@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +21,8 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
     Context context;
     List<DrawerItems> drawerItemsList;
     int layoutResID;
+    DrawerItems dItem;
+    private static int count = 0;
 
     public PersonalDrawerAdapter(Context context, int layoutResourceID,
                                  List<DrawerItems> listItems) {
@@ -37,6 +38,7 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
         DrawerItemHolder drawerHolder;
         View view = convertView;
 
+        dItem = this.drawerItemsList.get(position);
         if (view == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             drawerHolder = new DrawerItemHolder();
@@ -45,10 +47,6 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
             drawerHolder.ItemName = (TextView) view
                     .findViewById(R.id.drawer_itemName);
 
-            drawerHolder.capcalera = (ImageView) view
-                    .findViewById(R.id.imgCapcalera);
-
-            drawerHolder.icon = (ImageView) view.findViewById(R.id.drawer_icon);
 
             drawerHolder.title = (TextView) view.findViewById(R.id.drawerTitle);
 
@@ -56,33 +54,50 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
                     .findViewById(R.id.headerLayout);
             drawerHolder.itemLayout = (LinearLayout) view
                     .findViewById(R.id.itemLayout);
+
+            drawerHolder.icon = dItem.getImgUser();
+
+            drawerHolder.topBord = (View)  view.findViewById(R.id.topBord);
+            drawerHolder.botBord = (View)  view.findViewById(R.id.botBord);
+
+            if (drawerHolder.headerLayout != null && drawerHolder.icon != null) {
+                drawerHolder.headerLayout.addView(drawerHolder.icon);
+
+                LinearLayout.LayoutParams layParams = new LinearLayout.LayoutParams((int) getContext().getResources().getDimension(R.dimen.photo_user_registerH), (int) getContext().getResources().getDimension(R.dimen.photo_user_registerH));
+                layParams.setMargins(0,20,0,10);
+                drawerHolder.icon.setLayoutParams(layParams);
+            }
             view.setTag(drawerHolder);
 
         } else {
             drawerHolder = (DrawerItemHolder) view.getTag();
         }
 
-        DrawerItems dItem = this.drawerItemsList.get(position);
 
         if (dItem.getTitle() != null) {
             drawerHolder.headerLayout.setVisibility(LinearLayout.VISIBLE);
-            drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
             drawerHolder.title.setText(dItem.getTitle());
+            drawerHolder.topBord.setVisibility(View.VISIBLE);
+            drawerHolder.botBord.setVisibility(View.VISIBLE);
+
+
         } else {
-
-            drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
-            drawerHolder.itemLayout.setVisibility(LinearLayout.VISIBLE);
-
-            drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(
-                    dItem.getImgResID()));
+            drawerHolder.botBord.setVisibility(View.VISIBLE);
+            drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
             drawerHolder.ItemName.setText(dItem.getItemName());
+            drawerHolder.headerLayout.removeView(drawerHolder.title);
+
         }
+
         return view;
     }
 
     private static class DrawerItemHolder {
         TextView ItemName, title;
-        ImageView icon, capcalera;
+        MLRoundedImageView icon;
         LinearLayout headerLayout, itemLayout;
+        View topBord, botBord;
     }
+
+
 }
