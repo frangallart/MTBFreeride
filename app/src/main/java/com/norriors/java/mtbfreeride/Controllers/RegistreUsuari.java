@@ -69,7 +69,9 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
     private ImageTool imgTool;
 
-    private byte[] imatgeArray;
+    private Bitmap resized;
+
+    private byte[] byteArray;
 
     private File imgCamera;
 
@@ -86,7 +88,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
     private ProgressBar bar;
 
     private final String URL = "http://provesrasp.ddns.net/aplicacio/insertUsuari.php";
-    private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
     @Override
@@ -136,8 +138,8 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         //Afegim l'ImageView al Linear
         linearImage.addView(roundedImageView);
         //Paràmetres per decidir la mida
-        roundedImageView.getLayoutParams().height = (int)getResources().getDimension(R.dimen.photo_user_registerH);
-        roundedImageView.getLayoutParams().width = (int)getResources().getDimension(R.dimen.photo_user_registerW);
+        roundedImageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.photo_user_registerH);
+        roundedImageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.photo_user_registerW);
         //Paràmetre per indicar la gravetat
         linearImage.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -162,14 +164,23 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            // onClick registre
             case (R.id.btnRegistre):
+
+                // Control que tots els editText estiguin plens
                 if (!this.editNom.getText().toString().matches("") && !this.editEmail.getText().toString().matches("") &&
                         !this.editNomUsuari.getText().toString().matches("") && !this.editPassword.getText().toString().matches("")
                         && !this.editPassword2.getText().toString().matches("") && !this.editPrimerCognom.getText().toString().matches("")
-                        && !this.editSegonCognom.getText().toString().matches("")){
+                        && !this.editSegonCognom.getText().toString().matches("")) {
 
+                    // Control si hi ha imatge
                     if (resized != null) {
+
+                        // Control que les contrasenyes siguin iguals
                         if (this.editPassword.getText().toString().matches(this.editPassword2.getText().toString())) {
+
+                            // Utilitzem expressions regulars per verificar l'email
                             Pattern pattern = Pattern.compile(PATTERN_EMAIL);
                             Matcher matcher = pattern.matcher(this.editEmail.getText().toString());
                             if (matcher.matches()) {
@@ -183,12 +194,13 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
                         } else {
                             Toast.makeText(RegistreUsuari.this, "Les contrasenyes no són iguals.", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(RegistreUsuari.this, "Has d'insertar una imatge.", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(RegistreUsuari.this,"S'han d'omplir tots els camps.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegistreUsuari.this, "S'han d'omplir tots els camps.", Toast.LENGTH_SHORT).show();
                 }
+                break;
         }
     }
 
@@ -327,13 +339,12 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
      *
      * @param path path de la imatge
      */
-    Bitmap resized;
     private void pintaImatge(String path) {
         Bitmap imgPerfil;
 
         imgPerfil = this.imgTool.convertImageToByte(path);
         resized = Bitmap.createScaledBitmap(imgPerfil, 200, 200, true);
-        imatgeArray = this.imgTool.getBytes(resized);
+        //imatgeArray = this.imgTool.getBytes(resized);
         roundedImageView.setImageBitmap(resized);
     }
 
@@ -359,8 +370,10 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         return super.onOptionsItemSelected(item);
     }
 
-    byte[] byteArray;
 
+    /**
+     * Classe que registre l'usuari paral·lelament
+     */
     class InsertaUsuari extends AsyncTask<String, Void, String> {
 
         String responseText;
@@ -368,21 +381,24 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            // Pintem el progressbar
             bar.setVisibility(View.VISIBLE);
+
+            // Passem la imatge a una cadena de bytes
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             resized.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byteArray = stream.toByteArray();
         }
 
         /**
-         * Procés de descarrega de les dades
+         * Procés que envia les dades dels editText i la imatge
+         * a un json que fa l'insert a la base de dades
          *
          * @param params
          * @return una string true o false
          */
         @Override
         protected String doInBackground(String... params) {
-            ArrayList<PuntsMapa> llistaPunts = null;
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httppostreq = new HttpPost(URL);
             HttpResponse httpresponse = null;
@@ -390,7 +406,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
                 parametres.add(new BasicNameValuePair("user", params[0]));
                 parametres.add(new BasicNameValuePair("password", params[3]));
-                parametres.add(new BasicNameValuePair("img",Base64.encodeToString(byteArray, Base64.DEFAULT)));
+                parametres.add(new BasicNameValuePair("img", Base64.encodeToString(byteArray, Base64.DEFAULT)));
                 parametres.add(new BasicNameValuePair("nom", params[1]));
                 parametres.add(new BasicNameValuePair("cognom1", params[4]));
                 parametres.add(new BasicNameValuePair("cognom2", params[5]));
@@ -400,6 +416,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
                 httpresponse = httpclient.execute(httppostreq);
 
+                // Resposta del json
                 responseText = EntityUtils.toString(httpresponse.getEntity());
 
             } catch (IOException e) {
@@ -408,15 +425,25 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
             return responseText;
         }
 
+        /**
+         * Mètode que recull la resposta del json. Si es true tornem al login sinó
+         * mostrem el missatge d'error
+         * @param resposta
+         */
         @Override
-        protected void onPostExecute(String llista) {
-            if (llista.trim().equals("true")){
-                Toast.makeText(RegistreUsuari.this,"Usuari registrat correctament",Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(String resposta) {
+
+            // Si es true retornem al login
+            if (resposta.trim().equals("true")) {
+                Toast.makeText(RegistreUsuari.this, "Usuari registrat correctament", Toast.LENGTH_SHORT).show();
                 Intent mainIntent = new Intent().setClass(
                         RegistreUsuari.this, LoginUsuari.class);
                 startActivity(mainIntent);
-            }else {
-                Toast.makeText(RegistreUsuari.this,"S'ha produït un error",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            // Sinó mostrem el missatge de l'error
+            else {
+                Toast.makeText(RegistreUsuari.this, "S'ha produït un error", Toast.LENGTH_SHORT).show();
                 btnRegistre.setEnabled(true);
             }
             bar.setVisibility(View.GONE);
