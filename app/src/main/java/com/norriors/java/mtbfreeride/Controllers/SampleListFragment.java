@@ -79,8 +79,6 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
         btnModalitatDetall = (ImageButton) rootView.findViewById(R.id.btnDetallsModalitat);
         btnModalitatDetall.setOnClickListener(this);
 
-
-
         return rootView;
     }
 

@@ -44,6 +44,7 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
         tvModalDetall.setTypeface(font);
 
         svModaldetall = (ScrollView) findViewById(R.id.svModalDetall);
+        // Ens situa l'scroll en la posició superior
         svModaldetall.smoothScrollTo(0, 0);
     }
 
@@ -86,9 +87,9 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
             this.contrasenya = contrasenya;
         }*/
 
-        /**
-         * Mètode que s'executa abans de començar amb la tasca
-         */
+    /**
+     * Mètode que s'executa abans de començar amb la tasca
+     */
        /* @Override
         protected void onPreExecute() {
             super.onPreExecute();

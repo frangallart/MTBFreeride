@@ -1,3 +1,3 @@
 // TODO : Fer una classe per guardar els id's de les vistes del fragment i recarregar les seves dades
 // TODO : Carregar les imatges i la descripció de la modalitat des de la base de dades?
-// TODO : Controlar si es perd la connexió a internet al registre d'usuari
+// TODO : Al girar el main es pert el nom del tvTitol modalitat
