@@ -321,9 +321,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
                         result = cursor.getString(idx);
                         cursor.close();
                     }
-
                     cursor.close();
-
                     pintaImatge(result);
                     break;
 
@@ -331,10 +329,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
                     pintaImatge(imgCamera.getAbsolutePath());
                     break;
             }
-        } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
         }
-
     }
 
     /**
@@ -357,11 +352,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
      * @param path path de la imatge.
      */
     private void pintaImatge(String path) {
-        Bitmap imgPerfil;
-
-        imgPerfil = this.imgTool.convertImageToByte(path);
-        resized = Bitmap.createScaledBitmap(imgPerfil, 200, 200, true);
-        //imatgeArray = this.imgTool.getBytes(resized);
+        resized = this.imgTool.convertImageToByte(path);
         roundedImageView.setImageBitmap(resized);
     }
 

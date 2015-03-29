@@ -5,47 +5,36 @@ package com.norriors.java.mtbfreeride.Controllers;
  */
 public class DrawerItems {
 
-	String ItemName;
-	int imgResID;
 	String title;
+    String usuari;
+
+    public String getUsuari() {
+        return usuari;
+    }
+
+    public void setUsuari(String usuari) {
+        this.usuari = usuari;
+    }
+
     MLRoundedImageView imgUser;
 
-	public DrawerItems(String itemName, int imgResID) {
-		ItemName = itemName;
-		this.imgResID = imgResID;
-	}
-
 	public DrawerItems(String title) {
-		this(null, 0);
 		this.title = title;
 	}
 
-    public DrawerItems(int imgResID) {
-        this(null, 0);
-        this.imgResID = imgResID;
+    public DrawerItems(String title, int usuari) {
+        this.usuari = title;
     }
 
     public DrawerItems(MLRoundedImageView img){
         this.imgUser = img;
     }
 
-	public String getItemName() {
-		return ItemName;
-	}
+    public void setImgUser(MLRoundedImageView imgUser) {
+        this.imgUser = imgUser;
+    }
 
-	public void setItemName(String itemName) {
-		ItemName = itemName;
-	}
-
-	public int getImgResID() {
-		return imgResID;
-	}
-
-	public void setImgResID(int imgResID) {
-		this.imgResID = imgResID;
-	}
-
-	public String getTitle() {
+    public String getTitle() {
 		return title;
 	}
 
@@ -55,9 +44,5 @@ public class DrawerItems {
 
     public MLRoundedImageView getImgUser() {
         return imgUser;
-    }
-
-    public void setImgUser(MLRoundedImageView imgUser) {
-        this.imgUser = imgUser;
     }
 }

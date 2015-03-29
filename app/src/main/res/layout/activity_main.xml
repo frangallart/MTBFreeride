@@ -36,13 +36,6 @@
 
         </FrameLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sortir"
-            android:id="@+id/btnProvaSoritr"
-            android:layout_gravity="bottom" />
-
     </FrameLayout>
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right

@@ -1,15 +1,7 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Classe ImageTool
@@ -20,49 +12,33 @@ public class ImageTool {
 
     }
 
-    /**
-     * Method for convert image to a byte Array
-     *
-     * @param path
-
-     * @return byte array
-     */
-    public Bitmap convertImageToByte(String path, Context cont){
-        Bitmap image = null;
-        AssetManager assetManager = cont.getAssets();
-        InputStream istr = null;
-        try {
-            istr = assetManager.open(path);
-            image = BitmapFactory.decodeStream(istr);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return image;
-    }
-
     public Bitmap convertImageToByte(String path){
-        Bitmap image = null;
-        File file = new File(path);
-        InputStream istr = null;
-        try {
-            istr = new FileInputStream(file);
-            image = BitmapFactory.decodeStream(istr);
-        } catch (IOException e) {
-            e.printStackTrace();
+        return decodeSampledBitmapFromFile(path, 300, 300);
+    }
+
+    public static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        int inSampleSize = 1;
+
+        if (height > reqHeight) {
+            inSampleSize = Math.round((float) height / (float) reqHeight);
+        }
+        int expectedWidth = width / inSampleSize;
+
+        if (expectedWidth > reqWidth) {
+            inSampleSize = Math.round((float) width / (float) reqWidth);
         }
 
-        return image;
-    }
+        options.inSampleSize = inSampleSize;
 
-    public static byte[] getBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
-    }
+        options.inJustDecodeBounds = false;
 
-    public static Bitmap getPhoto(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        return BitmapFactory.decodeFile(path, options);
     }
-
 }
