@@ -30,8 +30,8 @@
         <activity
             android:name=".Controllers.MainActivity"
             android:label="@string/app_name"
-            android:configChanges="orientation|screenSize"
-            android:parentActivityName=".Controllers.MainActivity" />
+            android:parentActivityName=".Controllers.MainActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".Controllers.RegistreUsuari"
             android:label="@string/title_activity_registre_usuari"
