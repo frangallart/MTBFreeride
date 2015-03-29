@@ -1,6 +1,9 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +59,18 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
 
 
         imgUsuari = (ImageView) element.findViewById(R.id.imgUser);
-        imgUsuari.setImageResource(R.drawable.img_splash_screen);
+        imgUsuari.setImageBitmap(getBitmap(usuari.getImg()));
         return element;
+    }
+
+    public Bitmap getBitmap(String img) {
+        try {
+            byte[] byteData = Base64.decode(img, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(byteData, 0, byteData.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

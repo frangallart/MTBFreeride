@@ -1,7 +1,5 @@
 package com.norriors.java.mtbfreeride.Models;
 
-import java.util.Date;
-
 /**
  * Created by Ruben on 28/3/15.
  */
@@ -10,14 +8,13 @@ public class UserVisites {
     private String user;
     private String img;
     private int total;
-    private Date data;
+    private String data;
 
-    public UserVisites(String user, String img, Date data, String total) {
+    public UserVisites(String user, String img, String data, String total) {
         this.user = user;
         this.img = img;
         this.data = data;
         this.total = Integer.parseInt(total);
-
     }
 
     public String getUser() {
@@ -44,11 +41,11 @@ public class UserVisites {
         this.total = total;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

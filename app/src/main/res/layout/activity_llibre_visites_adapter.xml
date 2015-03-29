@@ -1,68 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp" >
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/imgUser"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="start" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNomuser"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imgUser"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        />
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/txtNomuser"
+        android:gravity="end">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="84dp"
-            android:layout_height="fill_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/txtDate"
+            />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/imgUser"
-                android:layout_gravity="center_vertical|left" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="268dp"
-            android:layout_height="94dp">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="115dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/txtNomuser"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.39" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="78dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1.42">
-
-                    <TextView
-                        android:layout_width="115dp"
-                        android:layout_height="35dp"
-                        android:text="New Text"
-                        android:id="@+id/txtDate"
-                        android:layout_gravity="center_vertical|right" />
-
-                    <EditText
-                        android:layout_width="105dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/txtVisites"
-                        android:layout_gravity="right" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/txtVisites"/>
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
 
@@ -47,8 +47,6 @@ public class MainActivity extends ActionBarActivity
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
-
-    private TextView tvNomUsuari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,16 +100,12 @@ public class MainActivity extends ActionBarActivity
 
         mPagerSlidingTabStrip.setViewPager(mViewPager);
 
-        tvNomUsuari = (TextView) findViewById(R.id.tvNomUsuari);
-
         // TODO : Carregar el nom i el mail al component corresponent
         // get name
         String name = dadesUsuari.get(UsuariSessionManager.KEY_NAME);
 
         // get email
         String email = dadesUsuari.get(UsuariSessionManager.KEY_EMAIL);
-
-        tvNomUsuari.setText("nom: " + name + ", email: " + email);
     }
 
     @Override

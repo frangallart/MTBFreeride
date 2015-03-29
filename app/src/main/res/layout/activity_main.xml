@@ -19,14 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="58dp" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/tvNomUsuari"
-                android:layout_gravity="bottom" />
-
             <com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"

@@ -129,10 +129,7 @@ public class LlibreVisitesFragment extends  android.support.v4.app.Fragment{
 
         private ArrayList<UserVisites> tractarJSON(String json) {
             Gson converter = new Gson();
-
             return converter.fromJson(json, new TypeToken<ArrayList<UserVisites>>(){}.getType());
         }
-
     }
-
 }
