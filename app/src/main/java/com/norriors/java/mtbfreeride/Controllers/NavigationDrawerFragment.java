@@ -243,16 +243,22 @@ public class NavigationDrawerFragment extends Fragment {
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
 
-        // Selecció d'items
-        if (position == 0) {
-        } else if (position == 1) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        } else if (position == 2) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        } else if (position == 3) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-            mCallbacks.onNavigationDrawerItemSelected(position);
+        switch (position) {
+            // Selecció d'items
 
+            case 1:
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+                break;
+            case 2:
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+                break;
+            case 3:
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+                mCallbacks.onNavigationDrawerItemSelected(position);
+                break;
+            case 5:
+                mCallbacks.onNavigationDrawerItemSelected(position);
+                break;
         }
 
         /*if (mDrawerListView != null) {

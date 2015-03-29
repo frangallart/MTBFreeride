@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +49,6 @@ public class MainActivity extends ActionBarActivity
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
 
-    private Button btnProvaSortir;
     private TextView tvNomUsuari;
 
     @Override
@@ -106,8 +104,6 @@ public class MainActivity extends ActionBarActivity
         mPagerSlidingTabStrip.setViewPager(mViewPager);
 
         tvNomUsuari = (TextView) findViewById(R.id.tvNomUsuari);
-        btnProvaSortir = (Button) findViewById(R.id.btnProvaSoritr);
-        btnProvaSortir.setOnClickListener(this);
 
         // TODO : Carregar el nom i el mail al component corresponent
         // get name
@@ -133,6 +129,10 @@ public class MainActivity extends ActionBarActivity
                 mViewPager.setVisibility(View.GONE);
                 currentFragment = LlibreVisitesFragment.newInstance();
                 t.replace(R.id.container, currentFragment).addToBackStack("tag").commit();
+                break;
+            case 5:
+                sessioUsuari.logoutUser();
+                finish();
                 break;
         }
     }
@@ -194,12 +194,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case (R.id.btnProvaSoritr):
-                sessioUsuari.logoutUser();
-                finish();
-                break;
-        }
+
     }
 
     /**
