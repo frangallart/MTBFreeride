@@ -163,7 +163,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
 
             if (usuaris != null) {
                 // Crear user login session
-                sessioUsuari.createUserLoginSession(usuaris.get(0).getNom(),
+                sessioUsuari.createUserLoginSession(usuaris.get(0).getUser(),
                                                     usuaris.get(0).getEmail(),
                                                     usuaris.get(0).getImg());
 

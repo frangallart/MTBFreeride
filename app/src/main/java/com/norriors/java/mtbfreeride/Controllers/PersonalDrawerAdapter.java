@@ -2,6 +2,7 @@ package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
     List<DrawerItems> drawerItemsList;
     int layoutResID;
     DrawerItems dItem;
-    private static int count = 0;
 
     public PersonalDrawerAdapter(Context context, int layoutResourceID,
                                  List<DrawerItems> listItems) {
@@ -57,14 +57,12 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
 
             drawerHolder.icon = dItem.getImgUser();
 
-            drawerHolder.topBord = (View)  view.findViewById(R.id.topBord);
-            drawerHolder.botBord = (View)  view.findViewById(R.id.botBord);
-
             if (drawerHolder.headerLayout != null && drawerHolder.icon != null) {
                 drawerHolder.headerLayout.addView(drawerHolder.icon);
 
                 LinearLayout.LayoutParams layParams = new LinearLayout.LayoutParams((int) getContext().getResources().getDimension(R.dimen.photo_user_registerH), (int) getContext().getResources().getDimension(R.dimen.photo_user_registerH));
-                layParams.setMargins(0,20,0,10);
+                layParams.setMargins(0,-20,0,30);
+                layParams.gravity = Gravity.CENTER;
                 drawerHolder.icon.setLayoutParams(layParams);
             }
             view.setTag(drawerHolder);
@@ -73,20 +71,14 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
             drawerHolder = (DrawerItemHolder) view.getTag();
         }
 
-
-        if (dItem.getTitle() != null) {
-            drawerHolder.headerLayout.setVisibility(LinearLayout.VISIBLE);
+        if (position == 1) {
             drawerHolder.title.setText(dItem.getTitle());
-            drawerHolder.topBord.setVisibility(View.VISIBLE);
-            drawerHolder.botBord.setVisibility(View.VISIBLE);
+        }else {
+            drawerHolder.ItemName.setText(dItem.getTitle());
+        }
 
-
-        } else {
-            drawerHolder.botBord.setVisibility(View.VISIBLE);
+        if (dItem.getTitle() == null) {
             drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
-            drawerHolder.ItemName.setText(dItem.getItemName());
-            drawerHolder.headerLayout.removeView(drawerHolder.title);
-
         }
 
         return view;
@@ -96,7 +88,6 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
         TextView ItemName, title;
         MLRoundedImageView icon;
         LinearLayout headerLayout, itemLayout;
-        View topBord, botBord;
     }
 
 

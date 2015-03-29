@@ -3,6 +3,8 @@ package com.norriors.java.mtbfreeride.Controllers;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import com.norriors.java.mtbfreeride.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,6 +72,11 @@ public class NavigationDrawerFragment extends Fragment {
 
     private MLRoundedImageView imgUsuariPerfil;
 
+    // User Session Manager Class
+    private UsuariSessionManager sessioUsuari;
+    // get user data from session
+    private HashMap<String, String> dadesUsuari;
+
 
     public NavigationDrawerFragment() {
     }
@@ -75,6 +84,9 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sessioUsuari = new UsuariSessionManager(getActivity().getApplicationContext());
+        dadesUsuari = sessioUsuari.getUserDetails();
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -133,10 +145,10 @@ public class NavigationDrawerFragment extends Fragment {
 
 
         imgUsuariPerfil = new MLRoundedImageView(getActivity().getBaseContext());
-        imgUsuariPerfil.setImageResource(R.drawable.img_splash_screen);
+        imgUsuariPerfil.setImageBitmap(getBitmap(dadesUsuari.get(UsuariSessionManager.KEW_IMAGE)));
 
         dataList.add(new DrawerItems(imgUsuariPerfil));
-        dataList.add(new DrawerItems("Aqui Anira l'usuari"));
+        dataList.add(new DrawerItems(dadesUsuari.get(UsuariSessionManager.KEY_NAME)));
         dataList.add(new DrawerItems("Modalitats"));
         dataList.add(new DrawerItems("Llibre Visites"));
         dataList.add(new DrawerItems("Grava la teva opinió"));
@@ -331,5 +343,15 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    public Bitmap getBitmap(String img) {
+        try {
+            byte[] byteData = Base64.decode(img, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(byteData, 0, byteData.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
