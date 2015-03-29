@@ -29,4 +29,7 @@
     <string name="img_modal">image modal</string>
     <string name="titol_modalitat"></string>
     <string name="detalls_modalitat"></string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

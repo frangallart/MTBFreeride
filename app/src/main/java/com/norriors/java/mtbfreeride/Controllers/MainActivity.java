@@ -1,6 +1,7 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,8 +19,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
 
@@ -124,15 +123,41 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         // update the main content by replacing fragments
+        mPagerSlidingTabStrip.setVisibility(View.GONE);
+        mViewPager.setVisibility(View.GONE);
+
         switch (position) {
+
+
+            case 2:
+
+                if (mPagerSlidingTabStrip.getVisibility() == View.GONE && mViewPager.getVisibility() == View.GONE) {
+                    mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
+                    mViewPager.setVisibility(View.VISIBLE);
+                    if(currentFragment != null) {
+                        t.remove(currentFragment).commit();
+                        currentFragment = null;
+                    }
+                }
+
+                break;
 
             case 3:
                 //this.getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.container)).commit();
 
-                mPagerSlidingTabStrip.setVisibility(View.GONE);
-                mViewPager.setVisibility(View.GONE);
+
                 currentFragment = LlibreVisitesFragment.newInstance();
-                t.replace(R.id.container, currentFragment).addToBackStack("tag").commit();
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
+                break;
+
+            case 4:
+                currentFragment = LlibreVisitesFragment.newInstance();
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
+
+                break;
+
+            case 5:
+
                 break;
         }
     }
@@ -187,10 +212,7 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(String id) {
-        Toast.makeText(this, "Has accedit al llibre de visistes", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -200,6 +222,11 @@ public class MainActivity extends ActionBarActivity
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

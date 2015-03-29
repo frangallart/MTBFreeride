@@ -232,27 +232,26 @@ public class NavigationDrawerFragment extends Fragment {
         mCurrentSelectedPosition = position;
 
         // Selecció d'items
-        if (position == 0) {
-        } else if (position == 1) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        } else if (position == 2) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        } else if (position == 3) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-            mCallbacks.onNavigationDrawerItemSelected(position);
 
-        }
+        switch(position){
 
-        /*if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(position, true);
+            case 0:
+
+                break;
+
+            case 1:
+
+                break;
+
+            default:
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+                mCallbacks.onNavigationDrawerItemSelected(position);
+                break;
         }
-        if (mDrawerLayout != null) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        }
-        if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
-        }*/
     }
+
+
+
 
     @Override
     public void onAttach(Activity activity) {

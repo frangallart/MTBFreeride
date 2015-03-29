@@ -84,7 +84,6 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
         } else {
             drawerHolder.botBord.setVisibility(View.VISIBLE);
             drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
-            drawerHolder.ItemName.setText(dItem.getItemName());
             drawerHolder.headerLayout.removeView(drawerHolder.title);
 
         }

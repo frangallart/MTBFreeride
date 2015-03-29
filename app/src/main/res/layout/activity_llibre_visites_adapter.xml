@@ -7,41 +7,60 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="126dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="179dp"
+            android:layout_width="84dp"
             android:layout_height="fill_parent">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="139dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/imgUser"
-                android:layout_weight="0.37"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical|left" />
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="209dp"
-            android:layout_height="fill_parent">
+            android:layout_width="268dp"
+            android:layout_height="94dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/txtDate"
-                android:layout_gravity="right" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
 
-            <TextView
-                android:layout_width="115dp"
-                android:layout_height="50dp"
-                android:text="New Text"
-                android:id="@+id/txtNomuser"
-                android:layout_gravity="center_vertical" />
+                <TextView
+                    android:layout_width="115dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/txtNomuser"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.39" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="78dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.42">
+
+                    <TextView
+                        android:layout_width="115dp"
+                        android:layout_height="35dp"
+                        android:text="New Text"
+                        android:id="@+id/txtDate"
+                        android:layout_gravity="center_vertical|right" />
+
+                    <EditText
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtVisites"
+                        android:layout_gravity="right" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
