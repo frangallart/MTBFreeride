@@ -149,12 +149,8 @@ public class MainActivity extends ActionBarActivity
             case 4:
                 currentFragment = LlibreVisitesFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
-
                 break;
 
-            case 5:
-
-                break;
             case 5:
                 sessioUsuari.logoutUser();
                 finish();
