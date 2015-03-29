@@ -90,12 +90,12 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
     private final String URL = "http://provesrasp.ddns.net/aplicacio/insertUsuari.php";
     private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registre_usuari);
         this.imgTool = new ImageTool();
+
         setupGui();
     }
 
@@ -163,44 +163,58 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
 
-            // onClick registre
-            case (R.id.btnRegistre):
+        // Si hi ha conexiò a internet
+        if (InternetUtil.isOnline(RegistreUsuari.this)) {
+            switch (v.getId()) {
 
-                // Control que tots els editText estiguin plens
-                if (!this.editNom.getText().toString().matches("") && !this.editEmail.getText().toString().matches("") &&
-                        !this.editNomUsuari.getText().toString().matches("") && !this.editPassword.getText().toString().matches("")
-                        && !this.editPassword2.getText().toString().matches("") && !this.editPrimerCognom.getText().toString().matches("")
-                        && !this.editSegonCognom.getText().toString().matches("")) {
+                // onClick registre
+                case (R.id.btnRegistre):
+                    controlCampsRegistre();
+                    break;
+            }
+        } else {
+            InternetUtil.showAlertDialog(RegistreUsuari.this, "Servei de connexió",
+                    "El teu dispositiu no té connexió a Internet.");
+        }
 
-                    // Control si hi ha imatge
-                    if (resized != null) {
+    }
 
-                        // Control que les contrasenyes siguin iguals
-                        if (this.editPassword.getText().toString().matches(this.editPassword2.getText().toString())) {
+    /**
+     * Mètode que comprova si els camps són vàlids, en cas cotrari mostra un Toast amb l'error
+     */
+    public void controlCampsRegistre() {
+        // Control que tots els editText estiguin plens
+        if (!this.editNom.getText().toString().matches("") && !this.editEmail.getText().toString().matches("") &&
+                !this.editNomUsuari.getText().toString().matches("") && !this.editPassword.getText().toString().matches("")
+                && !this.editPassword2.getText().toString().matches("") && !this.editPrimerCognom.getText().toString().matches("")
+                && !this.editSegonCognom.getText().toString().matches("")) {
 
-                            // Utilitzem expressions regulars per verificar l'email
-                            Pattern pattern = Pattern.compile(PATTERN_EMAIL);
-                            Matcher matcher = pattern.matcher(this.editEmail.getText().toString());
-                            if (matcher.matches()) {
-                                new InsertaUsuari().execute(this.editNomUsuari.getText().toString(), this.editNom.getText().toString(),
-                                        this.editEmail.getText().toString(), this.editPassword.getText().toString(),
-                                        this.editPrimerCognom.getText().toString(), this.editSegonCognom.getText().toString());
-                                btnRegistre.setEnabled(false);
-                            } else {
-                                Toast.makeText(RegistreUsuari.this, "L'email no es correcta.", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(RegistreUsuari.this, "Les contrasenyes no són iguals.", Toast.LENGTH_SHORT).show();
-                        }
+            // Control si hi ha imatge
+            if (resized != null) {
+
+                // Control que les contrasenyes siguin iguals
+                if (this.editPassword.getText().toString().matches(this.editPassword2.getText().toString())) {
+
+                    // Utilitzem expressions regulars per verificar l'email
+                    Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+                    Matcher matcher = pattern.matcher(this.editEmail.getText().toString());
+                    if (matcher.matches()) {
+                        new InsertaUsuari().execute(this.editNomUsuari.getText().toString(), this.editNom.getText().toString(),
+                                this.editEmail.getText().toString(), this.editPassword.getText().toString(),
+                                this.editPrimerCognom.getText().toString(), this.editSegonCognom.getText().toString());
+                        btnRegistre.setEnabled(false);
                     } else {
-                        Toast.makeText(RegistreUsuari.this, "Has d'insertar una imatge.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistreUsuari.this, "L'email no es correcta.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(RegistreUsuari.this, "S'han d'omplir tots els camps.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistreUsuari.this, "Les contrasenyes no són iguals.", Toast.LENGTH_SHORT).show();
                 }
-                break;
+            } else {
+                Toast.makeText(RegistreUsuari.this, "Has d'insertar una imatge.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(RegistreUsuari.this, "S'han d'omplir tots els camps.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -213,8 +227,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
      * @param menuInfo
      */
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.setHeaderTitle("Opcions multimèdia");
@@ -222,7 +235,6 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_contextual, menu);
-
     }
 
     /**
@@ -250,14 +262,19 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         }
     }
 
+    /**
+     * Accedir a la galeria d'imatges
+     */
     public void accessGaleria() {
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
+        Intent i = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
+    /**
+     * Accedir a la càmera del dispostiu
+     */
     private void accessCamara() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -427,6 +444,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
         /**
          * Mètode que recull la resposta del json. Si es true tornem al login sinó
          * mostrem el missatge d'error
+         *
          * @param resposta
          */
         @Override

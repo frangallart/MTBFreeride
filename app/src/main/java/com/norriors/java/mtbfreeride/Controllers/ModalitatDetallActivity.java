@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -17,6 +18,7 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
 
     // UI references.
     private TextView tvModalTitol, tvModalDetall;
+    private ScrollView svModaldetall;
     private VideoView videoModal;
     private ImageView ivModal;
     private Typeface font;
@@ -34,13 +36,16 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
      */
     private void setupGui() {
 
-        tvModalTitol = (TextView) findViewById(R.id.tvModalitatTitol);
-        tvModalDetall = (TextView) findViewById(R.id.tvModalitatDetall);
+        tvModalTitol = (TextView) findViewById(R.id.tvModalitatDetallTitol);
+        tvModalDetall = (TextView) findViewById(R.id.tvModalitatDetallDescripcio);
 
         font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
         tvModalTitol.setTypeface(font);
         tvModalDetall.setTypeface(font);
 
+        svModaldetall = (ScrollView) findViewById(R.id.svModalDetall);
+        // Ens situa l'scroll en la posició superior
+        svModaldetall.smoothScrollTo(0, 0);
     }
 
     /**
@@ -82,9 +87,9 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
             this.contrasenya = contrasenya;
         }*/
 
-        /**
-         * Mètode que s'executa abans de començar amb la tasca
-         */
+    /**
+     * Mètode que s'executa abans de començar amb la tasca
+     */
        /* @Override
         protected void onPreExecute() {
             super.onPreExecute();

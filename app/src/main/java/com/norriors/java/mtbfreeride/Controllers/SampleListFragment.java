@@ -1,11 +1,15 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,13 +30,19 @@ import java.util.List;
 
 /**
  * Classe SampleListFragment
+ * <p/>
+ * Classe que modela el fragment d'una modalitat i descarrega i mostra les seves dades
  */
-public class SampleListFragment extends ScrollTabHolderFragment {
+public class SampleListFragment extends ScrollTabHolderFragment implements View.OnClickListener {
 
     private static final String ARG_POSITION = "position";
     private static final String URL = "http://www.infobosccoma.net/pmdm/pois.php";
     private TextView tvView;
     private int mPosition;
+    private Typeface font;
+    private View rootView;
+    private ImageButton btnModalitatDetall;
+    private ScrollView svModal;
 
     public static Fragment newInstance(int position) {
         SampleListFragment f = new SampleListFragment();
@@ -56,10 +66,18 @@ public class SampleListFragment extends ScrollTabHolderFragment {
         //View v = inflater.inflate(R.layout.fragment_list, null);
 
         // fem referència a la vista
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // textView on mostro el contingut del json
         tvView = (TextView) rootView.findViewById(R.id.tvModalitat);
+        font = Typeface.createFromAsset(getActivity().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
+        tvView.setTypeface(font);
+
+        svModal = (ScrollView) rootView.findViewById(R.id.svMainFragment);
+        svModal.requestFocus();
+
+        btnModalitatDetall = (ImageButton) rootView.findViewById(R.id.btnDetallsModalitat);
+        btnModalitatDetall.setOnClickListener(this);
 
         return rootView;
     }
@@ -74,15 +92,21 @@ public class SampleListFragment extends ScrollTabHolderFragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.btnDetallsModalitat):
+                Intent intent = new Intent(getActivity().getBaseContext(), ModalitatDetallActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
     class DescarregarDades extends AsyncTask<String, Void, ArrayList<PuntsMapa>> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Mostro la progressbar
-            // bar.setVisibility(View.VISIBLE);
-            // Netejo el mapa
-            //mMap.clear();
         }
 
         /**
@@ -99,9 +123,6 @@ public class SampleListFragment extends ScrollTabHolderFragment {
             HttpResponse httpresponse = null;
             try {
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-                // Com a paràmetre li dic que només descarregui els punts de les ciutats
-                // que tinguin el valor entrat al buscador
-
                 parametres.add(new BasicNameValuePair("city", params[0]));
                 httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
 
