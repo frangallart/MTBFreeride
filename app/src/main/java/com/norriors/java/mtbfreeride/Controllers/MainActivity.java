@@ -99,13 +99,6 @@ public class MainActivity extends ActionBarActivity
         mViewPager.setAdapter(mPagerAdapter);
 
         mPagerSlidingTabStrip.setViewPager(mViewPager);
-
-        // TODO : Carregar el nom i el mail al component corresponent
-        // get name
-        String name = dadesUsuari.get(UsuariSessionManager.KEY_NAME);
-
-        // get email
-        String email = dadesUsuari.get(UsuariSessionManager.KEY_EMAIL);
     }
 
     @Override
@@ -297,7 +290,7 @@ public class MainActivity extends ActionBarActivity
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    fragment = (SampleListFragment2) SampleListFragment2.newInstance(1);
+                    fragment = (SampleListFragment) SampleListFragment.newInstance(1);
                     mScrollTabHolders.put(position, fragment);
                     return fragment;
                 case 2: // Fragment # 1 - This will show SecondFragment

@@ -1,2 +1,3 @@
 // TODO : Fer una classe per guardar els id's de les vistes del fragment i recarregar les seves dades
 // TODO : Carregar les imatges i la descripció de la modalitat des de la base de dades?
+// TODO : Alhora de descarregar dades del llibre de visites s'hauria de anar fet amb una tasca de 1 amb 1, i al arribar  a 5 pares. Al anar desplaçan-te cap avall en descarregues 5 més d'un en un.

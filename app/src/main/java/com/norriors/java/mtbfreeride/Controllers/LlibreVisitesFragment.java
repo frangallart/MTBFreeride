@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,13 +31,14 @@ import java.util.ArrayList;
  * Use the {@link LlibreVisitesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LlibreVisitesFragment extends  android.support.v4.app.Fragment{
+public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
 
     private ArrayList<UserVisites> dades;
     private ListView lstVisites;
     private LlibreVisitesAdapter adapterVisites;
     private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/llibreVisites.php";
     private DescarregarDades downloadVisites;
+    private ProgressBar llibre_progress;
 
 
     public static LlibreVisitesFragment newInstance() {
@@ -63,6 +65,7 @@ public class LlibreVisitesFragment extends  android.support.v4.app.Fragment{
         dades = new ArrayList<UserVisites>();
 
         lstVisites = (ListView) rootView.findViewById(R.id.lstVisites);
+        llibre_progress = (ProgressBar) rootView.findViewById(R.id.llibre_progress);
 
         downloadVisites = new DescarregarDades();
         downloadVisites.execute(URL_DATA);
@@ -73,7 +76,7 @@ public class LlibreVisitesFragment extends  android.support.v4.app.Fragment{
     }
 
     private void refreshData() {
-        if(dades==null) {
+        if (dades == null) {
             dades = new ArrayList<UserVisites>();
         }
         adapterVisites = new LlibreVisitesAdapter(getActivity(), dades);
@@ -101,6 +104,7 @@ public class LlibreVisitesFragment extends  android.support.v4.app.Fragment{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            llibre_progress.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -124,12 +128,14 @@ public class LlibreVisitesFragment extends  android.support.v4.app.Fragment{
         protected void onPostExecute(ArrayList<UserVisites> llista) {
             dades = llista;
             refreshData();
+            llibre_progress.setVisibility(View.GONE);
         }
 
 
         private ArrayList<UserVisites> tractarJSON(String json) {
             Gson converter = new Gson();
-            return converter.fromJson(json, new TypeToken<ArrayList<UserVisites>>(){}.getType());
+            return converter.fromJson(json, new TypeToken<ArrayList<UserVisites>>() {
+            }.getType());
         }
     }
 }

@@ -3,6 +3,7 @@ package com.norriors.java.mtbfreeride.Controllers;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
     private ImageView imgUsuari;
     private List<UserVisites> dades;
     private ImageTool imgTool;
+    private Typeface font;
 
 
     public LlibreVisitesAdapter(Activity context, List<UserVisites> objects) {
@@ -43,19 +45,25 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
             LayoutInflater inflater = context.getLayoutInflater();
             element = inflater.inflate(R.layout.activity_llibre_visites_adapter, null);
         }
+
+        font = Typeface.createFromAsset(getContext().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
+
         UserVisites usuari  = this.dades.get(position);
 
 
         txtNomUsuari = (TextView) element.findViewById(R.id.txtNomuser);
         txtNomUsuari.setText(usuari.getUser());
+        txtNomUsuari.setTypeface(font);
 
 
         txtData = (TextView)element.findViewById(R.id.txtDate);
         txtData.setText(""+usuari.getData());
+        txtData.setTypeface(font);
 
 
         txtVisites = (TextView) element.findViewById(R.id.txtVisites);
         txtVisites.setText("Num. visites: " + usuari.getTotal());
+        txtVisites.setTypeface(font);
 
 
         imgUsuari = (ImageView) element.findViewById(R.id.imgUser);
