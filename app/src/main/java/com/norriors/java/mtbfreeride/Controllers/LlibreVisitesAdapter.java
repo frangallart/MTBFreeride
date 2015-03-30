@@ -2,14 +2,12 @@ package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.norriors.java.mtbfreeride.Models.UserVisites;
@@ -26,10 +24,12 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
     private TextView txtNomUsuari;
     private TextView txtData;
     private TextView txtVisites;
-    private ImageView imgUsuari;
+    private MLRoundedImageView imgUsuari;
     private List<UserVisites> dades;
     private ImageTool imgTool;
     private Typeface font;
+    private LinearLayout parentLayout;
+    private Bitmap fotoUser;
 
 
     public LlibreVisitesAdapter(Activity context, List<UserVisites> objects) {
@@ -51,7 +51,7 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         UserVisites usuari  = this.dades.get(position);
 
 
-        txtNomUsuari = (TextView) element.findViewById(R.id.txtNomuser);
+        txtNomUsuari = new TextView(getContext());
         txtNomUsuari.setText(usuari.getUser());
         txtNomUsuari.setTypeface(font);
 
@@ -65,21 +65,27 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         txtVisites.setText("Num. visites: " + usuari.getTotal());
         txtVisites.setTypeface(font);
 
+        parentLayout = (LinearLayout) element.findViewById(R.id.parentLayout);
 
-        imgUsuari = (ImageView) element.findViewById(R.id.imgUser);
-        imgUsuari.setImageBitmap(getBitmap(usuari.getImg()));
+        fotoUser = Bitmap.createScaledBitmap(imgTool.getBitmap(usuari.getImg()), 100, 100, false);
+
+        imgUsuari = new MLRoundedImageView(getContext());
+        imgUsuari.setImageBitmap(fotoUser);
+
+        parentLayout.addView(imgUsuari);
+        parentLayout.addView(txtNomUsuari);
+
+
+
+        /*LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams((int) getContext().getResources().getDimension(R.dimen.photo_user_visitesH), (int) getContext().getResources().getDimension(R.dimen.photo_user_visitesW));
+        imgUsuari.setLayoutParams(layoutParams);*/
+
+
+
         return element;
     }
 
-    public Bitmap getBitmap(String img) {
-        try {
-            byte[] byteData = Base64.decode(img, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(byteData, 0, byteData.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
 
 

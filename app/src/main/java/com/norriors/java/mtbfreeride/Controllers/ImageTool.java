@@ -2,6 +2,7 @@ package com.norriors.java.mtbfreeride.Controllers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 /**
  * Classe ImageTool
@@ -40,5 +41,15 @@ public class ImageTool {
         options.inJustDecodeBounds = false;
 
         return BitmapFactory.decodeFile(path, options);
+    }
+
+    public Bitmap getBitmap(String img) {
+        try {
+            byte[] byteData = Base64.decode(img, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(byteData, 0, byteData.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
