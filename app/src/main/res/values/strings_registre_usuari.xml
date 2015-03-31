@@ -3,8 +3,8 @@
 
     <string name="action_galeria">Galeria</string>
     <string name="action_camera">Càmara</string>
-    <string name="nom_usuari_registre">Nom d\'usuari</string>
-    <string name="contrasenya_registre">Contrassenya</string>
+    <string name="nom_usuari_registre">Nick</string>
+    <string name="contrasenya_registre">Contrasenya</string>
     <string name="contrasenya2_registre">Repeteix la contrassenya</string>
     <string name="nom_persona_registre">Nom</string>
     <string name="cognom1_registre">Primer cognom</string>
