@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,14 +34,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : Que entri Alhora de entrar mitjançant el teclat
 // TODO : Per a la tasca que permet acccedir a un usuari intentar que no sigui una llista ArrayList
+
 /**
  * Classe LoginUsuaris
  * <p/>
  * Classe que controla l'entrada d'un usuari o el registre d'un usuari nou
  */
-public class LoginUsuari extends ActionBarActivity implements OnClickListener {
+public class LoginUsuari extends ActionBarActivity implements OnClickListener, OnKeyListener {
 
     private static final String URL = "http://provesrasp.ddns.net/aplicacio/usuaris.php";
 
@@ -77,13 +79,14 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
         btnSignUp = (Button) findViewById(R.id.btnRegistre);
         tvSeparador = (TextView) findViewById(R.id.tvSeparador);
 
-        btnLogin.setOnClickListener(this);
-        btnSignUp.setOnClickListener(this);
-
         Typeface font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
         etUsuari.setTypeface(font);
         etPassword.setTypeface(font);
         tvSeparador.setTypeface(font);
+
+        btnLogin.setOnClickListener(this);
+        btnSignUp.setOnClickListener(this);
+        etPassword.setOnKeyListener(this);
     }
 
     /**
@@ -109,6 +112,35 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
             InternetUtil.showAlertDialog(LoginUsuari.this, "Servei de connexió",
                     "El teu dispositiu no té connexió a Internet.");
         }
+    }
+
+    /**
+     * Controla els events de teclat
+     *
+     * @param v
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+        // Si hi ha conexiò a internet
+        if (InternetUtil.isOnline(LoginUsuari.this)) {
+            switch (v.getId()) {
+                case (R.id.etPassword):
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        new UserLoginTask(etUsuari.getText().toString(), etPassword.getText().toString()).execute();
+                        return true;
+                    }
+                    break;
+            }
+        } else {
+            InternetUtil.showAlertDialog(LoginUsuari.this, "Servei de connexió",
+                    "El teu dispositiu no té connexió a Internet.");
+        }
+
+        return false;
     }
 
     /**
@@ -164,8 +196,8 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener {
             if (usuaris != null) {
                 // Crear user login session
                 sessioUsuari.createUserLoginSession(usuaris.get(0).getUser(),
-                                                    usuaris.get(0).getEmail(),
-                                                    usuaris.get(0).getImg());
+                        usuaris.get(0).getEmail(),
+                        usuaris.get(0).getImg());
 
                 Intent act = new Intent(getApplicationContext(), MainActivity.class);
                 act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
