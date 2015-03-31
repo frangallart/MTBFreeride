@@ -3,8 +3,6 @@ package com.norriors.java.mtbfreeride.Controllers;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -145,7 +142,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 
         imgUsuariPerfil = new MLRoundedImageView(getActivity().getBaseContext());
-        imgUsuariPerfil.setImageBitmap(getBitmap(dadesUsuari.get(UsuariSessionManager.KEW_IMAGE)));
+        imgUsuariPerfil.setImageBitmap(ImageTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEW_IMAGE)));
 
         dataList.add(new DrawerItems(imgUsuariPerfil));
         dataList.add(new DrawerItems(dadesUsuari.get(UsuariSessionManager.KEY_NAME)));
@@ -349,15 +346,5 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
-    }
-
-    public Bitmap getBitmap(String img) {
-        try {
-            byte[] byteData = Base64.decode(img, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(byteData, 0, byteData.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

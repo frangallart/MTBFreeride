@@ -43,7 +43,7 @@ public class ImageTool {
         return BitmapFactory.decodeFile(path, options);
     }
 
-    public Bitmap getBitmap(String img) {
+    public static Bitmap getBitmap(String img) {
         try {
             byte[] byteData = Base64.decode(img, Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(byteData, 0, byteData.length);
