@@ -451,8 +451,11 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
                 finish();
             }
             // Sinó mostrem el missatge de l'error
-            else {
+            else if (resposta.trim().equals("false")){
                 Toast.makeText(RegistreUsuari.this, "S'ha produït un error", Toast.LENGTH_SHORT).show();
+                btnRegistre.setEnabled(true);
+            }else{
+                Toast.makeText(RegistreUsuari.this, "Aquest nick ja existeix!", Toast.LENGTH_SHORT).show();
                 btnRegistre.setEnabled(true);
             }
             bar.setVisibility(View.GONE);

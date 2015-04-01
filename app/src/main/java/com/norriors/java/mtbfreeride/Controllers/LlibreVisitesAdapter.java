@@ -1,12 +1,12 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,12 +24,11 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
     private TextView txtNomUsuari;
     private TextView txtData;
     private TextView txtVisites;
-    private MLRoundedImageView imgUsuari;
     private List<UserVisites> dades;
     private ImageTool imgTool;
     private Typeface font;
     private LinearLayout parentLayout;
-    private Bitmap fotoUser;
+    private ImageView imgLlibreVisites;
 
 
     public LlibreVisitesAdapter(Activity context, List<UserVisites> objects) {
@@ -41,51 +40,30 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
 
     public View getView(int position, View convertView, ViewGroup parent){
         View element = convertView;
+        UserVisites usuari  = this.dades.get(position);
+
+        font = Typeface.createFromAsset(getContext().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
+
         if(element == null) {
             LayoutInflater inflater = context.getLayoutInflater();
             element = inflater.inflate(R.layout.activity_llibre_visites_adapter, null);
         }
 
-        font = Typeface.createFromAsset(getContext().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
-
-        UserVisites usuari  = this.dades.get(position);
-
-
-        txtNomUsuari = new TextView(getContext());
-        txtNomUsuari.setText(usuari.getUser());
-        txtNomUsuari.setTypeface(font);
-
-
+        imgLlibreVisites = (ImageView) element.findViewById(R.id.imgLlibreVisites);
+        parentLayout = (LinearLayout) element.findViewById(R.id.parentLayout);
         txtData = (TextView)element.findViewById(R.id.txtDate);
+        txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
+        txtVisites = (TextView) element.findViewById(R.id.txtVisites);
+
+        imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(usuari.getImg()));
         txtData.setText(""+usuari.getData());
         txtData.setTypeface(font);
-
-
-        txtVisites = (TextView) element.findViewById(R.id.txtVisites);
+        txtNomUsuari.setText(usuari.getUser());
         txtVisites.setText("Num. visites: " + usuari.getTotal());
         txtVisites.setTypeface(font);
 
-        parentLayout = (LinearLayout) element.findViewById(R.id.parentLayout);
-
-        fotoUser = Bitmap.createScaledBitmap(imgTool.getBitmap(usuari.getImg()), 100, 100, false);
-
-        imgUsuari = new MLRoundedImageView(getContext());
-        imgUsuari.setImageBitmap(fotoUser);
-
-        parentLayout.addView(imgUsuari);
-        parentLayout.addView(txtNomUsuari);
-
-
-
-        /*LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams((int) getContext().getResources().getDimension(R.dimen.photo_user_visitesH), (int) getContext().getResources().getDimension(R.dimen.photo_user_visitesW));
-        imgUsuari.setLayoutParams(layoutParams);*/
-
-
-
         return element;
     }
-
-
 }
 
 

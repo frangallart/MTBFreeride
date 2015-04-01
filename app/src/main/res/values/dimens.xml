@@ -10,6 +10,6 @@
     <dimen name="photo_user_registerH">169dp</dimen>
     <dimen name="photo_user_registerW">169dp</dimen>
 
-    <dimen name="photo_user_visitesH">100dp</dimen>
-    <dimen name="photo_user_visitesW">100dp</dimen>
+    <dimen name="photo_user_visitesH">70dp</dimen>
+    <dimen name="photo_user_visitesW">70dp</dimen>
 </resources>
