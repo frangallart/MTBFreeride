@@ -1,170 +1,82 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ToggleButton;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.norriors.java.mtbfreeride.Models.Opinions;
+import com.norriors.java.mtbfreeride.Models.UserVisites;
 import com.norriors.java.mtbfreeride.R;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * Created by Arnau on 02/04/2015.
+ */
+public class ValoracionsFragment extends android.support.v4.app.Fragment {
+
+    private ArrayList<Opinions> dades;
+    private ListView lstVisites;
+    private OpinionsAdapter adapterVisites;
+    private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/llibreVisites.php";
+    private DescarregarDades downloadOpinions;
+    private ProgressBar opinions_progress;
 
 
-public class ValoracionsFragment extends android.support.v4.app.Fragment  {
-
-
-    private OnFragmentInteractionListener mListener;
-    private MediaRecorder gravador;
-    private String nomGravacio = null;
-    private MediaPlayer mPlayer;
-    private Button btnPlay;
-    private ToggleButton btnGravar;
-    private boolean mStartRecording = true;
-    private boolean mStartPlaying = true;
-
-
-
-
-
-    // TODO: Rename and change types and number of parameters
     public static ValoracionsFragment newInstance() {
         ValoracionsFragment fragment = new ValoracionsFragment();
-
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
     public ValoracionsFragment() {
-
+        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_valoracions, container, false);
 
-        nomGravacio = getActivity().getApplicationContext().getApplicationInfo().dataDir + "/test.3gp";
-        btnGravar = (ToggleButton) view.findViewById(R.id.btnGravar);
-        btnGravar.setText("Start Recording");
+        View rootView = inflater.inflate(R.layout.fragment_llibre_visites, container, false);
+        dades = new ArrayList<Opinions>();
 
-        btnGravar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecord(mStartRecording);
-                if (mStartRecording) {
-                    btnGravar.setText("Stop recording");
-                } else {
-                    btnGravar.setText("Start recording");
-                }
-                mStartRecording = !mStartRecording;
-            }
-        });
+        lstVisites = (ListView) rootView.findViewById(R.id.lstVisites);
+        opinions_progress = (ProgressBar) rootView.findViewById(R.id.llibre_progress);
+
+        downloadOpinions = new DescarregarDades();
+        downloadOpinions.execute(URL_DATA);
 
 
-        btnPlay = (Button) view.findViewById(R.id.btnPlay);
-        btnPlay.setText("Start playing");
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPlay(mStartPlaying);
-                if (mStartPlaying) {
-                    btnPlay.setText("Stop playing");
-                } else {
-                    btnPlay.setText("Start playing");
-                }
-                mStartPlaying = !mStartPlaying;
-
-            }
-        });
-
-
-
-
-
-        return view;
+        // Inflate the layout for this fragment
+        return rootView;
     }
 
-    /**
-     * Mètode que inicia la gravació d'àudio.
-     */
-    private void iniciGravacio() {
-        gravador = new MediaRecorder();
-        gravador.reset();
-        gravador.setAudioSource(MediaRecorder.AudioSource.MIC);
-        gravador.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        gravador.setOutputFile(nomGravacio);
-        gravador.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-        try {
-            gravador.prepare();
-        } catch (IOException e) {
-            Log.e("Gravacio", "Error en la preparació de la gravació");
+    private void refreshData() {
+        if (dades == null) {
+            dades = new ArrayList<Opinions>();
         }
-
-        gravador.start();
+        adapterVisites = new OpinionsAdapter(getActivity(), dades);
+        lstVisites.setAdapter(adapterVisites);
     }
-
-    /**
-     * Mètode que ens para de gravar i ens deixa el gravador a null,
-     * a punt per tornar a gravar
-     */
-    private void pararGravacio() {
-        gravador.stop();
-        gravador.release();
-        gravador = null;
-    }
-
-    private void onRecord(boolean start) {
-        if (start) {
-            iniciGravacio();
-        } else {
-            pararGravacio();
-        }
-    }
-
-    private void onPlay(boolean start) {
-        if (start) {
-            startPlaying();
-        } else {
-            stopPlaying();
-        }
-    }
-
-    private void startPlaying() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(nomGravacio);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            Log.e("ERROR", "prepare() failed");
-        }
-    }
-
-    private void stopPlaying() {
-        mPlayer.release();
-        mPlayer = null;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
 
 
     /**
@@ -182,8 +94,43 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment  {
         public void onFragmentInteraction(Uri uri);
     }
 
+    class DescarregarDades extends AsyncTask<String, Void, ArrayList<UserVisites>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            opinions_progress.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected ArrayList<UserVisites> doInBackground(String... params) {
+            ArrayList<UserVisites> llistaTitulars = null;
+            DefaultHttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppostreq = new HttpPost(URL_DATA);
+            HttpResponse httpresponse = null;
+            try {
+                httpresponse = httpclient.execute(httppostreq);
+                String responseText = EntityUtils.toString(httpresponse.getEntity());
+                llistaTitulars = tractarJSON(responseText);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return llistaTitulars;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Opinions> llista) {
+            dades = llista;
+            refreshData();
+            opinions_progress.setVisibility(View.GONE);
+        }
 
 
-
-
+        private ArrayList<UserVisites> tractarJSON(String json) {
+            Gson converter = new Gson();
+            return converter.fromJson(json, new TypeToken<ArrayList<UserVisites>>() {
+            }.getType());
+        }
+    }
 }
