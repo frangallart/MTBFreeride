@@ -4,23 +4,35 @@ import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.norriors.java.mtbfreeride.R;
 
+import java.util.HashMap;
+
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PerfilUsuariFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PerfilUsuariFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Classe Perfil Usuari Fragment
+ * En aquesta classe sens mostren les dades bàsiques de l'usuari
+ * (Imatge de perfil, nom , cognoms i correu)
+ * I ens permet fer l'edició de es dades esmentades a partir del botó editar
+ *
  */
 public class PerfilUsuariFragment extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
+    private TextView txtNom;
+    private TextView txtPrimerCognom;
+    private TextView txtSegonCognom;
+    private TextView  txtEmail;
+    private MLRoundedImageView imgUser;
+
+    private UsuariSessionManager sessioUsuari;
+    private HashMap<String, String> dadesUsuari;
 
     /**
      * Use this factory method to create a new instance of
@@ -44,6 +56,7 @@ public class PerfilUsuariFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
     }
 
@@ -51,7 +64,34 @@ public class PerfilUsuariFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //Recullim la vista
         View viewPerfil =  inflater.inflate(R.layout.fragment_perfil_usuari, container, false);
+
+        //Utilitzem el shared preferences per recollir les dades
+        sessioUsuari = new UsuariSessionManager(getActivity().getBaseContext());
+        dadesUsuari = sessioUsuari.getUserDetails();
+
+
+        //Text View Nom
+        txtNom = (TextView) viewPerfil.findViewById(R.id.txtNom);
+        txtNom.setText(dadesUsuari.get("name"));
+
+        //TextText View Primer cognom
+        txtPrimerCognom = (TextView) viewPerfil.findViewById(R.id.txtPrimerCognom);
+
+
+        //Text View Segon Cognom
+        txtSegonCognom = (TextView) viewPerfil.findViewById(R.id.txtSegonCognom);
+
+        //Text View Email
+        txtEmail = (TextView) viewPerfil.findViewById(R.id.txtEmail);
+        txtEmail.setText(dadesUsuari.get("email"));
+
+        //MLRounded Image View
+        imgUser = (MLRoundedImageView) viewPerfil.findViewById(R.id.imgUser);
+
+
+
 
 
 
@@ -61,6 +101,12 @@ public class PerfilUsuariFragment extends Fragment {
         // Inflate the layout for this fragment
         return viewPerfil;
     }
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_editar_user, menu);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

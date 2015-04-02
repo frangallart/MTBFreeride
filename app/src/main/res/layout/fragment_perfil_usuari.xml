@@ -11,7 +11,7 @@
         android:layout_height="fill_parent">
 
         <com.norriors.java.mtbfreeride.Controllers.MLRoundedImageView
-            android:id="@+id/imgLlibreVisites"
+            android:id="@+id/imgUser"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="5dp"
