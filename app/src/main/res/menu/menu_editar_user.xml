@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_editUser"
+        android:title="@string/mnEdit"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_saveChange"
+        android:title="@string/mnSave"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_cancelChange"
+        android:title="@string/mnCancel"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="never" />
+</menu>

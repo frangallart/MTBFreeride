@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mnEdit">Editar</string>
+    <string name="mnSave">Guardar</string>
+    <string name="mnCancel">Cancel·lar</string>
+</resources>

@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * Classe ImageTool
  */
@@ -51,5 +53,21 @@ public class ImageTool {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /***
+     * Mètode que rep una imatge en Bitmap i ens retorna un String per poder passar-lo al JSON
+     * @param image
+     * @return
+     */
+    public String getImageString(Bitmap image){
+
+        byte[] byteArray;
+        // Passem la imatge a una cadena de bytes
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byteArray = stream.toByteArray();
+
+       return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }
