@@ -245,15 +245,22 @@ public class NavigationDrawerFragment extends Fragment {
 
             case 1:
                 mDrawerLayout.closeDrawer(mFragmentContainerView);
+
                 break;
             case 2:
                 mDrawerLayout.closeDrawer(mFragmentContainerView);
+                mCallbacks.onNavigationDrawerItemSelected(position);
                 break;
             case 3:
                 mDrawerLayout.closeDrawer(mFragmentContainerView);
                 mCallbacks.onNavigationDrawerItemSelected(position);
                 break;
+            case 4:
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+                mCallbacks.onNavigationDrawerItemSelected(position);
+                break;
             case 5:
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
                 mCallbacks.onNavigationDrawerItemSelected(position);
                 break;
         }

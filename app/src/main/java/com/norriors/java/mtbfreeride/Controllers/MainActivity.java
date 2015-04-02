@@ -128,13 +128,12 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 //this.getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.container)).commit();
 
-
                 currentFragment = LlibreVisitesFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
                 break;
 
             case 4:
-                currentFragment = LlibreVisitesFragment.newInstance();
+                currentFragment = ValoracionsFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
                 break;
 
