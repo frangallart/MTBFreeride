@@ -142,7 +142,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 
         imgUsuariPerfil = new MLRoundedImageView(getActivity().getBaseContext());
-        imgUsuariPerfil.setImageBitmap(ImageTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEW_IMAGE)));
+        imgUsuariPerfil.setImageBitmap(ImageTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE)));
 
         dataList.add(new DrawerItems(imgUsuariPerfil));
         dataList.add(new DrawerItems(dadesUsuari.get(UsuariSessionManager.KEY_NAME)));

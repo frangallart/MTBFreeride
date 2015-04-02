@@ -1,32 +1,29 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.norriors.java.mtbfreeride.Models.Modalitat;
 import com.norriors.java.mtbfreeride.R;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import com.norriors.java.mtbfreeride.dao.ModalitatsConversor;
+import com.norriors.java.mtbfreeride.dao.ModalitatsSQLiteHelper;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe SampleListFragment
@@ -35,14 +32,19 @@ import java.util.List;
  */
 public class SampleListFragment extends ScrollTabHolderFragment implements View.OnClickListener {
 
+    private ModalitatsSQLiteHelper factsHelper;
+    private SQLiteDatabase db;
+    private ModalitatsConversor modalitatsConversor;
+    private ArrayList<Modalitat> dades;
+
     private static final String ARG_POSITION = "position";
-    private static final String URL = "http://www.infobosccoma.net/pmdm/pois.php";
-    private TextView tvView;
+    private TextView tvTitolMain;
     private int mPosition;
     private Typeface font;
     private View rootView;
     private ImageButton btnModalitatDetall;
-    private ScrollView svModal;
+    private ScrollView svModalMain;
+    private ImageView ivModalMain;
 
     public static Fragment newInstance(int position) {
         SampleListFragment f = new SampleListFragment();
@@ -58,29 +60,39 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
         setRetainInstance(true);
         mPosition = getArguments().getInt(ARG_POSITION);
 
-        new DescarregarDades().execute("");
+        // crear l'objecte que crea a la connexió amb la BD
+        factsHelper = new ModalitatsSQLiteHelper(getActivity().getBaseContext(), "MTBModalitats.db", null, 1);
+        // obtenir l'objecte BD
+        db = factsHelper.getReadableDatabase();
+        modalitatsConversor = new ModalitatsConversor(factsHelper);
+        dades = modalitatsConversor.getAllAsList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //View v = inflater.inflate(R.layout.fragment_list, null);
 
         // fem referència a la vista
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // textView on mostro el contingut del json
-        tvView = (TextView) rootView.findViewById(R.id.tvModalitat);
-        font = Typeface.createFromAsset(getActivity().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
-        tvView.setTypeface(font);
-
-        svModal = (ScrollView) rootView.findViewById(R.id.svMainFragment);
-        svModal.requestFocus();
-
+        // textView on mostro el nom de la modalitat
+        tvTitolMain = (TextView) rootView.findViewById(R.id.tvModalitat);
+        // imageView on es veu la imatge de la modalitat
+        ivModalMain = (ImageView) rootView.findViewById(R.id.ivModalMain);
+        svModalMain = (ScrollView) rootView.findViewById(R.id.svMainFragment);
         btnModalitatDetall = (ImageButton) rootView.findViewById(R.id.btnDetallsModalitat);
+        font = Typeface.createFromAsset(getActivity().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
+
+        tvTitolMain.setTypeface(font);
+        // Ens situa l'scroll en la posició superior
+        svModalMain.smoothScrollTo(0, 0);
+
         btnModalitatDetall.setOnClickListener(this);
+        tvTitolMain.setText(dades.get(mPosition).getTitol());
+        ivModalMain.setImageBitmap(recollirImatge());
 
         return rootView;
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -102,51 +114,22 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
         }
     }
 
-    class DescarregarDades extends AsyncTask<String, Void, ArrayList<PuntsMapa>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        /**
-         * Procés de descarrega de les dades
-         *
-         * @param params
-         * @return la llista de punts
-         */
-        @Override
-        protected ArrayList<PuntsMapa> doInBackground(String... params) {
-            ArrayList<PuntsMapa> llistaPunts = null;
-            DefaultHttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppostreq = new HttpPost(URL);
-            HttpResponse httpresponse = null;
-            try {
-                List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-                parametres.add(new BasicNameValuePair("city", params[0]));
-                httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
-
-                httpresponse = httpclient.execute(httppostreq);
-
-                String responseText = EntityUtils.toString(httpresponse.getEntity());
-                // Retorno la llista de punts
-                llistaPunts = tractarJSON(responseText);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return llistaPunts;
-        }
-
-        // Pinto el resultat de l'asyncTask
-        @Override
-        protected void onPostExecute(ArrayList<PuntsMapa> llista) {
-            tvView.setText(llista.get(mPosition).getName());
-        }
-
-        private ArrayList<PuntsMapa> tractarJSON(String json) {
-            Gson converter = new Gson();
-            return converter.fromJson(json, new TypeToken<ArrayList<PuntsMapa>>() {
-            }.getType());
+    /**
+     * Recull la imatge corresponent de la carpeta assets
+     *
+     * @return bitmap
+     */
+    public Bitmap recollirImatge() {
+        AssetManager assetManager = getActivity().getBaseContext().getAssets();
+        Bitmap imatge = null;
+        InputStream inputStream = null;
+        try {
+            inputStream = assetManager.open(dades.get(mPosition).getImatge1());
+            imatge = BitmapFactory.decodeStream(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return imatge;
         }
     }
 }
