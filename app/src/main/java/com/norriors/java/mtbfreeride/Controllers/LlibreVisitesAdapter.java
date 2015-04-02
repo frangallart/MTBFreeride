@@ -55,7 +55,9 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
         txtVisites = (TextView) element.findViewById(R.id.txtVisites);
 
-        imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(usuari.getImg()));
+        if(imgLlibreVisites != null && usuari.getImg() != null) {
+            imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(usuari.getImg()));
+        }
         txtData.setText(""+usuari.getData());
         txtData.setTypeface(font);
         txtNomUsuari.setText(usuari.getUser());

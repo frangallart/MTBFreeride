@@ -34,6 +34,8 @@ public class MLRoundedImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
 
         Drawable drawable = getDrawable();
+        Bitmap bitmap = null;
+        Bitmap roundBitmap = null;
 
         if (drawable == null) {
             return;
@@ -43,12 +45,16 @@ public class MLRoundedImageView extends ImageView {
             return;
         }
         Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-        Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+        if(b != null) {
+            bitmap = b.copy(Bitmap.Config.RGB_565, true);
+        }
 
         int w = getWidth(), h = getHeight();
 
-        Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
-        canvas.drawBitmap(roundBitmap, 0, 0, null);
+        if(bitmap != null) {
+            roundBitmap = getCroppedBitmap(bitmap, w);
+            canvas.drawBitmap(roundBitmap, 0, 0, null);
+        }
 
     }
 
