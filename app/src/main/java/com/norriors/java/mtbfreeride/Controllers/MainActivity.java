@@ -106,9 +106,12 @@ public class MainActivity extends ActionBarActivity
 
         switch (position) {
 
+            case 1:
+                currentFragment = PerfilUsuariFragment.newInstance();
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
+                break;
 
             case 2:
-
                 if (mPagerSlidingTabStrip.getVisibility() == View.GONE && mViewPager.getVisibility() == View.GONE) {
                     mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
                     mViewPager.setVisibility(View.VISIBLE);
@@ -117,12 +120,9 @@ public class MainActivity extends ActionBarActivity
                         currentFragment = null;
                     }
                 }
-
                 break;
 
             case 3:
-                //this.getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.container)).commit();
-
                 currentFragment = LlibreVisitesFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
                 break;

@@ -5,5 +5,5 @@
         android:title="@string/mnEdit"
         android:orderInCategory="100"
         android:icon="@android:drawable/ic_menu_edit"
-        app:showAsAction="always|ifRoom" />
+        app:showAsAction="always" />
 </menu>

@@ -1,6 +1,5 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
-import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import java.util.HashMap;
  * I ens permet fer l'edició de es dades esmentades a partir del botó editar
  *
  */
-public class PerfilUsuariFragment extends Fragment {
+public class PerfilUsuariFragment extends android.support.v4.app.Fragment  {
 
 
     private OnFragmentInteractionListener mListener;
@@ -33,17 +32,10 @@ public class PerfilUsuariFragment extends Fragment {
 
     private UsuariSessionManager sessioUsuari;
     private HashMap<String, String> dadesUsuari;
+    private ImageTool imgTool;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PerfilUsuariFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PerfilUsuariFragment newInstance(String param1, String param2) {
+
+    public static PerfilUsuariFragment newInstance() {
         PerfilUsuariFragment fragment = new PerfilUsuariFragment();
 
         return fragment;
@@ -67,6 +59,8 @@ public class PerfilUsuariFragment extends Fragment {
         //Recullim la vista
         View viewPerfil =  inflater.inflate(R.layout.fragment_perfil_usuari, container, false);
 
+        imgTool = new ImageTool();
+
         //Utilitzem el shared preferences per recollir les dades
         sessioUsuari = new UsuariSessionManager(getActivity().getBaseContext());
         dadesUsuari = sessioUsuari.getUserDetails();
@@ -74,28 +68,24 @@ public class PerfilUsuariFragment extends Fragment {
 
         //Text View Nom
         txtNom = (TextView) viewPerfil.findViewById(R.id.txtNom);
-        txtNom.setText(dadesUsuari.get("name"));
+        txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_NAME));
 
         //TextText View Primer cognom
         txtPrimerCognom = (TextView) viewPerfil.findViewById(R.id.txtPrimerCognom);
+        txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
 
 
         //Text View Segon Cognom
         txtSegonCognom = (TextView) viewPerfil.findViewById(R.id.txtSegonCognom);
+        txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
 
         //Text View Email
         txtEmail = (TextView) viewPerfil.findViewById(R.id.txtEmail);
-        txtEmail.setText(dadesUsuari.get("email"));
+        txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
 
         //MLRounded Image View
         imgUser = (MLRoundedImageView) viewPerfil.findViewById(R.id.imgUser);
-
-
-
-
-
-
-
+        imgUser.setImageBitmap(imgTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE)));
 
 
         // Inflate the layout for this fragment
