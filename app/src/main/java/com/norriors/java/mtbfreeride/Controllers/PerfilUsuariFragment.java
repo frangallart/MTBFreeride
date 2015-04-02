@@ -1,13 +1,16 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
 
@@ -18,21 +21,22 @@ import java.util.HashMap;
  * En aquesta classe sens mostren les dades bàsiques de l'usuari
  * (Imatge de perfil, nom , cognoms i correu)
  * I ens permet fer l'edició de es dades esmentades a partir del botó editar
- *
  */
-public class PerfilUsuariFragment extends android.support.v4.app.Fragment  {
+public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
 
 
     private OnFragmentInteractionListener mListener;
-    private TextView txtNom;
-    private TextView txtPrimerCognom;
-    private TextView txtSegonCognom;
-    private TextView  txtEmail;
+    private EditText txtNom;
+    private EditText txtPrimerCognom;
+    private EditText txtSegonCognom;
+    private EditText txtEmail;
     private MLRoundedImageView imgUser;
 
     private UsuariSessionManager sessioUsuari;
     private HashMap<String, String> dadesUsuari;
     private ImageTool imgTool;
+    private Toast toast;
+    private Bitmap novaImatge;
 
 
     public static PerfilUsuariFragment newInstance() {
@@ -57,7 +61,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment  {
                              Bundle savedInstanceState) {
 
         //Recullim la vista
-        View viewPerfil =  inflater.inflate(R.layout.fragment_perfil_usuari, container, false);
+        View viewPerfil = inflater.inflate(R.layout.fragment_perfil_usuari, container, false);
 
         imgTool = new ImageTool();
 
@@ -67,20 +71,20 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment  {
 
 
         //Text View Nom
-        txtNom = (TextView) viewPerfil.findViewById(R.id.txtNom);
+        txtNom = (EditText) viewPerfil.findViewById(R.id.txtNom);
         txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_NAME));
 
         //TextText View Primer cognom
-        txtPrimerCognom = (TextView) viewPerfil.findViewById(R.id.txtPrimerCognom);
+        txtPrimerCognom = (EditText) viewPerfil.findViewById(R.id.txtPrimerCognom);
         txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
 
 
         //Text View Segon Cognom
-        txtSegonCognom = (TextView) viewPerfil.findViewById(R.id.txtSegonCognom);
+        txtSegonCognom = (EditText) viewPerfil.findViewById(R.id.txtSegonCognom);
         txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
 
         //Text View Email
-        txtEmail = (TextView) viewPerfil.findViewById(R.id.txtEmail);
+        txtEmail = (EditText) viewPerfil.findViewById(R.id.txtEmail);
         txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
 
         //MLRounded Image View
@@ -91,10 +95,51 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment  {
         // Inflate the layout for this fragment
         return viewPerfil;
     }
+
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_editar_user, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+            case R.id.action_editUser:
+
+                    toast = new Toast(getActivity().getBaseContext());
+                    toast.makeText(getActivity().getBaseContext(), "Ara, pots editar el teu perfil", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    txtNom.setEnabled(true);
+                    txtPrimerCognom.setEnabled(true);
+                    txtSegonCognom.setEnabled(true);
+                    txtEmail.setEnabled(true);
+
+                return true;
+
+            case R.id.action_saveChange:
+
+                toast = new Toast(getActivity().getBaseContext());
+                toast.makeText(getActivity().getBaseContext(), "Canvis gaurdats correctament", Toast.LENGTH_SHORT);
+                toast.show();
+
+                txtNom.setEnabled(false);
+                txtPrimerCognom.setEnabled(false);
+                txtSegonCognom.setEnabled(false);
+                txtEmail.setEnabled(false);
+
+                sessioUsuari.createUserLoginSession(txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), dadesUsuari.get(UsuariSessionManager.KEY_PASS), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
+
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
     }
 
 
