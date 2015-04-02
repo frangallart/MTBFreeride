@@ -15,10 +15,11 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="69dp">
 
         <ScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/svMainFragment"
             android:scrollbars="none">
@@ -39,10 +40,9 @@
                     android:layout_marginBottom="20dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView"
-                        android:src="@drawable/img_sign_up_default"
+                        android:id="@+id/ivModalMain"
                         android:nestedScrollingEnabled="false"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/img_modal" />

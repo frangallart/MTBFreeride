@@ -30,6 +30,9 @@ public class MainActivity extends ActionBarActivity
     // User Session Manager Class
     private UsuariSessionManager sessioUsuari;
 
+
+    //private ModalitatsConversor modalitatsConversor;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -72,6 +75,22 @@ public class MainActivity extends ActionBarActivity
      * Mètode que recupera els controls de la GUI i toca espectes de disseny
      */
     public void setupGui() {
+
+
+        /*modalitatsConversor = new ModalitatsConversor(factsHelper);
+        String prova = "";
+        ArrayList<Modalitat> m = modalitatsConversor.getAllAsList();
+        for(Modalitat i : m){
+            prova = " " + i.getCodi();
+            prova += " " + i.getDescripcio();
+            prova += " " + i.getImatge1();
+            prova += " " + i.getImatge2();
+            prova += " " + i.getTitol();
+            prova += " " + i.getUrl_video();
+
+        }
+        System.out.println(prova);*/
+
 
         // Creació del drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
