@@ -42,27 +42,37 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         View element = convertView;
         UserVisites usuari  = this.dades.get(position);
 
+        LlibreVisitesAdapter llibre;
+
         font = Typeface.createFromAsset(getContext().getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
 
         if(element == null) {
+            llibre = new LlibreVisitesAdapter(context,dades);
             LayoutInflater inflater = context.getLayoutInflater();
             element = inflater.inflate(R.layout.activity_llibre_visites_adapter, null);
+            llibre.imgLlibreVisites = (ImageView) element.findViewById(R.id.imgLlibreVisites);
+            llibre.txtData = (TextView)element.findViewById(R.id.txtDate);
+            llibre.txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
+            llibre.txtVisites = (TextView) element.findViewById(R.id.txtVisites);
+
+            element.setTag(llibre);
         }
 
-        imgLlibreVisites = (ImageView) element.findViewById(R.id.imgLlibreVisites);
-        parentLayout = (LinearLayout) element.findViewById(R.id.parentLayout);
-        txtData = (TextView)element.findViewById(R.id.txtDate);
-        txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
-        txtVisites = (TextView) element.findViewById(R.id.txtVisites);
-
-        if(imgLlibreVisites != null && usuari.getImg() != null) {
-            imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(usuari.getImg()));
+        else{
+            llibre = (LlibreVisitesAdapter)element.getTag();
         }
-        txtData.setText(""+usuari.getData());
-        txtData.setTypeface(font);
-        txtNomUsuari.setText(usuari.getUser());
-        txtVisites.setText("Num. visites: " + usuari.getTotal());
-        txtVisites.setTypeface(font);
+
+        //parentLayout = (LinearLayout) element.findViewById(R.id.parentLayout);
+        //txtData = (TextView)element.findViewById(R.id.txtDate);
+        //txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
+        //txtVisites = (TextView) element.findViewById(R.id.txtVisites);
+
+        llibre.imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(usuari.getImg()));
+        llibre.txtData.setText(""+usuari.getData());
+        llibre.txtData.setTypeface(font);
+        llibre.txtNomUsuari.setText(usuari.getUser());
+        llibre.txtVisites.setText("Num. visites: " + usuari.getTotal());
+        llibre.txtVisites.setTypeface(font);
 
         return element;
     }
