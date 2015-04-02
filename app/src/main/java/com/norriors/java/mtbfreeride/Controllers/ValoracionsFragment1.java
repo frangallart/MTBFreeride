@@ -13,6 +13,7 @@ import android.widget.ToggleButton;
 
 import com.norriors.java.mtbfreeride.R;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -143,6 +144,8 @@ public class ValoracionsFragment1 extends android.support.v4.app.Fragment  {
     }
 
     private void startPlaying() {
+
+        File path=new File(getActivity().getCacheDir()+"/musicfile.3gp");
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(nomGravacio);

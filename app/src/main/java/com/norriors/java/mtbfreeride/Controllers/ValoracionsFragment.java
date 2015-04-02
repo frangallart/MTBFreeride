@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.norriors.java.mtbfreeride.Models.Opinions;
-import com.norriors.java.mtbfreeride.Models.UserVisites;
 import com.norriors.java.mtbfreeride.R;
 
 import org.apache.http.HttpResponse;
@@ -30,8 +29,8 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
 
     private ArrayList<Opinions> dades;
     private ListView lstVisites;
-    private OpinionsAdapter adapterVisites;
-    private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/llibreVisites.php";
+    private ValoracionsAdapter adapterVisites;
+    private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/valoracions.php";
     private DescarregarDades downloadOpinions;
     private ProgressBar opinions_progress;
 
@@ -74,7 +73,7 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         if (dades == null) {
             dades = new ArrayList<Opinions>();
         }
-        adapterVisites = new OpinionsAdapter(getActivity(), dades);
+        adapterVisites = new ValoracionsAdapter(getActivity(), dades);
         lstVisites.setAdapter(adapterVisites);
     }
 
@@ -94,7 +93,7 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    class DescarregarDades extends AsyncTask<String, Void, ArrayList<UserVisites>> {
+    class DescarregarDades extends AsyncTask<String, Void, ArrayList<Opinions>> {
 
         @Override
         protected void onPreExecute() {
@@ -103,20 +102,19 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         }
 
         @Override
-        protected ArrayList<UserVisites> doInBackground(String... params) {
-            ArrayList<UserVisites> llistaTitulars = null;
+        protected ArrayList<Opinions> doInBackground(String... params) {
+            ArrayList<Opinions> opinions = null;
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httppostreq = new HttpPost(URL_DATA);
             HttpResponse httpresponse = null;
             try {
                 httpresponse = httpclient.execute(httppostreq);
                 String responseText = EntityUtils.toString(httpresponse.getEntity());
-                llistaTitulars = tractarJSON(responseText);
+                opinions = tractarJSON(responseText);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            return llistaTitulars;
+            return opinions;
         }
 
         @Override
@@ -127,9 +125,9 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         }
 
 
-        private ArrayList<UserVisites> tractarJSON(String json) {
+        private ArrayList<Opinions> tractarJSON(String json) {
             Gson converter = new Gson();
-            return converter.fromJson(json, new TypeToken<ArrayList<UserVisites>>() {
+            return converter.fromJson(json, new TypeToken<ArrayList<Opinions>>() {
             }.getType());
         }
     }
