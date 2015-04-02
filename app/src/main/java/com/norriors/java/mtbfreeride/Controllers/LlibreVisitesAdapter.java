@@ -62,11 +62,6 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
             llibre = (LlibreVisitesAdapter)element.getTag();
         }
 
-        //parentLayout = (LinearLayout) element.findViewById(R.id.parentLayout);
-        //txtData = (TextView)element.findViewById(R.id.txtDate);
-        //txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
-        //txtVisites = (TextView) element.findViewById(R.id.txtVisites);
-
         llibre.imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(usuari.getImg()));
         llibre.txtData.setText(""+usuari.getData());
         llibre.txtData.setTypeface(font);
