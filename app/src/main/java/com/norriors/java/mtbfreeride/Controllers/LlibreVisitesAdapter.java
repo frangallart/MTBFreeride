@@ -16,7 +16,7 @@ import com.norriors.java.mtbfreeride.R;
 import java.util.List;
 
 /**
- * Created by Ruben on 28/3/15.
+ * Classe LlibreVisitesAdapter
  */
 public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
 
@@ -66,6 +66,7 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         llibre.txtData.setText(""+usuari.getData());
         llibre.txtData.setTypeface(font);
         llibre.txtNomUsuari.setText(usuari.getUser());
+        llibre.txtNomUsuari.setTypeface(font);
         llibre.txtVisites.setText("Num. visites: " + usuari.getTotal());
         llibre.txtVisites.setTypeface(font);
 

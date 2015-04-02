@@ -3,7 +3,6 @@ package com.norriors.java.mtbfreeride.Controllers;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -14,7 +13,7 @@ import com.norriors.java.mtbfreeride.R;
 /**
  * Classe ModalitatDetallActivity
  */
-public class ModalitatDetallActivity extends ActionBarActivity implements View.OnClickListener {
+public class ModalitatDetallActivity extends ActionBarActivity {
 
     // UI references.
     private TextView tvModalTitol, tvModalDetall;
@@ -38,6 +37,8 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
 
         tvModalTitol = (TextView) findViewById(R.id.tvModalitatDetallTitol);
         tvModalDetall = (TextView) findViewById(R.id.tvModalitatDetallDescripcio);
+        videoModal = (VideoView) findViewById(R.id.videoModalitatDetall);
+        ivModal = (ImageView) findViewById(R.id.ivModalDetall);
 
         font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
         tvModalTitol.setTypeface(font);
@@ -46,31 +47,6 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
         svModaldetall = (ScrollView) findViewById(R.id.svModalDetall);
         // Ens situa l'scroll en la posició superior
         svModaldetall.smoothScrollTo(0, 0);
-    }
-
-    /**
-     * Mètode que controla l'event onClick
-     *
-     * @param v
-     */
-    @Override
-    public void onClick(View v) {
-
-        // Si hi ha conexiò a internet
-        /*if (InternetUtil.isOnline(LoginUsuari.this)) {
-            switch (v.getId()) {
-                case (R.id.btnLogin):
-                    //new UserLoginTask(etUsuari.getText().toString(), etPassword.getText().toString()).execute();
-                    break;
-                case (R.id.btnRegistre):
-                    Intent intent = new Intent(LoginUsuari.this, RegistreUsuari.class);
-                    startActivity(intent);
-                    break;
-            }
-        } else {
-            InternetUtil.showAlertDialog(LoginUsuari.this, "Servei de connexió",
-                    "El teu dispositiu no té connexió a Internet.");
-        }*/
     }
 
     /**

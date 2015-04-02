@@ -37,11 +37,20 @@ public class UsuariSessionManager {
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
 
+    // User surname1 (make variable public to access from outside)
+    public static final String KEY_SURNAME1 = "surname1";
+
+    // User surname2 (make variable public to access from outside)
+    public static final String KEY_SURNAME2 = "surname2";
+
+    // User pass (make variable public to access from outside)
+    public static final String KEY_PASS = "pass";
+
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
 
     // User image
-    public static final String KEW_IMAGE = "image";
+    public static final String KEY_IMAGE = "image";
 
     /**
      * Constructor amb paràmetres
@@ -60,21 +69,33 @@ public class UsuariSessionManager {
      * Aquest mètode s'ha de crear al entrar com a un usuari vàlid
      *
      * @param name
+     * @param cognom1
+     * @param cognom2
+     * @param pass
      * @param email
      * @param image
      */
-    public void createUserLoginSession(String name, String email, String image) {
+    public void createUserLoginSession(String name, String cognom1, String cognom2, String pass, String email, String image) {
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
         // Storing name in pref
         editor.putString(KEY_NAME, name);
 
+        // Stroing surname1 in pref
+        editor.putString(KEY_SURNAME1, cognom1);
+
+        // Stroing surname2 in pref
+        editor.putString(KEY_SURNAME2, cognom2);
+
+        // Stroing pass in pref
+        editor.putString(KEY_PASS, pass);
+
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
 
         // Stroing image in pref
-        editor.putString(KEW_IMAGE, image);
+        editor.putString(KEY_IMAGE, image);
 
         // commit changes
         editor.commit();
@@ -117,11 +138,20 @@ public class UsuariSessionManager {
         // user name
         user.put(KEY_NAME, preferencies.getString(KEY_NAME, null));
 
-        // user email id
+        // user surname1
+        user.put(KEY_SURNAME1, preferencies.getString(KEY_SURNAME1, null));
+
+        // user surname2
+        user.put(KEY_SURNAME2, preferencies.getString(KEY_SURNAME2, null));
+
+        // user pass
+        user.put(KEY_PASS, preferencies.getString(KEY_PASS, null));
+
+        // user email
         user.put(KEY_EMAIL, preferencies.getString(KEY_EMAIL, null));
 
         // user image
-        user.put(KEW_IMAGE, preferencies.getString(KEW_IMAGE, null));
+        user.put(KEY_IMAGE, preferencies.getString(KEY_IMAGE, null));
 
         // return user
         return user;

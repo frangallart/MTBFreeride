@@ -21,8 +21,6 @@ import android.view.ViewGroup;
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
 
-import java.util.HashMap;
-
 /**
  * Classe MainActivity
  */
@@ -31,8 +29,6 @@ public class MainActivity extends ActionBarActivity
 
     // User Session Manager Class
     private UsuariSessionManager sessioUsuari;
-    // get user data from session
-    private HashMap<String, String> dadesUsuari;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -65,7 +61,6 @@ public class MainActivity extends ActionBarActivity
 
         // Si hi ha conexiò a internet
         if (InternetUtil.isOnline(MainActivity.this)) {
-            dadesUsuari = sessioUsuari.getUserDetails();
             setupGui();
         } else {
             InternetUtil.showAlertDialog(MainActivity.this, "Servei de connexió",
