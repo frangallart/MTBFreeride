@@ -7,7 +7,7 @@ import android.util.Base64;
 /**
  * Classe User
  * <p/>
- * Classe que modela un usuari de l'aplicació
+ * Classe que modela un usuari de l'aplicació.
  */
 public class User {
 

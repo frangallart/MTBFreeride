@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 /**
  * Classe conversora d'objectes Modalitat a BD
+ *
+ * Implementa els mètodes per recollir, editar, modificar i eliminar les dades que conte la base de dades.
  */
 public class ModalitatsConversor {
 
@@ -28,6 +30,31 @@ public class ModalitatsConversor {
      */
     public ModalitatsConversor(ModalitatsSQLiteHelper helper) {
         this.helper = helper; // Permetrà obrir la base de dades
+    }
+
+    /**
+     * Mètode que retorna totes les dades de la taula
+     *
+     * @return arraylist, llista que conté totes les dades
+     */
+    public ArrayList<Modalitat> getAllAsList() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true, "Modalitats", new String[]{"codi", "nom", "descripcio", "imatge1", "imatge2", "url_video"},
+                null, null, null, null, null, null);
+
+        ArrayList<Modalitat> dades = null;
+
+        if (c.moveToFirst()) {
+            dades = new ArrayList<Modalitat>();
+            do {
+                dades.add(new Modalitat(c.getInt(0), c.getString(1), c.getString(2), c.getString(3),c.getString(4),c.getString(5)));
+            } while (c.moveToNext());
+        }
+
+        db.close();
+        // Retorna el contingut de la base de dades en un llista
+        return dades;
     }
 
     /**
@@ -87,30 +114,7 @@ public class ModalitatsConversor {
         return index;
     }*/
 
-    /**
-     * Mètode que retorna totes les dades de la taula
-     *
-     * @return arraylist, llista que conté totes les dades
-     */
-    public ArrayList<Modalitat> getAllAsList() {
-        SQLiteDatabase db = helper.getReadableDatabase();
 
-        Cursor c = db.query(true, "Modalitats", new String[]{"codi", "nom", "descripcio", "imatge1", "imatge2", "url_video"},
-                null, null, null, null, null, null);
-
-        ArrayList<Modalitat> dades = null;
-
-        if (c.moveToFirst()) {
-            dades = new ArrayList<Modalitat>();
-            do {
-                dades.add(new Modalitat(c.getInt(0), c.getString(1), c.getString(2), c.getString(3),c.getString(4),c.getString(5)));
-            } while (c.moveToNext());
-        }
-
-        db.close();
-        // Retorna el contingut de la base de dades en un llista
-        return dades;
-    }
 
    /* public Fact getByCodi(int codi) {
         SQLiteDatabase db = helper.getReadableDatabase();

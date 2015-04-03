@@ -11,7 +11,7 @@ import android.net.NetworkInfo;
 /**
  * Classe InternetUtil
  * <p/>
- * Classe que implementa mètodes estàtics per controlar si el dispositiu té connexiò a Internet
+ * Classe que implementa mètodes estàtics per controlar si el dispositiu té connexiò a Internet.
  */
 public class InternetUtil {
 
@@ -27,7 +27,7 @@ public class InternetUtil {
     }
 
     /**
-     * Mètode que mostra un missatge d'alerta si no hi ha connexió a internet
+     * Mostra un missatge d'alerta si no hi ha connexió a internet
      *
      * @param context activity on es mostrarà
      * @param title   títol del dialeg

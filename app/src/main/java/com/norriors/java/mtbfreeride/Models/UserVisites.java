@@ -1,7 +1,9 @@
 package com.norriors.java.mtbfreeride.Models;
 
 /**
- * Created by Ruben on 28/3/15.
+ * Classe UserVisites
+ *
+ * Classe que modela l'estructura de les dades que formen una visita d'usuari.
  */
 public class UserVisites {
 
