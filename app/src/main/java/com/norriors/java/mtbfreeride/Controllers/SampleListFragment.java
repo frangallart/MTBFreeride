@@ -108,7 +108,14 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btnDetallsModalitat):
+
+                Modalitat m = dades.get(mPosition);
+
                 Intent intent = new Intent(getActivity().getBaseContext(), ModalitatDetallActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("modalitat",m);
+                intent.putExtras(bundle);
+
                 startActivity(intent);
                 break;
         }

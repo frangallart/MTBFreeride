@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteStatement;
 /**
  * Classe ModalitatsSQLiteHelper
  * <p/>
- * Classe que estén les funcionalitats de SQLiteOpenHelper
+ * Classe que estén les funcionalitats de SQLiteOpenHelper.
  */
 public class ModalitatsSQLiteHelper extends SQLiteOpenHelper {
 
@@ -66,46 +66,42 @@ public class ModalitatsSQLiteHelper extends SQLiteOpenHelper {
 
         insertModalitats.clearBindings();
         insertModalitats.bindString(1, "North Shore");
-        insertModalitats.bindString(2, "Es tracta d''una sèrie d''estructures col·locades a certa distàmncia del terra.\n" +
-                "\n" +
-                "Aquesta modalitat es practica normalment el el bosc.\n" +
-                "\n" +
-                "No és gaire popular aquí Catalunya,( n''hi Espanya), pero es una modalitat que es practica molt al Nord d''America i al Canada.");
+        insertModalitats.bindString(2, "Es tracta d'una sèrie d'estructures col·locades a certa distància del terra.\n" + "\n" + "Aquesta modalitat es practica normalment en el bosc.\n" + "\n" + "No és gaire popular aquí Catalunya,( n'hi Espanya), però és una modalitat que es practica molt al Nord d'Amèrica i al Canada.");
         insertModalitats.bindString(3, "ImatgesModalitats/inorthShore.jpg");
         insertModalitats.bindString(4, "ImatgesModalitats/inorthShore2.jpg");
-        insertModalitats.bindString(5, "");
+        insertModalitats.bindString(5, "http://techslides.com/demos/sample-videos/small.mp4");
         insertModalitats.executeInsert();
 
         insertModalitats.clearBindings();
         insertModalitats.bindString(1, "Dirt Jump");
-        insertModalitats.bindString(2, "Aquesta modalitat consisteix en diferents salts de terra, i fer el major número de trucs en cada salt.\n" + "\n" + "A la foto es pot veure un truc que se n''hi diu l''indian.\n" + "\n" + "Hi ha infinitat de conbinacions de trucs, ja que casibé s''han inventat tots per fer-ho més difícil convinen varis trucs en un mateix salt.");
+        insertModalitats.bindString(2, "Aquesta modalitat consisteix en diferents salts de terra, i fer el major número de trucs en cada salt.\n" + "\n" + "A la foto es pot veure un truc que se n'hi diu l'indian.\n" + "\n" + "Hi ha infinitat de conbinacions de trucs, casibé s'han inventat tots i per fer-ho més difícil convinen vàris trucs en un mateix salt.");
         insertModalitats.bindString(3, "ImatgesModalitats/idirtJump.jpg");
         insertModalitats.bindString(4, "ImatgesModalitats/idirtJump2.jpg");
-        insertModalitats.bindString(5, "");
+        insertModalitats.bindString(5, "http://techslides.com/demos/sample-videos/small.mp4");
         insertModalitats.executeInsert();
 
         insertModalitats.clearBindings();
         insertModalitats.bindString(1, "Street");
-        insertModalitats.bindString(2, "En aquesta modalitat s’han d’anar superant els diferents obstacles urbans.\n" + "\n" + "Es una modalitat molt complicada que necessita molta pràctica. La majoria de la gent no la te gaire ben vista i moltes vegades es sanciónada per la policia, amb multes.");
+        insertModalitats.bindString(2, "En aquesta modalitat s'han d'anar superant els diferents obstacles urbans.\n" + "\n" + "És una modalitat molt complicada que necessita molta pràctica. La majoria de la gent no la té gaire ben vista i moltes vegades es sancionada per la policia, amb multes.");
         insertModalitats.bindString(3, "ImatgesModalitats/idirtJump2.jpg");
         insertModalitats.bindString(4, "ImatgesModalitats/idirtJump2.jpg");
-        insertModalitats.bindString(5, "");
+        insertModalitats.bindString(5, "http://techslides.com/demos/sample-videos/small.mp4");
         insertModalitats.executeInsert();
 
         insertModalitats.clearBindings();
         insertModalitats.bindString(1, "Big Air");
-        insertModalitats.bindString(2, "Es com el dirt jump però amb salts molt més grans, de 10 metres cap amunt.\n" + "\n" + "És la modalitat que es fa mes perillosa de totes per culpa de les grans distancies que es recorren fent aquests salts.");
+        insertModalitats.bindString(2, "És com el dirt jump però amb salts molt més grans, de 10 metres cap amunt.\n" + "\n" + "És la modalitat que es fa més perillosa de totes per culpa de les grans distàncies que es recorren fent aquests salts.");
         insertModalitats.bindString(3, "ImatgesModalitats/ibigAir.jpg");
         insertModalitats.bindString(4, "ImatgesModalitats/ibigAir2.jpg");
-        insertModalitats.bindString(5, "");
+        insertModalitats.bindString(5, "http://techslides.com/demos/sample-videos/small.mp4");
         insertModalitats.executeInsert();
 
         insertModalitats.clearBindings();
         insertModalitats.bindString(1, "Park");
-        insertModalitats.bindString(2, "Aquesta modalitat es derivada del BMX i tracta de moure''s en diferents estructures de ciment, fusta o metall.\n" + "\n" + "Aquesta modalitat es practica menys que les altres, ja que es te que tenir molta maniobralitat, com per exemple la que et proporciona una BMX, i amb aquestes bicis tan grans de mountain bike es fa mes dificil moure''s per eskate parks.");
+        insertModalitats.bindString(2, "Aquesta modalitat és derivada del BMX i tracta de moure's en diferents estructures de ciment, fusta o metall.\n" + "\n" + "Aquesta modalitat és practica menys que les altres, ja que és té que tenir molta capacitat de maniobra, com per exemple la que et proporciona una BMX, i amb bicis de mountain bike és fà més difícil moure's per skate parks.");
         insertModalitats.bindString(3, "ImatgesModalitats/ipark.jpg");
         insertModalitats.bindString(4, "ImatgesModalitats/ipark2.jpg");
-        insertModalitats.bindString(5, "");
+        insertModalitats.bindString(5, "http://techslides.com/demos/sample-videos/small.mp4");
         insertModalitats.executeInsert();
     }
 
@@ -118,16 +114,5 @@ public class ModalitatsSQLiteHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        // NOTA: Per simplificar l'exemple, aquí s'utilitza directament
-        // l'opció d'eliminar la taula anterior i tornar-la a crear buida
-        // amb la nova estructura.
-        // No obstant, el més habitual és migrar les dades de la taula antiga
-        // a la nova, per la qual cosa aquest mètode hauria de fer més coses.
-
-        // S'elimina la versió anterior de la taula
-        //db.execSQL("DROP TABLE IF EXISTS Facts");
-        // Es crea la nova versió de la taula
-        //db.execSQL(SQL_CREATE_FACTS);
     }
 }
