@@ -82,10 +82,10 @@ public class UsuariSessionManager {
         // Storing name in pref
         editor.putString(KEY_NAME, name);
 
-        // Stroing surname1 in pref
+        // Storing surname1 in pref
         editor.putString(KEY_SURNAME1, cognom1);
 
-        // Stroing surname2 in pref
+        // Storing surname2 in pref
         editor.putString(KEY_SURNAME2, cognom2);
 
         // Stroing pass in pref

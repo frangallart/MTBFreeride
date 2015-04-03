@@ -53,7 +53,7 @@ public class ValoracionsFragment1 extends android.support.v4.app.Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_valoracions, container, false);
+        View view = inflater.inflate(R.layout.activity_valoracions_gravar, container, false);
 
         nomGravacio = getActivity().getApplicationContext().getApplicationInfo().dataDir + "/test.3gp";
         btnGravar = (ToggleButton) view.findViewById(R.id.btnGravar);

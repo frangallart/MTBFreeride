@@ -44,6 +44,10 @@
             android:label="@string/title_activity_detall_modalitat"
             android:parentActivityName=".Controllers.MainActivity">
         </activity>
+        <activity
+            android:name=".Controllers.GravarValoracio"
+            android:label="@string/title_activity_detall_gravar_valoracio">
+        </activity>
     </application>
 
 </manifest>

@@ -5,10 +5,18 @@ package com.norriors.java.mtbfreeride.Models;
  */
 public class Opinions {
 
+    private int id;
     private String user;
     private String data;
+    private String so;
 
-    public Opinions(String user, String data) {
+
+    public Opinions (String so){
+        this.so = so;
+
+    }
+    public Opinions(int id, String user, String data) {
+        this.id = id;
         this.user = user;
         this.data = data;
     }
@@ -27,5 +35,21 @@ public class Opinions {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSo() {
+        return so;
+    }
+
+    public void setSo(String so) {
+        this.so = so;
     }
 }

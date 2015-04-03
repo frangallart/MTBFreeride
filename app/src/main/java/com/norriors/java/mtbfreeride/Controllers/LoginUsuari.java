@@ -221,7 +221,6 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
         }
 
         private ArrayList<User> tractarJSON(String json) {
-            System.out.println(json.toString());
             Gson converter = new Gson();
             return converter.fromJson(json, new TypeToken<ArrayList<User>>() {
             }.getType());

@@ -1,6 +1,7 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -208,7 +209,23 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Mètode que recull el resultat de l'activity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("hola");
+        android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            currentFragment = ValoracionsFragment.newInstance();
+            t.replace(R.id.container, currentFragment, "fragment").commit();
+        }
+    }
 
     @Override
     public void onClick(View v) {

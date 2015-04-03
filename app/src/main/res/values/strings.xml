@@ -6,7 +6,6 @@
     <string name="login_sign_in">ENTRA</string>
     <string name="login_sign_in_short">Entrar</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="img_inici">Image inici</string>
     <string name="title_activity_llibre_visites">LlibreVisites</string>
@@ -25,10 +24,13 @@
 
     <string name="title_activity_registre_usuari">RegistreUsuari</string>
     <string name="title_activity_detall_modalitat">Detall modalitat</string>
+    <string name="title_activity_detall_gravar_valoracio">Valoració</string>
     <string name="im_login">img login</string>
     <string name="img_modal">image modal</string>
     <string name="titol_modalitat"></string>
     <string name="detalls_modalitat"></string>
+
+    <string name="penjaSo">Penja so</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
