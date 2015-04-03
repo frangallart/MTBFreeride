@@ -12,15 +12,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:id="@+id/parentLayout">
-
-        <!--<com.norriors.java.mtbfreeride.Controllers.MLRoundedImageView
-            android:id="@+id/imgLlibreVisites"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
-            />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,21 +27,14 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="end">
+        android:layout_height="60dp"
+        android:gravity="end|center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:id="@+id/txtDate"
             />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/txtVisites"/>
     </LinearLayout>
 
 </LinearLayout>

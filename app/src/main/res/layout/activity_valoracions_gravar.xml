@@ -1,37 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.norriors.java.mtbfreeride.Controllers.GravarValoracio"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New ToggleButton"
         android:id="@+id/btnGravar"
-        android:layout_gravity="left|top" />
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/btnPlay"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="center_horizontal|center|center_vertical" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/penjaSo"
         android:id="@+id/btnPenjaSo"
-        android:layout_gravity="center_horizontal|top" />
-
+        android:layout_gravity="center_horizontal" />
+    </LinearLayout>
     <ProgressBar
         android:id="@+id/bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_gravity="center_horizontal|center_vertical" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.norriors.java.mtbfreeride.R;
@@ -54,8 +55,6 @@ public class GravarValoracio extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valoracions_gravar);
-
-        nomGravacio = this.getApplicationContext().getApplicationInfo().dataDir + "/test.3gp";
         btnGravar = (ToggleButton) findViewById(R.id.btnGravar);
         btnPenjaSo = (Button) findViewById(R.id.btnPenjaSo);
         bar = (ProgressBar) findViewById(R.id.bar);
@@ -84,13 +83,21 @@ public class GravarValoracio extends ActionBarActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPlay();
+                if (nomGravacio != null) {
+                    onPlay();
+                }else{
+                    Toast.makeText(GravarValoracio.this,"No has gravat la valoració", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btnPenjaSo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PenjaValoracio().execute();
+                if (nomGravacio != null) {
+                    new PenjaValoracio().execute();
+                }else{
+                    Toast.makeText(GravarValoracio.this,"Has de gravar una valoració", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -112,6 +119,7 @@ public class GravarValoracio extends ActionBarActivity {
      * Mètode que inicia la gravació d'àudio.
      */
     private void iniciGravacio() {
+        nomGravacio = this.getApplicationContext().getApplicationInfo().dataDir + "/test.3gp";
         gravador = new MediaRecorder();
         gravador.reset();
         gravador.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -173,6 +181,7 @@ public class GravarValoracio extends ActionBarActivity {
             // Read file and return data
             byte[] data = new byte[length];
             f.readFully(data);
+            file.delete();
             return data;
         } finally {
             f.close();
@@ -248,6 +257,9 @@ public class GravarValoracio extends ActionBarActivity {
             if (resposta.trim().equals("true")){
                 setResult(RESULT_OK);
                 finish();
+            }
+            if (mPlayer != null) {
+                mPlayer.release();
             }
             bar.setVisibility(View.GONE);
         }
