@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,7 +31,11 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     private EditText txtPrimerCognom;
     private EditText txtSegonCognom;
     private EditText txtEmail;
+    private EditText txtPass;
+
     private MLRoundedImageView imgUser;
+
+    private Button btnPass;
 
     private UsuariSessionManager sessioUsuari;
     private HashMap<String, String> dadesUsuari;
@@ -64,7 +69,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //Recullim la vista
+        //Recollim la vista
         View viewPerfil = inflater.inflate(R.layout.fragment_perfil_usuari, container, false);
 
         imgTool = new ImageTool();
@@ -74,30 +79,47 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
         dadesUsuari = sessioUsuari.getUserDetails();
 
 
-        //Text View Nom
+        //EditText Nom
         txtNom = (EditText) viewPerfil.findViewById(R.id.txtNom);
         txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_NAME));
 
-        //TextText View Primer cognom
+        //EditText Primer cognom
         txtPrimerCognom = (EditText) viewPerfil.findViewById(R.id.txtPrimerCognom);
         txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
 
 
-        //Text View Segon Cognom
+        //EditText Segon Cognom
         txtSegonCognom = (EditText) viewPerfil.findViewById(R.id.txtSegonCognom);
         txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
 
-        //Text View Email
+        //EditText Email
         txtEmail = (EditText) viewPerfil.findViewById(R.id.txtEmail);
         txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
 
+
+        //EditText Password
+        txtPass = (EditText) viewPerfil.findViewById(R.id.txtPass);
+
+        //Button Password
+        btnPass = (Button) viewPerfil.findViewById(R.id.btnChangePass);
+        btnPass.setEnabled(false);
+        btnPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtPass.setVisibility(View.VISIBLE);
+                btnPass.setVisibility(View.GONE);
+            }
+        });
+
+
         //MLRounded Image View
+        novaImatge = imgTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE));
         imgUser = (MLRoundedImageView) viewPerfil.findViewById(R.id.imgUser);
-        imgUser.setImageBitmap(imgTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE)));
+        imgUser.setImageBitmap(novaImatge);
         imgUser.setEnabled(false);
 
 
-        // Inflate the layout for this fragment
+
         return viewPerfil;
     }
 
@@ -137,10 +159,12 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 txtPrimerCognom.setEnabled(true);
                 txtSegonCognom.setEnabled(true);
                 txtEmail.setEnabled(true);
+                txtPass.setEnabled(true);
+
+                btnPass.setEnabled(true);
 
                 //Posem la imatge com a activa per poder modificar-la
                 imgUser.setEnabled(true);
-
 
                 //El item del menu editar el posem com a invisible ja que ja estem editant
                 itemEdit.setVisible(false);
@@ -170,12 +194,18 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 txtPrimerCognom.setEnabled(false);
                 txtSegonCognom.setEnabled(false);
                 txtEmail.setEnabled(false);
+                txtPass.setEnabled(false);
+                txtPass.setVisibility(View.GONE);
+
+                //Posem el botó de canviar contrasenya deshabilitat per evitar que es torni a mostrar
+                btnPass.setEnabled(false);
+                btnPass.setVisibility(View.VISIBLE);
 
                 //Posem la imatge com deshabilitada per evitar modificar-la
                 imgUser.setEnabled(false);
 
                 //Guardem les noves dades al shared preferences
-                sessioUsuari.createUserLoginSession(txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), dadesUsuari.get(UsuariSessionManager.KEY_PASS), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
+                sessioUsuari.createUserLoginSession(txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(),txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
 
 
                 //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
@@ -213,6 +243,14 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
                 txtEmail.setEnabled(false);
 
+                txtPass.setText("");
+                txtPass.setEnabled(false);
+                txtPass.setVisibility(View.GONE);
+
+
+                //Posem el botó de canviar contrasenya deshabilitat per evitar que es torni a mostrar
+                btnPass.setEnabled(false);
+                btnPass.setVisibility(View.VISIBLE);
 
                 //Posem la imatge com deshabilitat i establim la imatge que hi havia per defecte
                 imgUser.setEnabled(false);
