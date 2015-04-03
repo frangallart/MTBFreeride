@@ -1,19 +1,29 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.norriors.java.mtbfreeride.Models.Modalitat;
 import com.norriors.java.mtbfreeride.R;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Classe ModalitatDetallActivity
  */
-public class ModalitatDetallActivity extends ActionBarActivity {
+public class ModalitatDetallActivity extends ActionBarActivity implements View.OnClickListener {
 
     // UI references.
     private TextView tvModalTitol, tvModalDetall;
@@ -22,10 +32,21 @@ public class ModalitatDetallActivity extends ActionBarActivity {
     private ImageView ivModal;
     private Typeface font;
 
+    private Modalitat modalitat;
+    private MediaController mediaController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modal_detall);
+
+        // Si hi ha conexiò a internet
+        if (InternetUtil.isOnline(ModalitatDetallActivity.this)) {
+            setupGui();
+        } else {
+            InternetUtil.showAlertDialog(ModalitatDetallActivity.this, "Servei de connexió",
+                    "El teu dispositiu no té connexió a Internet.");
+        }
 
         setupGui();
     }
@@ -45,86 +66,61 @@ public class ModalitatDetallActivity extends ActionBarActivity {
         tvModalDetall.setTypeface(font);
 
         svModaldetall = (ScrollView) findViewById(R.id.svModalDetall);
+
+        modalitat = null;
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            modalitat = (Modalitat) getIntent().getExtras().getSerializable("modalitat");
+            tvModalTitol.setText(modalitat.getTitol());
+            tvModalDetall.setText(modalitat.getDescripcio());
+            ivModal.setImageBitmap(recollirImatge(modalitat.getImatge2()));
+
+            mediaController = new MediaController(this);
+            videoModal.setMediaController(mediaController);
+            //videoModal.setVideoURI(Uri.parse("http://techslides.com/demos/sample-videos/small.mp4"));
+            //System.out.println(modalitat.getUrl_video());
+            videoModal.setVideoURI(Uri.parse(modalitat.getUrl_video()));
+            //videoModal.pause();
+            videoModal.setOnClickListener(this);
+        }
+
+        //TODO : Fer que l'escroll començi a la imatge de dalt'
+
         // Ens situa l'scroll en la posició superior
         svModaldetall.smoothScrollTo(0, 0);
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Recull la imatge d'una modalitat i la retorna amb bitmap
+     *
+     * @param path
+     * @return
      */
-   /* public class UserLoginTask extends AsyncTask<String, Void, ArrayList<User>> {
-
-        private String usuari;
-        private String contrasenya;
-
-        UserLoginTask(String usuari, String contrasenya) {
-            this.usuari = usuari;
-            this.contrasenya = contrasenya;
-        }*/
-
-    /**
-     * Mètode que s'executa abans de començar amb la tasca
-     */
-       /* @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressView.setVisibility(View.VISIBLE);
+    public Bitmap recollirImatge(String path) {
+        AssetManager assetManager = this.getBaseContext().getAssets();
+        Bitmap imatge = null;
+        InputStream inputStream = null;
+        try {
+            inputStream = assetManager.open(path);
+            imatge = BitmapFactory.decodeStream(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return imatge;
         }
+    }
 
-        @Override
-        protected ArrayList<User> doInBackground(String... strings) {
-            ArrayList<User> usuaris = null;
-            DefaultHttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppostreq = new HttpPost(URL);
-            HttpResponse httpresponse = null;
-            try {
-                List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-                // Com només ha de descarregar l'usuari que s'ha identificat
-                parametres.add(new BasicNameValuePair("nom", usuari));
-                parametres.add(new BasicNameValuePair("password", contrasenya));
-
-                httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
-                httpresponse = httpclient.execute(httppostreq);
-                String responseText = EntityUtils.toString(httpresponse.getEntity());
-                // Retorno la llista de punts
-                usuaris = tractarJSON(responseText);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return usuaris;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.videoModalitatDetall):
+                if (videoModal.isPlaying()) {
+                    videoModal.pause();
+                } else {
+                    videoModal.start();
+                }
+                break;
         }
-
-        @Override
-        protected void onPostExecute(ArrayList<User> usuaris) {
-
-            if (usuaris != null) {
-                // Crear user login session
-                sessioUsuari.createUserLoginSession(usuaris.get(0).getNom(), usuaris.get(0).getEmail());
-
-                Intent act = new Intent(getApplicationContext(), MainActivity.class);
-                act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // Add new Flag to start new Activity
-                act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(act);
-                finish();
-            } else {
-                err_login();
-                Toast toast = Toast.makeText(getApplicationContext(), "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 200);
-                toast.show();
-            }
-
-            mProgressView.setVisibility(View.GONE);
-        }
-
-        private ArrayList<User> tractarJSON(String json) {
-            System.out.println(json.toString());
-            Gson converter = new Gson();
-            return converter.fromJson(json, new TypeToken<ArrayList<User>>() {
-            }.getType());
-        }
-    }*/
+    }
 }

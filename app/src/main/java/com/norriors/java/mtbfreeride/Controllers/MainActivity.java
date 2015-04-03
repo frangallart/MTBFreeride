@@ -30,9 +30,6 @@ public class MainActivity extends ActionBarActivity
     // User Session Manager Class
     private UsuariSessionManager sessioUsuari;
 
-
-    //private ModalitatsConversor modalitatsConversor;
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -76,22 +73,6 @@ public class MainActivity extends ActionBarActivity
      */
     public void setupGui() {
 
-
-        /*modalitatsConversor = new ModalitatsConversor(factsHelper);
-        String prova = "";
-        ArrayList<Modalitat> m = modalitatsConversor.getAllAsList();
-        for(Modalitat i : m){
-            prova = " " + i.getCodi();
-            prova += " " + i.getDescripcio();
-            prova += " " + i.getImatge1();
-            prova += " " + i.getImatge2();
-            prova += " " + i.getTitol();
-            prova += " " + i.getUrl_video();
-
-        }
-        System.out.println(prova);*/
-
-
         // Creació del drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -134,7 +115,7 @@ public class MainActivity extends ActionBarActivity
                 if (mPagerSlidingTabStrip.getVisibility() == View.GONE && mViewPager.getVisibility() == View.GONE) {
                     mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
                     mViewPager.setVisibility(View.VISIBLE);
-                    if(currentFragment != null) {
+                    if (currentFragment != null) {
                         t.remove(currentFragment).commit();
                         currentFragment = null;
                     }
@@ -207,7 +188,6 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override
@@ -326,7 +306,5 @@ public class MainActivity extends ActionBarActivity
         public SparseArrayCompat<ScrollTabHolder> getScrollTabHolders() {
             return mScrollTabHolders;
         }
-
     }
-
 }

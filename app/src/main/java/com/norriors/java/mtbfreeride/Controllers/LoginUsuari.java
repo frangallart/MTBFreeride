@@ -39,7 +39,8 @@ import java.util.List;
 /**
  * Classe LoginUsuaris
  * <p/>
- * Classe que controla l'entrada d'un usuari o el registre d'un usuari nou
+ * Classe que controla l'entrada d'un usuari o el registre d'un usuari nou.
+ * Tindrà en compte que per a fer el login o registrar-se ho hagi conexió a Internet.
  */
 public class LoginUsuari extends ActionBarActivity implements OnClickListener, OnKeyListener {
 
@@ -210,6 +211,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
                 act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(act);
                 finish();
+
             } else {
                 err_login();
                 Toast toast = Toast.makeText(getApplicationContext(), "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_SHORT);

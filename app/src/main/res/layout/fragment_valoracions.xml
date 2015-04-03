@@ -7,17 +7,26 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <ToggleButton
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/btnGravar"
-        android:layout_gravity="left|top" />
+        android:layout_gravity="center_vertical|center_horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/btnPlay"
-        android:layout_gravity="center_horizontal|top" />
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:id="@+id/btnGravar"
+            android:background="@drawable/customapptheme_btn_toggle_holo_light"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/btnPlay"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
 </FrameLayout>

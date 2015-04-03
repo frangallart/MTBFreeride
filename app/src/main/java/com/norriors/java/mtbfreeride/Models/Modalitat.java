@@ -3,7 +3,8 @@ package com.norriors.java.mtbfreeride.Models;
 import java.io.Serializable;
 
 /**
- * Classe que modela una modalitat
+ * Classe Modalitat
+ * Classe que modela una modalitat i les dades que la formen.
  */
 public class Modalitat implements Serializable {
 

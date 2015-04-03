@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.norriors.java.mtbfreeride.Controllers.PerfilUsuariFragment">
 
@@ -16,7 +17,7 @@
             android:layout_height="70dp"
             android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal"
-            android:enabled="false"/>
+            android:enabled="false" />
 
         <EditText
             android:layout_width="match_parent"
@@ -25,7 +26,9 @@
             android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:inputType="text"
+            android:background="@drawable/customapptheme_edit_text_holo_light" />
 
         <EditText
             android:layout_width="match_parent"
@@ -34,7 +37,9 @@
             android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:inputType="text"
+            android:background="@drawable/customapptheme_edit_text_holo_light" />
 
         <EditText
             android:layout_width="match_parent"
@@ -43,7 +48,9 @@
             android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:inputType="text"
+            android:background="@drawable/customapptheme_edit_text_holo_light" />
 
         <EditText
             android:layout_width="match_parent"
@@ -52,7 +59,9 @@
             android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/customapptheme_edit_text_holo_light" />
 
     </LinearLayout>
 </FrameLayout>
