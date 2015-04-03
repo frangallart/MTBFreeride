@@ -10,12 +10,12 @@
         android:id="@+id/action_saveChange"
         android:title="@string/mnSave"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_menu_edit"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_save"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_cancelChange"
         android:title="@string/mnCancel"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_menu_edit"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_cancel"
+        app:showAsAction="always" />
 </menu>

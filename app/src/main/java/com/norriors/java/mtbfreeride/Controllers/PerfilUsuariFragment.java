@@ -38,6 +38,10 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     private Toast toast;
     private Bitmap novaImatge;
 
+    private MenuItem itemEdit;
+    private MenuItem itemSave;
+    private MenuItem itemCancel;
+
 
     public static PerfilUsuariFragment newInstance() {
         PerfilUsuariFragment fragment = new PerfilUsuariFragment();
@@ -90,6 +94,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
         //MLRounded Image View
         imgUser = (MLRoundedImageView) viewPerfil.findViewById(R.id.imgUser);
         imgUser.setImageBitmap(imgTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE)));
+        imgUser.setEnabled(false);
 
 
         // Inflate the layout for this fragment
@@ -100,6 +105,15 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_editar_user, menu);
+
+        //Recollim i guardem els tres items del menu que necessitem
+        itemEdit = menu.findItem(R.id.action_editUser);
+        itemSave = menu.findItem(R.id.action_saveChange);
+        itemCancel = menu.findItem(R.id.action_cancelChange);
+
+        //Establim els menus de guardar i cancel·lar com a invisibles
+        itemSave.setVisible(false);
+        itemCancel.setVisible(false);
     }
 
     @Override
@@ -107,33 +121,110 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
         // Handle item selection
         switch (item.getItemId()) {
 
+
+            /**
+             * Acció del botó editar,
+             * ens posa tots els camps en editables i ens permet o guardar els canvis o cancel·lar-los.
+             */
             case R.id.action_editUser:
 
-                    toast = new Toast(getActivity().getBaseContext());
-                    toast.makeText(getActivity().getBaseContext(), "Ara, pots editar el teu perfil", Toast.LENGTH_SHORT);
-                    toast.show();
+                //Mostrem missatge  de que sens permet editar
+                toast = toast.makeText(getActivity().getBaseContext(), "Ara, pots editar el teu perfil", Toast.LENGTH_SHORT);
+                toast.show();
 
-                    txtNom.setEnabled(true);
-                    txtPrimerCognom.setEnabled(true);
-                    txtSegonCognom.setEnabled(true);
-                    txtEmail.setEnabled(true);
+                //Posem els text views com a editables
+                txtNom.setEnabled(true);
+                txtPrimerCognom.setEnabled(true);
+                txtSegonCognom.setEnabled(true);
+                txtEmail.setEnabled(true);
+
+                //Posem la imatge com a activa per poder modificar-la
+                imgUser.setEnabled(true);
+
+
+                //El item del menu editar el posem com a invisible ja que ja estem editant
+                itemEdit.setVisible(false);
+
+                //Els items de guardar i cancel·lar els posem com a visibles
+                itemSave.setVisible(true);
+                itemCancel.setVisible(true);
+
 
                 return true;
 
+            /**
+             * Acció de guardar.
+             * Ens guarda els canvis al shared preferences i a la DB
+             * Torna a posar els TextViews com a deshabilitats
+             */
+
             case R.id.action_saveChange:
 
-                toast = new Toast(getActivity().getBaseContext());
-                toast.makeText(getActivity().getBaseContext(), "Canvis gaurdats correctament", Toast.LENGTH_SHORT);
+
+                //Mostrem missatge de canvis guardats
+                toast =  toast.makeText(getActivity().getBaseContext(), "Canvis guardats correctament", Toast.LENGTH_SHORT);
                 toast.show();
 
+                //Posems els TextViews com a deshabilitats per evitar l'edició
                 txtNom.setEnabled(false);
                 txtPrimerCognom.setEnabled(false);
                 txtSegonCognom.setEnabled(false);
                 txtEmail.setEnabled(false);
 
+                //Posem la imatge com deshabilitada per evitar modificar-la
+                imgUser.setEnabled(false);
+
+                //Guardem les noves dades al shared preferences
                 sessioUsuari.createUserLoginSession(txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), dadesUsuari.get(UsuariSessionManager.KEY_PASS), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
 
 
+                //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
+                itemSave.setVisible(false);
+                itemCancel.setVisible(false);
+
+                //Tornem a posar el item d'editar com a visible
+                itemEdit.setVisible(true);
+
+
+                return true;
+
+
+            /**
+             * Acció de cancel·lar els canvis
+             * Cancel·la els canvis i estableix les dades anteriors de nou als camps
+             * Deshabilita l'edició dels camps
+             */
+            case R.id.action_cancelChange:
+
+                //Mostrem missatge de canvis cancel·lats
+                toast =  toast.makeText(getActivity().getBaseContext(), "Canvis cancel·lats", Toast.LENGTH_SHORT);
+                toast.show();
+
+                //Posem els camps que hi teniem guardats al shared preferences i els tornem a posar com a deshabilitats per evitar l'edició
+                txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_NAME));
+                txtNom.setEnabled(false);
+
+                txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
+                txtPrimerCognom.setEnabled(false);
+
+                txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
+                txtSegonCognom.setEnabled(false);
+
+                txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
+                txtEmail.setEnabled(false);
+
+
+                //Posem la imatge com deshabilitat i establim la imatge que hi havia per defecte
+                imgUser.setEnabled(false);
+
+                //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
+                itemSave.setVisible(false);
+                itemCancel.setVisible(false);
+
+                //Tornem a posar el item d'editar com a visible
+                itemEdit.setVisible(true);
+
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
