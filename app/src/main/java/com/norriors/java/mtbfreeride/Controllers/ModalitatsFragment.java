@@ -35,7 +35,7 @@ public class ModalitatsFragment extends android.support.v4.app.Fragment {
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
-
+    private View rootView;
 
     public static ModalitatsFragment newInstance() {
         ModalitatsFragment fragment = new ModalitatsFragment();
@@ -50,25 +50,13 @@ public class ModalitatsFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-
     }
 
-    View rootView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         getActivity().setTitle("Modalitats");
-
-        if (rootView != null) {
-            System.out.println("fffff");
-            ViewGroup parent = (ViewGroup) rootView.getParent();
-            if (parent != null) {
-                System.out.println("adeu");
-                parent.removeView(rootView);
-            }
-        }
 
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.activity_modalitats, container, false);
@@ -118,40 +106,13 @@ public class ModalitatsFragment extends android.support.v4.app.Fragment {
         @Override
         public Fragment getItem(int position) {
 
-            /*ScrollTabHolderFragment fragment = (SampleListFragment) SampleListFragment.newInstance(position);
+            ScrollTabHolderFragment fragment = (SampleListFragment) SampleListFragment.newInstance(position);
 
             mScrollTabHolders.put(position, fragment);
             if (mListener != null) {
                 fragment.setScrollTabHolder(mListener);
             }
-            return fragment;*/
-
-            // Si volem crear els fragments en diferents opcions li assignem una classe diferent
-            ScrollTabHolderFragment fragment;
-            switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
-                    fragment = (SampleListFragment) SampleListFragment.newInstance(0);
-                    mScrollTabHolders.put(position, fragment);
-                    return fragment;
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    fragment = (SampleListFragment) SampleListFragment.newInstance(1);
-                    mScrollTabHolders.put(position, fragment);
-                    return fragment;
-                case 2: // Fragment # 1 - This will show SecondFragment
-                    fragment = (SampleListFragment) SampleListFragment.newInstance(2);
-                    mScrollTabHolders.put(position, fragment);
-                    return fragment;
-                case 3: // Fragment # 1 - This will show SecondFragment
-                    fragment = (SampleListFragment) SampleListFragment.newInstance(3);
-                    mScrollTabHolders.put(position, fragment);
-                    return fragment;
-                case 4: // Fragment # 1 - This will show SecondFragment
-                    fragment = (SampleListFragment) SampleListFragment.newInstance(4);
-                    mScrollTabHolders.put(position, fragment);
-                    return fragment;
-                default:
-                    return null;
-            }
+            return fragment;
         }
 
         public SparseArrayCompat<ScrollTabHolder> getScrollTabHolders() {

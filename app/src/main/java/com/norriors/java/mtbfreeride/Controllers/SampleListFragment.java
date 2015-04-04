@@ -83,7 +83,6 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        System.out.println("hola");
         // fem referència a la vista
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
