@@ -1,3 +1,15 @@
+/*************************************************************************************
+ *                                                                                   *
+ *  MTB FreeRide por Java Norriors se distribuye bajo una                            *
+ *  Licencia Creative Commons Atribución-NoComercial-SinDerivar 4.0 Internacional.   *
+ *                                                                                   *
+ *  http://creativecommons.org/licenses/by-nc-nd/4.0/                                *
+ *                                                                                   *
+ *  @author: Arnau Roma Vidal  - aroma@infoboscoma.net                               *
+ *  @author: Rubén Garcia Torres - rgarcia@infobosccoma.net                          *
+ *  @author: Francesc Gallart Vila - fgallart@infobosccoma.net                       *
+ *                                                                                   *
+/************************************************************************************/
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.net.Uri;
@@ -15,7 +27,8 @@ import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
 
 /**
- * Created by Arnau on 04/04/2015.
+ * Classe ModalitatsFragment,
+ * Fragment que ens permet veure les modalitats
  */
 public class ModalitatsFragment extends android.support.v4.app.Fragment {
 
