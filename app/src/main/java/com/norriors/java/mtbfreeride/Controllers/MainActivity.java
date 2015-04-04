@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
@@ -63,7 +64,8 @@ public class MainActivity extends ActionBarActivity
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
 
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
+    private static boolean so;
 
     private android.support.v4.app.FragmentTransaction t;
 
@@ -71,6 +73,8 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.so = true;
 
         // Instanciar la sessió
         sessioUsuari = new UsuariSessionManager(getApplicationContext());
@@ -152,6 +156,10 @@ public class MainActivity extends ActionBarActivity
                 sessioUsuari.logoutUser();
                 finish();
                 break;
+
+            case 6:
+                Toast.makeText(this,"Bé",Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -173,7 +181,20 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mediaPlayer.start();
+
+        if (so) {
+            mediaPlayer.start();
+        }
+    }
+
+    public static void music(boolean actiu){
+        if (actiu){
+            so = true;
+            mediaPlayer.start();
+        }else{
+            so = false;
+            mediaPlayer.pause();
+        }
     }
 
     /**

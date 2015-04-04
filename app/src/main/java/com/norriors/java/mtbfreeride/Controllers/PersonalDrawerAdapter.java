@@ -19,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.norriors.java.mtbfreeride.R;
 
@@ -29,7 +31,7 @@ import java.util.List;
 /**
  * Classe PersonalDrawerAdapter
  */
-public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
+public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> implements CompoundButton.OnCheckedChangeListener {
 
     Context context;
     List<DrawerItems> drawerItemsList;
@@ -67,6 +69,7 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
             drawerHolder.itemLayout = (LinearLayout) view
                     .findViewById(R.id.itemLayout);
 
+            drawerHolder.tbSo = (ToggleButton) view.findViewById(R.id.tbSo);
             drawerHolder.icon = dItem.getImgUser();
 
             if (drawerHolder.headerLayout != null && drawerHolder.icon != null) {
@@ -85,8 +88,13 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
 
         if (position == 1) {
             drawerHolder.title.setText(dItem.getTitle());
-        }else {
+        } else {
             drawerHolder.ItemName.setText(dItem.getTitle());
+        }
+
+        if (position == 6) {
+            drawerHolder.tbSo.setVisibility(View.VISIBLE);
+            drawerHolder.tbSo.setOnCheckedChangeListener(this);
         }
 
         if (dItem.getTitle() == null) {
@@ -96,10 +104,23 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> {
         return view;
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
+        if(check)
+        {
+            MainActivity.music(false);
+        }
+        else
+        {
+            MainActivity.music(true);
+        }
+    }
+
     private static class DrawerItemHolder {
         TextView ItemName, title;
         MLRoundedImageView icon;
         LinearLayout headerLayout, itemLayout;
+        ToggleButton tbSo;
     }
 
 

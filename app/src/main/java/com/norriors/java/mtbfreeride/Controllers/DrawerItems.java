@@ -13,13 +13,37 @@
 
 package com.norriors.java.mtbfreeride.Controllers;
 
+import android.widget.ToggleButton;
+
 /**
  * Classe DrawerItems
  */
 public class DrawerItems {
 
-	String title;
-    String usuari;
+	private String title;
+    private String usuari;
+    private MLRoundedImageView imgUser;
+    private ToggleButton so;
+
+	public DrawerItems(String title) {
+		this.title = title;
+	}
+
+    public DrawerItems(MLRoundedImageView img){
+        this.imgUser = img;
+    }
+
+    public DrawerItems(ToggleButton so){
+        this.so = so;
+    }
+
+    public ToggleButton getSo() {
+        return so;
+    }
+
+    public void setSo(ToggleButton so) {
+        this.so = so;
+    }
 
     public String getUsuari() {
         return usuari;
@@ -27,20 +51,6 @@ public class DrawerItems {
 
     public void setUsuari(String usuari) {
         this.usuari = usuari;
-    }
-
-    MLRoundedImageView imgUser;
-
-	public DrawerItems(String title) {
-		this.title = title;
-	}
-
-    public DrawerItems(String title, int usuari) {
-        this.usuari = title;
-    }
-
-    public DrawerItems(MLRoundedImageView img){
-        this.imgUser = img;
     }
 
     public void setImgUser(MLRoundedImageView imgUser) {

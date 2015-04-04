@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.norriors.java.mtbfreeride.R;
 
@@ -134,7 +135,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-
+        ToggleButton so = (ToggleButton) getActivity().findViewById(R.id.tbSo);
         imgUsuariPerfil = new MLRoundedImageView(getActivity().getBaseContext());
         imgUsuariPerfil.setImageBitmap(ImageTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE)));
 
@@ -144,6 +145,7 @@ public class NavigationDrawerFragment extends Fragment {
         dataList.add(new DrawerItems("Llibre Visites"));
         dataList.add(new DrawerItems("Grava la teva opinió"));
         dataList.add(new DrawerItems("Tanca la sessió"));
+        dataList.add(new DrawerItems(so));
 
         adapter = new PersonalDrawerAdapter(getActivity(), R.layout.personal_drawer_item,
                 dataList);
