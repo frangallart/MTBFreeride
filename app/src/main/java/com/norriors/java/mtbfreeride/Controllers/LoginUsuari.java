@@ -198,6 +198,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
                 // Crear user login session
                 sessioUsuari.createUserLoginSession(
                         usuaris.get(0).getUser(),
+                        usuaris.get(0).getNom(),
                         usuaris.get(0).getCognom1(),
                         usuaris.get(0).getCognom2(),
                         usuaris.get(0).getPassword(),

@@ -2,8 +2,10 @@ package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -149,11 +151,46 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("hola");
-        android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            currentFragment = ValoracionsFragment.newInstance();
-            t.replace(R.id.container, currentFragment, "fragment").commit();
+        FragmentManager fm = getSupportFragmentManager();
+        PerfilUsuariFragment fragment;
+        ValoracionsFragment fragmentValoracions;
+
+        if (resultCode == RESULT_OK) {
+
+            switch (requestCode) {
+
+                // Cas que un cop penjada la valoració recarrega la llista de valoracions
+                case 0:
+                    fragmentValoracions = (ValoracionsFragment) fm.findFragmentById(R.id.container);
+                    fragmentValoracions.new DescarregarDades().execute("http://provesrasp.ddns.net/aplicacio/valoracions.php");
+                    break;
+
+                // Cas que un cop seleccionada una imatge de la galeria la pinta
+                case 1:
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    String result;
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    if (cursor == null) {
+                        result = selectedImage.getPath();
+                    } else {
+                        cursor.moveToFirst();
+                        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                        result = cursor.getString(idx);
+                        cursor.close();
+                    }
+                    cursor.close();
+                    fragment = (PerfilUsuariFragment) fm.findFragmentById(R.id.container);
+                    fragment.pintaImatge(result);
+                    break;
+
+                // Cas que el tirar una foto amb la càmera la pinta
+                case 2:
+                    fragment = (PerfilUsuariFragment) fm.findFragmentById(R.id.container);
+                    fragment.pintaImatge();
+                    break;
+            }
         }
     }
 

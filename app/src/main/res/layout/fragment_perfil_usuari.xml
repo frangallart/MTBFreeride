@@ -18,8 +18,8 @@
 
             <com.norriors.java.mtbfreeride.Controllers.MLRoundedImageView
                 android:id="@+id/imgUser"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:enabled="false" />
@@ -91,4 +91,13 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 </FrameLayout>

@@ -3,6 +3,7 @@ package com.norriors.java.mtbfreeride.Controllers;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -156,6 +157,15 @@ public class NavigationDrawerFragment extends Fragment {
 
         mDrawerListView.setAdapter(adapter);
         return mDrawerListView;
+    }
+
+    /**
+     * Mètode que actualitza l'imatge del drawer quan es canvia la imatge de
+     * l'usuari des del perfil
+     * @param imatge
+     */
+    public void imatgeRodona(Bitmap imatge){
+        imgUsuariPerfil.setImageBitmap(imatge);
     }
 
     public boolean isDrawerOpen() {

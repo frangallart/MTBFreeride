@@ -37,6 +37,9 @@ public class UsuariSessionManager {
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
 
+    // User name (make variable public to access from outside)
+    public static final String KEY_REAL_NAME = "real_name";
+
     // User surname1 (make variable public to access from outside)
     public static final String KEY_SURNAME1 = "surname1";
 
@@ -75,12 +78,15 @@ public class UsuariSessionManager {
      * @param email
      * @param image
      */
-    public void createUserLoginSession(String name, String cognom1, String cognom2, String pass, String email, String image) {
+    public void createUserLoginSession(String name, String realName, String cognom1, String cognom2, String pass, String email, String image) {
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
         // Storing name in pref
         editor.putString(KEY_NAME, name);
+
+        // Storing real name user
+        editor.putString(KEY_REAL_NAME, realName);
 
         // Storing surname1 in pref
         editor.putString(KEY_SURNAME1, cognom1);
@@ -137,6 +143,9 @@ public class UsuariSessionManager {
 
         // user name
         user.put(KEY_NAME, preferencies.getString(KEY_NAME, null));
+
+        // user real name
+        user.put(KEY_REAL_NAME, preferencies.getString(KEY_REAL_NAME, null));
 
         // user surname1
         user.put(KEY_SURNAME1, preferencies.getString(KEY_SURNAME1, null));
