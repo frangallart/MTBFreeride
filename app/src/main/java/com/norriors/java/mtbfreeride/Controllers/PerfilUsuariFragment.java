@@ -150,6 +150,8 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        getActivity().setTitle("Perfil");
+
         //Recollim la vista
         View viewPerfil = inflater.inflate(R.layout.fragment_perfil_usuari, container, false);
 

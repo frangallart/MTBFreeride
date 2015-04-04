@@ -9,7 +9,7 @@
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.view.ViewPager
+        <!--<android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -26,7 +26,7 @@
                 android:layout_gravity="bottom"
                 android:background="@android:color/transparent" />
 
-        </FrameLayout>
+        </FrameLayout>-->
 
     </FrameLayout>
     <!-- android:layout_gravity="start" tells DrawerLayout to treat

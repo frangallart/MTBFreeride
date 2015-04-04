@@ -14,7 +14,9 @@ package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +37,8 @@ import android.view.ViewGroup;
 
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
+
+import java.io.IOException;
 
 /**
  * Classe MainActivity
@@ -59,6 +63,10 @@ public class MainActivity extends ActionBarActivity
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
 
+    private MediaPlayer mediaPlayer;
+
+    private android.support.v4.app.FragmentTransaction t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,14 +89,23 @@ public class MainActivity extends ActionBarActivity
             InternetUtil.showAlertDialog(MainActivity.this, "Servei de connexió",
                     "El teu dispositiu no té connexió a Internet.");
         }
+
+        mediaPlayer = new MediaPlayer();
+
+        try {
+            AssetFileDescriptor music = getAssets().openFd("Sons/music.mp3");
+            mediaPlayer.setDataSource(music.getFileDescriptor(), music.getStartOffset(), music.getLength());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Mètode que recupera els controls de la GUI i toca espectes de disseny
      */
     public void setupGui() {
-
-        setTitle("Modalitats");
         // Creació del drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -99,57 +116,36 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-
-        // Crecio del pager horitzontal
-        mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setOffscreenPageLimit(4);
-
-        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
-
-        mViewPager.setAdapter(mPagerAdapter);
-
-        mPagerSlidingTabStrip.setViewPager(mViewPager);
+        t = getSupportFragmentManager().beginTransaction();
+        currentFragment = ModalitatsFragment.newInstance();
+        t.add(R.id.container, currentFragment, "fragment").commit();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        // update the main content by replacing fragments
-        mPagerSlidingTabStrip.setVisibility(View.GONE);
-        mViewPager.setVisibility(View.GONE);
+        t = getSupportFragmentManager().beginTransaction();
 
         switch (position) {
 
             case 1:
                 currentFragment = PerfilUsuariFragment.newInstance();
-                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
-                setTitle("Perfil");
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag5").commit();
                 break;
 
             case 2:
-                if (mPagerSlidingTabStrip.getVisibility() == View.GONE && mViewPager.getVisibility() == View.GONE) {
-                    mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
-                    mViewPager.setVisibility(View.VISIBLE);
-                    if (currentFragment != null) {
-                        t.remove(currentFragment).commit();
-                        currentFragment = null;
-                    }
-                }
-                setTitle("Modalitats");
+                currentFragment = ModalitatsFragment.newInstance();
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag4").commit();
                 break;
 
             case 3:
                 currentFragment = LlibreVisitesFragment.newInstance();
-                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
-                setTitle("LLibre de Visites");
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag3").commit();
                 break;
 
             case 4:
                 currentFragment = ValoracionsFragment.newInstance();
-                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
-                setTitle("Valoracions");
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag2").commit();
                 break;
 
             case 5:
@@ -157,6 +153,27 @@ public class MainActivity extends ActionBarActivity
                 finish();
                 break;
         }
+    }
+
+    /**
+     * Mètode que quan se surt de l'aplicació, però no es tanca,
+     * para les peticions del gps per no gastar bateria.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    /**
+     * Mètode que quan es torna a l'aplicació oberta en segon pla,
+     * torna activar les peticions del gps si estaven activades
+     * abans de sortir de l'aplicació.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
     }
 
     /**

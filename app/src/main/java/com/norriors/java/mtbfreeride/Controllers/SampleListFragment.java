@@ -69,7 +69,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        //setRetainInstance(true);
         mPosition = getArguments().getInt(ARG_POSITION);
 
         // crear l'objecte que crea a la connexió amb la BD
@@ -83,6 +83,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        System.out.println("hola");
         // fem referència a la vista
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 

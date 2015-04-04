@@ -66,6 +66,7 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        getActivity().setTitle("LLibre de Visites");
         View rootView = inflater.inflate(R.layout.fragment_llibre_visites, container, false);
         dades = new ArrayList<UserVisites>();
 
