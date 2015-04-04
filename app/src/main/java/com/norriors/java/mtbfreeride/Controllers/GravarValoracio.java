@@ -1,3 +1,15 @@
+/*************************************************************************************
+ *                                                                                   *
+ *  MTB FreeRide por Java Norriors se distribuye bajo una                            *
+ *  Licencia Creative Commons Atribución-NoComercial-SinDerivar 4.0 Internacional.   *
+ *                                                                                   *
+ *  http://creativecommons.org/licenses/by-nc-nd/4.0/                                *
+ *                                                                                   *
+ *  @author: Arnau Roma Vidal  - aroma@infoboscoma.net                               *
+ *  @author: Rubén Garcia Torres - rgarcia@infobosccoma.net                          *
+ *  @author: Francesc Gallart Vila - fgallart@infobosccoma.net                       *
+ *                                                                                   *
+/************************************************************************************/
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.media.MediaPlayer;
@@ -32,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Arnau on 03/04/2015.
+ * Classe que ens permet gravar una valoració
  */
 public class GravarValoracio extends ActionBarActivity {
 
@@ -51,6 +63,11 @@ public class GravarValoracio extends ActionBarActivity {
     public GravarValoracio() {
     }
 
+    /**
+     * Mètode onCreate
+     * Instancia tots els elements de la vista i les seves accions
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +119,11 @@ public class GravarValoracio extends ActionBarActivity {
         });
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -146,6 +168,11 @@ public class GravarValoracio extends ActionBarActivity {
         gravador = null;
     }
 
+    /**
+     * Mètode que ens inicia la gravació o ens la para
+     * en el cas de què estigui encesa la gravació
+     * @param start
+     */
     private void onRecord(boolean start) {
         if (start) {
             iniciGravacio();
@@ -154,6 +181,9 @@ public class GravarValoracio extends ActionBarActivity {
         }
     }
 
+    /**
+     * Mètode que inicia la reproducció de la gravació realitzada
+     */
     private void onPlay() {
         mPlayer = new MediaPlayer();
         try {
@@ -188,11 +218,10 @@ public class GravarValoracio extends ActionBarActivity {
         }
     }
 
-    /*private void stopPlaying() {
-        mPlayer.release();
-        mPlayer = null;
-    }*/
 
+    /**
+     * Classe que ens emmagatzema la valoració en el servidor i així mostrar-la en el ListView
+     */
     class PenjaValoracio extends AsyncTask<String, Void, String> {
 
         String responseText;

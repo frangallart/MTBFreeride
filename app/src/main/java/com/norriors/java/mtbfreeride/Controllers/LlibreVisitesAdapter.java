@@ -1,3 +1,15 @@
+/*************************************************************************************
+ *                                                                                   *
+ *  MTB FreeRide por Java Norriors se distribuye bajo una                            *
+ *  Licencia Creative Commons Atribución-NoComercial-SinDerivar 4.0 Internacional.   *
+ *                                                                                   *
+ *  http://creativecommons.org/licenses/by-nc-nd/4.0/                                *
+ *                                                                                   *
+ *  @author: Arnau Roma Vidal  - aroma@infoboscoma.net                               *
+ *  @author: Rubén Garcia Torres - rgarcia@infobosccoma.net                          *
+ *  @author: Francesc Gallart Vila - fgallart@infobosccoma.net                       *
+ *                                                                                   *
+/************************************************************************************/
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
@@ -17,6 +29,8 @@ import java.util.List;
 
 /**
  * Classe LlibreVisitesAdapter
+ * Adapter que ens permet posar al llibre de visites (listView) la visita d'un usuari
+ * Amb tots els seus elements: Foto, nom, num visites, data primera visita
  */
 public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
 
@@ -30,7 +44,11 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
     private LinearLayout parentLayout;
     private ImageView imgLlibreVisites;
 
-
+    /**
+     * Constructor
+     * @param context
+     * @param objects
+     */
     public LlibreVisitesAdapter(Activity context, List<UserVisites> objects) {
         super(context,R.layout.activity_llibre_visites_adapter, objects);
         this.context = context;
@@ -38,6 +56,13 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         this.imgTool = new ImageTool();
     }
 
+    /**
+     * Mètode que ens crea la vista
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View convertView, ViewGroup parent){
         View element = convertView;
         UserVisites usuari  = this.dades.get(position);

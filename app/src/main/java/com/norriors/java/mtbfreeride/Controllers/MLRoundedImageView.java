@@ -1,3 +1,15 @@
+/*************************************************************************************
+ *                                                                                   *
+ *  MTB FreeRide por Java Norriors se distribuye bajo una                            *
+ *  Licencia Creative Commons Atribución-NoComercial-SinDerivar 4.0 Internacional.   *
+ *                                                                                   *
+ *  http://creativecommons.org/licenses/by-nc-nd/4.0/                                *
+ *                                                                                   *
+ *  @author: Arnau Roma Vidal  - aroma@infoboscoma.net                               *
+ *  @author: Rubén Garcia Torres - rgarcia@infobosccoma.net                          *
+ *  @author: Francesc Gallart Vila - fgallart@infobosccoma.net                       *
+ *                                                                                   *
+/************************************************************************************/
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.content.Context;
@@ -15,6 +27,9 @@ import android.widget.ImageView;
 
 /**
  * Classe MLRoundedImageView
+ * Aquesta classe hereta de ImageView
+ * Realitza una màscara per redondejar
+ * ImageView
  */
 public class MLRoundedImageView extends ImageView {
 

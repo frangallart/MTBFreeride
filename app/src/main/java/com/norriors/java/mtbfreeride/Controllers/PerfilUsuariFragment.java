@@ -1,3 +1,16 @@
+/*************************************************************************************
+ *                                                                                   *
+ *  MTB FreeRide por Java Norriors se distribuye bajo una                            *
+ *  Licencia Creative Commons Atribución-NoComercial-SinDerivar 4.0 Internacional.   *
+ *                                                                                   *
+ *  http://creativecommons.org/licenses/by-nc-nd/4.0/                                *
+ *                                                                                   *
+ *  @author: Arnau Roma Vidal  - aroma@infoboscoma.net                               *
+ *  @author: Rubén Garcia Torres - rgarcia@infobosccoma.net                          *
+ *  @author: Francesc Gallart Vila - fgallart@infobosccoma.net                       *
+ *                                                                                   *
+ /************************************************************************************/
+
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.content.Intent;
@@ -17,7 +30,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -51,58 +63,87 @@ import java.util.regex.Pattern;
  */
 public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
 
-
-    private OnFragmentInteractionListener mListener;
+    //Elements de la vista del fragment
+    //Edit Text
     private EditText txtNom;
     private EditText txtPrimerCognom;
     private EditText txtSegonCognom;
     private EditText txtEmail;
     private EditText txtPass;
     private EditText txtPassRepeteix;
+
+    //Progress Bar
     private ProgressBar bar;
 
+    //Custom Image View
     private MLRoundedImageView imgUser;
 
-    private Button btnPass;
 
+    //Objectes per recollir les dades del Shared Preferences
     private UsuariSessionManager sessioUsuari;
     private HashMap<String, String> dadesUsuari;
+
+    //Objectes per recollir la imatge i tractar-la
     private ImageTool imgTool;
-    private Toast toast;
     private Bitmap novaImatge;
-
-    private MenuItem itemEdit;
-    private MenuItem itemSave;
-    private MenuItem itemCancel;
-
     private File imgCamera;
     private Bitmap resized;
     private byte[] byteArray;
 
+    //Mostrar missatges
+    private Toast toast;
+
+    //Items del menú
+    private MenuItem itemEdit;
+    private MenuItem itemSave;
+    private MenuItem itemCancel;
+
+    //Constants
     private static final String URL = "http://provesrasp.ddns.net/aplicacio/modificaDadesPerfil.php";
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int TAKE_PHOTO_CODE = 2;
     private static final String PATH_IMATGES = Environment.getExternalStorageDirectory() + File.separator + "mtbfreeride";
-
     private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
+    /**
+     * Mètode que s'executa al crear una nova instància del fragment
+     * Crida al constructor i retorna el fragment
+     * @return fragment
+     */
     public static PerfilUsuariFragment newInstance() {
         PerfilUsuariFragment fragment = new PerfilUsuariFragment();
 
         return fragment;
     }
 
+    /**
+     * Constructor per defecte
+     */
     public PerfilUsuariFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Mètode que s'executa al crear el fragment
+     * Amb el <setHasOptionsMenu> establim el menú d'aquest fragment a l'action bar
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
+
+
+    /**
+     * Mètode que ens crea la vista
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -157,6 +198,12 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     }
 
 
+    /**
+     * Mètode que crea el menu de l'action Bar i instancia els tres items per poder
+     * posar la seva visibilitat
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
@@ -217,9 +264,9 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
 
                 if (resized != null) {
                     //Guardem les noves dades al shared preferences
-                    sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(resized));
+                    sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(resized));
                 }else{
-                    sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
+                    sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
                 }
 
                 if (!this.txtNom.getText().toString().matches("") && !this.txtPrimerCognom.getText().toString().matches("")
@@ -276,7 +323,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 toast.show();
 
                 //Posem els camps que hi teniem guardats al shared preferences i els tornem a posar com a deshabilitats per evitar l'edició
-                txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_NAME));
+                txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME));
                 txtNom.setEnabled(false);
 
                 txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
@@ -332,12 +379,6 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
         inflater.inflate(R.menu.menu_contextual, menu);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     /**
      * Events dels Items del menú contextual
@@ -422,21 +463,6 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     public void pintaImatge() {
         resized = this.imgTool.convertImageToByte(imgCamera.getAbsolutePath());
         imgUser.setImageBitmap(resized);
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 
     /**
