@@ -9,7 +9,7 @@
  *  @author: Rubén Garcia Torres - rgarcia@infobosccoma.net                          *
  *  @author: Francesc Gallart Vila - fgallart@infobosccoma.net                       *
  *                                                                                   *
- /************************************************************************************/
+/************************************************************************************/
 
 package com.norriors.java.mtbfreeride.Controllers;
 
@@ -109,6 +109,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     /**
      * Mètode que s'executa al crear una nova instància del fragment
      * Crida al constructor i retorna el fragment
+     *
      * @return fragment
      */
     public static PerfilUsuariFragment newInstance() {
@@ -127,6 +128,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     /**
      * Mètode que s'executa al crear el fragment
      * Amb el <setHasOptionsMenu> establim el menú d'aquest fragment a l'action bar
+     *
      * @param savedInstanceState
      */
     @Override
@@ -136,9 +138,9 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     }
 
 
-
     /**
      * Mètode que ens crea la vista
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -201,6 +203,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     /**
      * Mètode que crea el menu de l'action Bar i instancia els tres items per poder
      * posar la seva visibilitat
+     *
      * @param menu
      * @param inflater
      */
@@ -221,143 +224,150 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            /**
-             * Acció del botó editar,
-             * ens posa tots els camps en editables i ens permet o guardar els canvis o cancel·lar-los.
-             */
-            case R.id.action_editUser:
+        // Si hi ha conexiò a internet
+        if (InternetUtil.isOnline(getActivity().getBaseContext())) {
+            // Handle item selection
+            switch (item.getItemId()) {
+                /**
+                 * Acció del botó editar,
+                 * ens posa tots els camps en editables i ens permet o guardar els canvis o cancel·lar-los.
+                 */
+                case R.id.action_editUser:
 
-                //Mostrem missatge  de que sens permet editar
-                toast = toast.makeText(getActivity().getBaseContext(), "Ara, pots editar el teu perfil", Toast.LENGTH_SHORT);
-                toast.show();
+                    //Mostrem missatge  de que sens permet editar
+                    toast = toast.makeText(getActivity().getBaseContext(), "Ara, pots editar el teu perfil", Toast.LENGTH_SHORT);
+                    toast.show();
 
-                txtPass.setVisibility(View.VISIBLE);
-                txtPassRepeteix.setVisibility(View.VISIBLE);
+                    txtPass.setVisibility(View.VISIBLE);
+                    txtPassRepeteix.setVisibility(View.VISIBLE);
 
-                //Posem els text views com a editables
-                txtNom.setEnabled(true);
-                txtPrimerCognom.setEnabled(true);
-                txtSegonCognom.setEnabled(true);
-                txtEmail.setEnabled(true);
+                    //Posem els text views com a editables
+                    txtNom.setEnabled(true);
+                    txtPrimerCognom.setEnabled(true);
+                    txtSegonCognom.setEnabled(true);
+                    txtEmail.setEnabled(true);
 
-                //Posem la imatge com a activa per poder modificar-la
-                imgUser.setEnabled(true);
+                    //Posem la imatge com a activa per poder modificar-la
+                    imgUser.setEnabled(true);
 
-                //El item del menu editar el posem com a invisible ja que ja estem editant
-                itemEdit.setVisible(false);
+                    //El item del menu editar el posem com a invisible ja que ja estem editant
+                    itemEdit.setVisible(false);
 
-                //Els items de guardar i cancel·lar els posem com a visibles
-                itemSave.setVisible(true);
-                itemCancel.setVisible(true);
+                    //Els items de guardar i cancel·lar els posem com a visibles
+                    itemSave.setVisible(true);
+                    itemCancel.setVisible(true);
 
-                return true;
+                    return true;
 
-            /**
-             * Acció de guardar.
-             * Ens guarda els canvis al shared preferences i a la DB
-             * Torna a posar els TextViews com a deshabilitats
-             */
+                /**
+                 * Acció de guardar.
+                 * Ens guarda els canvis al shared preferences i a la DB
+                 * Torna a posar els TextViews com a deshabilitats
+                 */
 
-            case R.id.action_saveChange:
+                case R.id.action_saveChange:
 
-                if (resized != null) {
-                    //Guardem les noves dades al shared preferences
-                    sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(resized));
-                }else{
-                    sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
-                }
-
-                if (!this.txtNom.getText().toString().matches("") && !this.txtPrimerCognom.getText().toString().matches("")
-                        && !this.txtSegonCognom.getText().toString().matches("") && !this.txtEmail.getText().toString().matches("")){
-
-                    if (this.txtPass.getText().toString().equals(this.txtPassRepeteix.getText().toString())){
-
-                        // Utilitzem expressions regulars per verificar l'email
-                        Pattern pattern = Pattern.compile(PATTERN_EMAIL);
-                        Matcher matcher = pattern.matcher(this.txtEmail.getText().toString());
-                        if (matcher.matches()) {
-
-                            new ModificaDades().execute(this.txtNom.getText().toString(), this.txtPrimerCognom.getText().toString(),
-                                    txtSegonCognom.getText().toString(), txtEmail.getText().toString(), txtPass.getText().toString());
-                            //Posems els TextViews com a deshabilitats per evitar l'edició
-                            txtNom.setEnabled(false);
-                            txtPrimerCognom.setEnabled(false);
-                            txtSegonCognom.setEnabled(false);
-                            txtEmail.setEnabled(false);
-                            txtPass.setVisibility(View.GONE);
-                            txtPassRepeteix.setVisibility(View.GONE);
-
-                            //Posem la imatge com deshabilitada per evitar modificar-la
-                            imgUser.setEnabled(false);
-
-                            //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
-                            itemSave.setVisible(false);
-                            itemCancel.setVisible(false);
-
-                            //Tornem a posar el item d'editar com a visible
-                            itemEdit.setVisible(true);
-                        }else{
-                            Toast.makeText(getActivity(),"Escriu un email vàlid", Toast.LENGTH_SHORT).show();
-                        }
-                    }else{
-                        Toast.makeText(getActivity(),"Les contrasenyes no són coincideixen", Toast.LENGTH_SHORT).show();
+                    if (resized != null) {
+                        //Guardem les noves dades al shared preferences
+                        sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(resized));
+                    } else {
+                        sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
                     }
 
-                }else{
-                    Toast.makeText(getActivity(),"No hi poden haver camps buits", Toast.LENGTH_SHORT).show();
-                }
+                    if (!this.txtNom.getText().toString().matches("") && !this.txtPrimerCognom.getText().toString().matches("")
+                            && !this.txtSegonCognom.getText().toString().matches("") && !this.txtEmail.getText().toString().matches("")) {
 
-                return true;
+                        if (this.txtPass.getText().toString().equals(this.txtPassRepeteix.getText().toString())) {
 
-            /**
-             * Acció de cancel·lar els canvis
-             * Cancel·la els canvis i estableix les dades anteriors de nou als camps
-             * Deshabilita l'edició dels camps
-             */
-            case R.id.action_cancelChange:
+                            // Utilitzem expressions regulars per verificar l'email
+                            Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+                            Matcher matcher = pattern.matcher(this.txtEmail.getText().toString());
+                            if (matcher.matches()) {
 
-                //Mostrem missatge de canvis cancel·lats
-                toast =  toast.makeText(getActivity().getBaseContext(), "Canvis cancel·lats", Toast.LENGTH_SHORT);
-                toast.show();
+                                new ModificaDades().execute(this.txtNom.getText().toString(), this.txtPrimerCognom.getText().toString(),
+                                        txtSegonCognom.getText().toString(), txtEmail.getText().toString(), txtPass.getText().toString());
+                                //Posems els TextViews com a deshabilitats per evitar l'edició
+                                txtNom.setEnabled(false);
+                                txtPrimerCognom.setEnabled(false);
+                                txtSegonCognom.setEnabled(false);
+                                txtEmail.setEnabled(false);
+                                txtPass.setVisibility(View.GONE);
+                                txtPassRepeteix.setVisibility(View.GONE);
 
-                //Posem els camps que hi teniem guardats al shared preferences i els tornem a posar com a deshabilitats per evitar l'edició
-                txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME));
-                txtNom.setEnabled(false);
+                                //Posem la imatge com deshabilitada per evitar modificar-la
+                                imgUser.setEnabled(false);
 
-                txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
-                txtPrimerCognom.setEnabled(false);
+                                //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
+                                itemSave.setVisible(false);
+                                itemCancel.setVisible(false);
 
-                txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
-                txtSegonCognom.setEnabled(false);
+                                //Tornem a posar el item d'editar com a visible
+                                itemEdit.setVisible(true);
+                            } else {
+                                Toast.makeText(getActivity(), "Escriu un email vàlid", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Les contrasenyes no són coincideixen", Toast.LENGTH_SHORT).show();
+                        }
 
-                txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
-                txtEmail.setEnabled(false);
+                    } else {
+                        Toast.makeText(getActivity(), "No hi poden haver camps buits", Toast.LENGTH_SHORT).show();
+                    }
 
-                txtPass.setText("");
-                txtPass.setEnabled(false);
-                txtPass.setVisibility(View.GONE);
+                    return true;
 
-                txtPassRepeteix.setText("");
-                txtPassRepeteix.setEnabled(false);
-                txtPassRepeteix.setVisibility(View.GONE);
+                /**
+                 * Acció de cancel·lar els canvis
+                 * Cancel·la els canvis i estableix les dades anteriors de nou als camps
+                 * Deshabilita l'edició dels camps
+                 */
+                case R.id.action_cancelChange:
 
-                //Posem la imatge com deshabilitat i establim la imatge que hi havia per defecte
-                imgUser.setEnabled(false);
+                    //Mostrem missatge de canvis cancel·lats
+                    toast = toast.makeText(getActivity().getBaseContext(), "Canvis cancel·lats", Toast.LENGTH_SHORT);
+                    toast.show();
 
-                //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
-                itemSave.setVisible(false);
-                itemCancel.setVisible(false);
+                    //Posem els camps que hi teniem guardats al shared preferences i els tornem a posar com a deshabilitats per evitar l'edició
+                    txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME));
+                    txtNom.setEnabled(false);
 
-                //Tornem a posar el item d'editar com a visible
-                itemEdit.setVisible(true);
+                    txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
+                    txtPrimerCognom.setEnabled(false);
 
-                return true;
+                    txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
+                    txtSegonCognom.setEnabled(false);
 
-            default:
-                return super.onOptionsItemSelected(item);
+                    txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
+                    txtEmail.setEnabled(false);
 
+                    txtPass.setText("");
+                    txtPass.setEnabled(false);
+                    txtPass.setVisibility(View.GONE);
+
+                    txtPassRepeteix.setText("");
+                    txtPassRepeteix.setEnabled(false);
+                    txtPassRepeteix.setVisibility(View.GONE);
+
+                    //Posem la imatge com deshabilitat i establim la imatge que hi havia per defecte
+                    imgUser.setEnabled(false);
+
+                    //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
+                    itemSave.setVisible(false);
+                    itemCancel.setVisible(false);
+
+                    //Tornem a posar el item d'editar com a visible
+                    itemEdit.setVisible(true);
+
+                    return true;
+
+                default:
+                    return super.onOptionsItemSelected(item);
+
+            }
+        } else {
+            InternetUtil.showAlertDialog(getActivity().getBaseContext(), "Servei de connexió",
+                    "El teu dispositiu no té connexió a Internet.");
+            return false;
         }
     }
 
@@ -489,6 +499,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
         /**
          * Procés que envia les dades a un json
          * que fa l'update a la base de dades
+         *
          * @param params
          * @return una string true o false
          */
@@ -506,17 +517,17 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                     parametres.add(new BasicNameValuePair("img", Base64.encodeToString(byteArray, Base64.DEFAULT)));
                 }
                 // Si hi ha només imatge
-                else if (resized != null){
+                else if (resized != null) {
                     parametres.add(new BasicNameValuePair("password", null));
                     parametres.add(new BasicNameValuePair("img", Base64.encodeToString(byteArray, Base64.DEFAULT)));
                 }
                 // Si hi ha només contrasenya
-                else if (!txtPass.getText().toString().matches("")){
+                else if (!txtPass.getText().toString().matches("")) {
                     parametres.add(new BasicNameValuePair("password", params[4]));
                     parametres.add(new BasicNameValuePair("img", null));
                 }
                 // Si no hi ha ni imatge ni contrasenya
-                else{
+                else {
                     parametres.add(new BasicNameValuePair("password", null));
                     parametres.add(new BasicNameValuePair("img", null));
                 }
@@ -560,7 +571,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                     fragment.imatgeRodona(resized);
                 }
                 Toast.makeText(getActivity(), "Dades modificades correctament", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Toast.makeText(getActivity(), "S'ha produït un error", Toast.LENGTH_SHORT).show();
             }
             resized = null;
