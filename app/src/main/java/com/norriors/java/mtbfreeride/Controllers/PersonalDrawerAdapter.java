@@ -104,6 +104,11 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> implements 
         return view;
     }
 
+    /**
+     * Mètode que comprova l'estat del togglebutton del so
+     * @param compoundButton
+     * @param check
+     */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
         if(check)

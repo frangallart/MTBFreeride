@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.norriors.java.mtbfreeride.R;
 import com.norriors.java.mtbfreeride.astuetz.PagerSlidingTabStrip;
@@ -155,10 +154,6 @@ public class MainActivity extends ActionBarActivity
             case 5:
                 sessioUsuari.logoutUser();
                 finish();
-                break;
-
-            case 6:
-                Toast.makeText(this,"Bé",Toast.LENGTH_SHORT).show();
                 break;
         }
     }
