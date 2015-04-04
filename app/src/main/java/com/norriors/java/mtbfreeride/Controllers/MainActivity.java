@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity
      */
     public void setupGui() {
 
+        setTitle("Modalitats");
         // Creació del drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -112,6 +113,7 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 currentFragment = PerfilUsuariFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
+                setTitle("Perfil");
                 break;
 
             case 2:
@@ -123,16 +125,19 @@ public class MainActivity extends ActionBarActivity
                         currentFragment = null;
                     }
                 }
+                setTitle("Modalitats");
                 break;
 
             case 3:
                 currentFragment = LlibreVisitesFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
+                setTitle("LLibre de Visites");
                 break;
 
             case 4:
                 currentFragment = ValoracionsFragment.newInstance();
                 t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag").commit();
+                setTitle("Valoracions");
                 break;
 
             case 5:

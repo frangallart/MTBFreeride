@@ -72,6 +72,7 @@ public class ModalitatDetallActivity extends ActionBarActivity implements View.O
 
         if (extras != null) {
             modalitat = (Modalitat) getIntent().getExtras().getSerializable("modalitat");
+            setTitle(modalitat.getTitol());
             tvModalTitol.setText(modalitat.getTitol());
             tvModalDetall.setText(modalitat.getDescripcio());
             ivModal.setImageBitmap(recollirImatge(modalitat.getImatge2()));

@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe Perfil Usuari Fragment
@@ -56,6 +58,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     private EditText txtSegonCognom;
     private EditText txtEmail;
     private EditText txtPass;
+    private EditText txtPassRepeteix;
     private ProgressBar bar;
 
     private MLRoundedImageView imgUser;
@@ -80,6 +83,8 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int TAKE_PHOTO_CODE = 2;
     private static final String PATH_IMATGES = Environment.getExternalStorageDirectory() + File.separator + "mtbfreeride";
+
+    private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
     public static PerfilUsuariFragment newInstance() {
@@ -129,17 +134,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
 
         //EditText Password
         txtPass = (EditText) viewPerfil.findViewById(R.id.txtPass);
-
-        //Button Password
-        btnPass = (Button) viewPerfil.findViewById(R.id.btnChangePass);
-        btnPass.setEnabled(false);
-        btnPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtPass.setVisibility(View.VISIBLE);
-                btnPass.setVisibility(View.GONE);
-            }
-        });
+        txtPassRepeteix = (EditText) viewPerfil.findViewById(R.id.txtPass2);
 
         //MLRounded Image View
         novaImatge = imgTool.getBitmap(dadesUsuari.get(UsuariSessionManager.KEY_IMAGE));
@@ -191,14 +186,14 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 toast = toast.makeText(getActivity().getBaseContext(), "Ara, pots editar el teu perfil", Toast.LENGTH_SHORT);
                 toast.show();
 
+                txtPass.setVisibility(View.VISIBLE);
+                txtPassRepeteix.setVisibility(View.VISIBLE);
+
                 //Posem els text views com a editables
                 txtNom.setEnabled(true);
                 txtPrimerCognom.setEnabled(true);
                 txtSegonCognom.setEnabled(true);
                 txtEmail.setEnabled(true);
-                txtPass.setEnabled(true);
-
-                btnPass.setEnabled(true);
 
                 //Posem la imatge com a activa per poder modificar-la
                 imgUser.setEnabled(true);
@@ -230,39 +225,42 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 if (!this.txtNom.getText().toString().matches("") && !this.txtPrimerCognom.getText().toString().matches("")
                         && !this.txtSegonCognom.getText().toString().matches("") && !this.txtEmail.getText().toString().matches("")){
 
-                    //if (txtPass != null){
-                        new ModificaDades().execute(this.txtNom.getText().toString(), this.txtPrimerCognom.getText().toString(),
-                                txtSegonCognom.getText().toString(), txtEmail.getText().toString(), txtPass.getText().toString());
-                    /*}else{
-                        new ModificaDades().execute(this.txtNom.getText().toString(), this.txtPrimerCognom.getText().toString(),
-                                txtSegonCognom.getText().toString(), txtEmail.getText().toString());
-                    }*/
+                    if (this.txtPass.getText().toString().equals(this.txtPassRepeteix.getText().toString())){
+
+                        // Utilitzem expressions regulars per verificar l'email
+                        Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+                        Matcher matcher = pattern.matcher(this.txtEmail.getText().toString());
+                        if (matcher.matches()) {
+
+                            new ModificaDades().execute(this.txtNom.getText().toString(), this.txtPrimerCognom.getText().toString(),
+                                    txtSegonCognom.getText().toString(), txtEmail.getText().toString(), txtPass.getText().toString());
+                            //Posems els TextViews com a deshabilitats per evitar l'edició
+                            txtNom.setEnabled(false);
+                            txtPrimerCognom.setEnabled(false);
+                            txtSegonCognom.setEnabled(false);
+                            txtEmail.setEnabled(false);
+                            txtPass.setVisibility(View.GONE);
+                            txtPassRepeteix.setVisibility(View.GONE);
+
+                            //Posem la imatge com deshabilitada per evitar modificar-la
+                            imgUser.setEnabled(false);
+
+                            //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
+                            itemSave.setVisible(false);
+                            itemCancel.setVisible(false);
+
+                            //Tornem a posar el item d'editar com a visible
+                            itemEdit.setVisible(true);
+                        }else{
+                            Toast.makeText(getActivity(),"Escriu un email vàlid", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getActivity(),"Les contrasenyes no són coincideixen", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else{
                     Toast.makeText(getActivity(),"No hi poden haver camps buits", Toast.LENGTH_SHORT).show();
                 }
-
-                //Posems els TextViews com a deshabilitats per evitar l'edició
-                txtNom.setEnabled(false);
-                txtPrimerCognom.setEnabled(false);
-                txtSegonCognom.setEnabled(false);
-                txtEmail.setEnabled(false);
-                txtPass.setEnabled(false);
-                txtPass.setVisibility(View.GONE);
-
-                //Posem el botó de canviar contrasenya deshabilitat per evitar que es torni a mostrar
-                btnPass.setEnabled(false);
-                btnPass.setVisibility(View.VISIBLE);
-
-                //Posem la imatge com deshabilitada per evitar modificar-la
-                imgUser.setEnabled(false);
-
-
-                //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
-                itemSave.setVisible(false);
-                itemCancel.setVisible(false);
-
-                //Tornem a posar el item d'editar com a visible
-                itemEdit.setVisible(true);
 
                 return true;
 
@@ -294,10 +292,9 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                 txtPass.setEnabled(false);
                 txtPass.setVisibility(View.GONE);
 
-
-                //Posem el botó de canviar contrasenya deshabilitat per evitar que es torni a mostrar
-                btnPass.setEnabled(false);
-                btnPass.setVisibility(View.VISIBLE);
+                txtPassRepeteix.setText("");
+                txtPassRepeteix.setEnabled(false);
+                txtPassRepeteix.setVisibility(View.GONE);
 
                 //Posem la imatge com deshabilitat i establim la imatge que hi havia per defecte
                 imgUser.setEnabled(false);
@@ -540,6 +537,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
             }else{
                 Toast.makeText(getActivity(), "S'ha produït un error", Toast.LENGTH_SHORT).show();
             }
+            resized = null;
             bar.setVisibility(View.GONE);
         }
     }

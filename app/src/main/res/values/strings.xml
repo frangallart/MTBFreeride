@@ -32,6 +32,13 @@
 
     <string name="penjaSo">Penja so</string>
 
+    <string name="nom">Nom</string>
+    <string name="primerCognom">Primer Cognom</string>
+    <string name="segonCognom">Segon Cognom</string>
+    <string name="email">Em@il</string>
+    <string name="novaContra">Nova Contrasenya</string>
+    <string name="repetirContra">Repeteix la Contrasenya</string>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
