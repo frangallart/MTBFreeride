@@ -27,12 +27,16 @@ import com.norriors.java.mtbfreeride.Models.UserVisites;
 import com.norriors.java.mtbfreeride.R;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe LlibreVisites Fragment,
@@ -46,6 +50,7 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/llibreVisites.php";
     private DescarregarDades downloadVisites;
     private ProgressBar llibre_progress;
+    private boolean totsUsuaris;
 
 
     public static LlibreVisitesFragment newInstance() {
@@ -60,6 +65,7 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.totsUsuaris = false;
     }
 
     @Override
@@ -71,10 +77,25 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
         dades = new ArrayList<UserVisites>();
 
         lstVisites = (ListView) rootView.findViewById(R.id.lstVisites);
+
+        lstVisites.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                if (!totsUsuaris) {
+                    System.out.println(page);
+                    System.out.println(page*4);
+                    new DescarregarDades().execute(page * 6);
+                }
+            }
+        });
+
+        adapterVisites = new LlibreVisitesAdapter(getActivity(), dades);
+        lstVisites.setAdapter(adapterVisites);
+
         llibre_progress = (ProgressBar) rootView.findViewById(R.id.llibre_progress);
 
         downloadVisites = new DescarregarDades();
-        downloadVisites.execute(URL_DATA);
+        downloadVisites.execute(0);
 
 
         // Inflate the layout for this fragment
@@ -95,7 +116,7 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    class DescarregarDades extends AsyncTask<String, Void, ArrayList<UserVisites>> {
+    class DescarregarDades extends AsyncTask<Integer, Void, ArrayList<UserVisites>> {
 
         @Override
         protected void onPreExecute() {
@@ -104,12 +125,16 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
         }
 
         @Override
-        protected ArrayList<UserVisites> doInBackground(String... params) {
+        protected ArrayList<UserVisites> doInBackground(Integer... params) {
             ArrayList<UserVisites> llistaTitulars = null;
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httppostreq = new HttpPost(URL_DATA);
             HttpResponse httpresponse = null;
             try {
+                List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
+                // Com només ha de descarregar l'usuari que s'ha identificat
+                parametres.add(new BasicNameValuePair("pagina", params[0].toString()));
+                httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
                 httpresponse = httpclient.execute(httppostreq);
                 String responseText = EntityUtils.toString(httpresponse.getEntity());
                 llistaTitulars = tractarJSON(responseText);
@@ -122,8 +147,14 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<UserVisites> llista) {
-            dades = llista;
-            refreshData();
+            //dades.addAll(llista);
+            //refreshData();
+            //lstVisites.setAdapter();
+            if (llista != null) {
+                adapterVisites.setData(llista);
+            }else{
+                totsUsuaris = true;
+            }
             llibre_progress.setVisibility(View.GONE);
         }
 

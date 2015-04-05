@@ -97,6 +97,12 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
 
         return element;
     }
+
+    public void setData(List<UserVisites> visites){
+        this.dades.addAll(visites);
+        this.notifyDataSetChanged();
+    }
+
 }
 
 
