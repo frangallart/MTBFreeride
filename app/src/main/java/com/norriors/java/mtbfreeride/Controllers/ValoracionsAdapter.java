@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * Classe ValoracionsAdapter
- *
+ * <p/>
  * Classe que modela una fila de l'apartat de valoracions
  */
 public class ValoracionsAdapter extends ArrayAdapter<Opinions> {

@@ -49,7 +49,7 @@ import java.util.List;
 
 /**
  * Classe ValoracionsFragment
- *
+ * <p/>
  * En aquesta classe podem escoltar totes les valoracions dels usuaris
  */
 public class ValoracionsFragment extends android.support.v4.app.Fragment {
@@ -121,7 +121,7 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         return rootView;
     }
 
-    public void descarregaDades(){
+    public void descarregaDades() {
         new DescarregarDades().execute(URL_DATA);
     }
 
@@ -214,20 +214,17 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(ArrayList<Opinions> llista) {
             opinions_progress.setVisibility(View.GONE);
-            try
-            {
+            try {
                 byte[] data = Base64.decode(llista.get(0).getSo(), Base64.DEFAULT);
-                File path=new File(getActivity().getCacheDir()+"/musicfile.3gp");
+                File path = new File(getActivity().getCacheDir() + "/musicfile.3gp");
                 FileOutputStream fos = new FileOutputStream(path);
                 fos.write(data);
                 fos.close();
                 MediaPlayer mediaPlayer = new MediaPlayer();
-                mediaPlayer.setDataSource(getActivity().getCacheDir()+"/musicfile.3gp");
+                mediaPlayer.setDataSource(getActivity().getCacheDir() + "/musicfile.3gp");
                 mediaPlayer.prepare();
                 mediaPlayer.start();
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
