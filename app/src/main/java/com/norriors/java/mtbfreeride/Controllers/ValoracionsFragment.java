@@ -49,6 +49,7 @@ import java.util.List;
 
 /**
  * Classe ValoracionsFragment
+ *
  * En aquesta classe podem escoltar totes les valoracions dels usuaris
  */
 public class ValoracionsFragment extends android.support.v4.app.Fragment {

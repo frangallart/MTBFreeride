@@ -14,6 +14,7 @@ package com.norriors.java.mtbfreeride.Models;
 
 /**
  * Classe Opinions
+ * <p/>
  * Ens permet recollir les opinions dels usuaris
  */
 public class Opinions {
@@ -24,10 +25,11 @@ public class Opinions {
     private String so;
 
 
-    public Opinions (String so){
+    public Opinions(String so) {
         this.so = so;
 
     }
+
     public Opinions(int id, String user, String data) {
         this.id = id;
         this.user = user;
