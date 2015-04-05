@@ -12,7 +12,6 @@
 /************************************************************************************/
 package com.norriors.java.mtbfreeride.Controllers;
 
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -48,6 +47,9 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
     private SQLiteDatabase db;
     private ModalitatsConversor modalitatsConversor;
     private ArrayList<Modalitat> dades;
+
+    private Fragment currentFragment;
+    private android.support.v4.app.FragmentTransaction t;
 
     private static final String ARG_POSITION = "position";
     private TextView tvTitolMain;
@@ -120,15 +122,9 @@ public class SampleListFragment extends ScrollTabHolderFragment implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btnDetallsModalitat):
-
-                Modalitat m = dades.get(mPosition);
-
-                Intent intent = new Intent(getActivity().getBaseContext(), ModalitatDetallActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("modalitat",m);
-                intent.putExtras(bundle);
-
-                startActivity(intent);
+                t = getActivity().getSupportFragmentManager().beginTransaction();
+                currentFragment = ModalitatDetallFragment.newInstance(dades.get(mPosition));
+                t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag5").commit();
                 break;
         }
     }

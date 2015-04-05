@@ -71,15 +71,39 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/DarkGray"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
+
+                <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginBottom="20dp">
 
-                    <VideoView
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/modalitat_video"
+                        android:id="@+id/tvModalitatsVideo" />
+
+                    <ImageView
+                        android:layout_width="190dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/ic_video"
+                        android:id="@+id/imgVideo" />
+
+                   <!-- <VideoView
                         android:layout_width="wrap_content"
                         android:layout_height="200dp"
-                        android:id="@+id/videoModalitatDetall" />
+                        android:id="@+id/videoModalitatDetall" />-->
+
                 </LinearLayout>
 
             </LinearLayout>

@@ -223,8 +223,6 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
                 // Add new Flag to start new Activity
                 act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(act);
-                finish();
-
             } else {
                 err_login();
                 Toast toast = Toast.makeText(getApplicationContext(), "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_SHORT);
@@ -233,6 +231,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
             }
 
             mProgressView.setVisibility(View.GONE);
+            finish();
         }
 
         private ArrayList<User> tractarJSON(String json) {

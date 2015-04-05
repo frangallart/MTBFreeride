@@ -48,6 +48,12 @@
             android:name=".Controllers.GravarValoracio"
             android:label="@string/title_activity_detall_gravar_valoracio">
         </activity>
+        <activity
+            android:name=".Controllers.ModalitatVideo"
+            android:label="@string/title_activity_detall_gravar_valoracio"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
     </application>
 
 </manifest>

@@ -159,7 +159,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Mètode que quan se surt de l'aplicació, però no es tanca,
-     * para les peticions del gps per no gastar bateria.
+     * posa la música en pausa.
      */
     @Override
     public void onPause() {
@@ -169,8 +169,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Mètode que quan es torna a l'aplicació oberta en segon pla,
-     * torna activar les peticions del gps si estaven activades
-     * abans de sortir de l'aplicació.
+     * torna a reproduir la música
      */
     @Override
     protected void onResume() {
