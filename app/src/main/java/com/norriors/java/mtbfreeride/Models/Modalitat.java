@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 /**
  * Classe Modalitat
+ * <p/>
  * Classe que modela una modalitat i les dades que la formen.
  */
 public class Modalitat implements Serializable {

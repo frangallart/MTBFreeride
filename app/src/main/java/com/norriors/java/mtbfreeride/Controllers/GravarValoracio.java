@@ -66,6 +66,7 @@ public class GravarValoracio extends ActionBarActivity {
     /**
      * Mètode onCreate
      * Instancia tots els elements de la vista i les seves accions
+     *
      * @param savedInstanceState
      */
     @Override
@@ -76,16 +77,16 @@ public class GravarValoracio extends ActionBarActivity {
         btnPenjaSo = (Button) findViewById(R.id.btnPenjaSo);
         bar = (ProgressBar) findViewById(R.id.bar);
 
-        btnGravar.setText("Start Recording");
+        //btnGravar.setText("Start Recording");
 
         btnGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    btnGravar.setText("Stop recording");
+                    //btnGravar.setText("Stop recording");
                 } else {
-                    btnGravar.setText("Start recording");
+                    //btnGravar.setText("Start recording");
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -95,15 +96,15 @@ public class GravarValoracio extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         btnPlay = (Button) findViewById(R.id.btnPlay);
-        btnPlay.setText("Start playing");
+        //btnPlay.setText("Start playing");
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (nomGravacio != null) {
                     onPlay();
-                }else{
-                    Toast.makeText(GravarValoracio.this,"No has gravat la valoració", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(GravarValoracio.this, "No has gravat la valoració", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -112,15 +113,14 @@ public class GravarValoracio extends ActionBarActivity {
             public void onClick(View v) {
                 if (nomGravacio != null) {
                     new PenjaValoracio().execute();
-                }else{
-                    Toast.makeText(GravarValoracio.this,"Has de gravar una valoració", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(GravarValoracio.this, "Has de gravar una valoració", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     /**
-     *
      * @param item
      * @return
      */
@@ -171,6 +171,7 @@ public class GravarValoracio extends ActionBarActivity {
     /**
      * Mètode que ens inicia la gravació o ens la para
      * en el cas de què estigui encesa la gravació
+     *
      * @param start
      */
     private void onRecord(boolean start) {
@@ -234,7 +235,7 @@ public class GravarValoracio extends ActionBarActivity {
             try {
                 byte[] soBytes = readFile(nomGravacio);
                 so = new String(Base64.encodeToString(soBytes, Base64.DEFAULT));
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -242,6 +243,7 @@ public class GravarValoracio extends ActionBarActivity {
         /**
          * Procés que envia les dades
          * a un json que fa l'insert a la base de dades
+         *
          * @param params
          * @return una string true o false
          */
@@ -283,7 +285,7 @@ public class GravarValoracio extends ActionBarActivity {
         @Override
         protected void onPostExecute(String resposta) {
 
-            if (resposta.trim().equals("true")){
+            if (resposta.trim().equals("true")) {
                 setResult(RESULT_OK);
                 finish();
             }

@@ -16,13 +16,14 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="69dp">
+        android:layout_marginTop="59dp">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/svMainFragment"
             android:scrollbars="none">
+
 
             <LinearLayout
                 android:orientation="vertical"
@@ -32,6 +33,23 @@
                 android:padding="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/White">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="32dp"
+                    android:background="#00f0e9"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/imageView"
+                        android:src="@drawable/img_mu_splash_screen"
+                        android:layout_gravity="right|center_horizontal"
+                        android:layout_marginRight="5dp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -66,7 +84,7 @@
                         android:layout_height="1dp"
                         android:background="@color/DarkGray"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"/>
+                        android:layout_marginBottom="20dp" />
 
 
                     <ImageButton
@@ -80,6 +98,7 @@
 
             </LinearLayout>
         </ScrollView>
+
 
     </RelativeLayout>
 

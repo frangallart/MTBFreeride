@@ -95,8 +95,8 @@ public class ModalitatsSQLiteHelper extends SQLiteOpenHelper {
         insertModalitats.clearBindings();
         insertModalitats.bindString(1, "Street");
         insertModalitats.bindString(2, "En aquesta modalitat s'han d'anar superant els diferents obstacles urbans.\n" + "\n" + "És una modalitat molt complicada que necessita molta pràctica. La majoria de la gent no la té gaire ben vista i moltes vegades és sancionada per la policia, amb multes.");
-        insertModalitats.bindString(3, "ImatgesModalitats/idirtJump2.jpg");
-        insertModalitats.bindString(4, "ImatgesModalitats/idirtJump2.jpg");
+        insertModalitats.bindString(3, "ImatgesModalitats/istreet.jpg");
+        insertModalitats.bindString(4, "ImatgesModalitats/istreet2.jpg");
         insertModalitats.bindString(5, "http://r6---sn-h5q7dnee.googlevideo.com/videoplayback?id=o-ADm-WU83J1-WzoHAiNhmTmcYXUZAwp0AHgQBTScGFXVO&mm=31&initcwndbps=1181250&ip=79.158.60.6&signature=5BC980C1A00E66FB263BBA796B441DAF8497708D.D41BD51063D177E5C7C498DB5E485B6BDACCDD2A&ms=au&mt=1428202633&mv=m&pl=23&upn=Xvrv4SrT4Oo&ipbits=0&sver=3&expire=1428224296&itag=18&ratebypass=yes&dur=191.912&sparams=dur%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Cmime%2Cmm%2Cms%2Cmv%2Cnh%2Cpl%2Cratebypass%2Csource%2Cupn%2Cexpire&mime=video%2Fmp4&key=yt5&nh=IgpwcjAyLm1hZDAxKgkxMjcuMC4wLjE&fexp=900720%2C907263%2C934954%2C936118%2C9406963%2C9407721%2C9408102%2C9408144%2C9408755%2C947243%2C948124%2C948703%2C951703%2C952612%2C957201%2C961404%2C961406%2C966201&source=youtube&title=MTB%20Street%3A%20Unexpected%20Thursday%2038%20-%20The%20Rise");
         insertModalitats.executeInsert();
 
