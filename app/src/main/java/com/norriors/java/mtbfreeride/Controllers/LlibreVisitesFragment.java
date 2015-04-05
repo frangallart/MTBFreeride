@@ -51,6 +51,8 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     private DescarregarDades downloadVisites;
     private ProgressBar llibre_progress;
     private boolean totsUsuaris;
+    private int pos_inicial;
+    private int pos_final;
 
 
     public static LlibreVisitesFragment newInstance() {
@@ -66,10 +68,11 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.totsUsuaris = false;
+        this.pos_inicial = 1;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
         getActivity().setTitle("LLibre de Visites");
@@ -78,13 +81,18 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
 
         lstVisites = (ListView) rootView.findViewById(R.id.lstVisites);
 
-        lstVisites.setOnScrollListener(new EndlessScrollListener() {
+        // Listener que s'encarrega de l'scroll
+        lstVisites.setOnScrollListener(new VisitesScrollListener() {
             @Override
-            public void onLoadMore(int page, int totalItemsCount) {
+            public void carregaDades() {
+                // Si encara no s'han carregat tots els usuaris, podem seguir
+                // fent peticions
                 if (!totsUsuaris) {
-                    System.out.println(page);
-                    System.out.println(page*4);
-                    new DescarregarDades().execute(page * 6);
+                    pos_final = pos_inicial + 5;
+                    while (pos_inicial < (pos_final)) {
+                        new DescarregarDades().execute(pos_inicial);
+                        pos_inicial++;
+                    }
                 }
             }
         });
@@ -132,8 +140,9 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
             HttpResponse httpresponse = null;
             try {
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-                // Com només ha de descarregar l'usuari que s'ha identificat
-                parametres.add(new BasicNameValuePair("pagina", params[0].toString()));
+
+                // Aquesta clau s'utilitza per saber quina visita hem de carregar
+                parametres.add(new BasicNameValuePair("item", params[0].toString()));
                 httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
                 httpresponse = httpclient.execute(httppostreq);
                 String responseText = EntityUtils.toString(httpresponse.getEntity());
@@ -147,9 +156,9 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<UserVisites> llista) {
-            //dades.addAll(llista);
-            //refreshData();
-            //lstVisites.setAdapter();
+
+            // Si la llista no es null, carreguem els usuaris. Sinó
+            // posem la booleana totsUsuaris a cert.
             if (llista != null) {
                 adapterVisites.setData(llista);
             }else{
@@ -157,7 +166,6 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
             }
             llibre_progress.setVisibility(View.GONE);
         }
-
 
         private ArrayList<UserVisites> tractarJSON(String json) {
             Gson converter = new Gson();

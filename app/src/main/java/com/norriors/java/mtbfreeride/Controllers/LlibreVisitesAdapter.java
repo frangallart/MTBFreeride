@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.norriors.java.mtbfreeride.Models.UserVisites;
@@ -32,6 +31,7 @@ import java.util.List;
  * Adapter que ens permet posar al llibre de visites (listView) la visita d'un usuari
  * Amb tots els seus elements: Foto, nom, num visites, data primera visita
  */
+
 public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
 
     private Activity context;
@@ -41,7 +41,6 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
     private List<UserVisites> dades;
     private ImageTool imgTool;
     private Typeface font;
-    private LinearLayout parentLayout;
     private ImageView imgLlibreVisites;
 
     /**
@@ -98,11 +97,15 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         return element;
     }
 
+    /**
+     * Mètode que afegeix totes les visites rebudes amb una llista a la
+     * llista de dades i notifica que s'ha de repintar la llista.
+     * @param visites
+     */
     public void setData(List<UserVisites> visites){
         this.dades.addAll(visites);
         this.notifyDataSetChanged();
     }
-
 }
 
 
