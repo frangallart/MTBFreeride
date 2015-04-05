@@ -48,7 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Arnau on 02/04/2015.
+ * Classe ValoracionsFragment
+ * En aquesta classe podem escoltar totes les valoracions dels usuaris
  */
 public class ValoracionsFragment extends android.support.v4.app.Fragment {
 
