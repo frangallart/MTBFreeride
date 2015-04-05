@@ -101,7 +101,7 @@ public class ModalitatVideo extends Activity {
 
     /**
      * Mètode que quan se surt de l'aplicació, però no es tanca,
-     * para les peticions del gps per no gastar bateria.
+     * posa el vídeo en pausa.
      */
     @Override
     public void onPause() {
@@ -112,8 +112,7 @@ public class ModalitatVideo extends Activity {
 
     /**
      * Mètode que quan es torna a l'aplicació oberta en segon pla,
-     * torna activar les peticions del gps si estaven activades
-     * abans de sortir de l'aplicació.
+     * posa a mode reproducció el video des del punt que s'havia pausat.
      */
     @Override
     protected void onResume() {
