@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/gradien_gray"></item>
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/gradien_gray"></item>
+    <item android:state_checked="true" android:drawable="@android:drawable/presence_audio_busy"></item>
+    <item android:state_checked="false" android:drawable="@android:drawable/presence_audio_online"></item>
+</selector>
