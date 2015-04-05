@@ -1,3 +1,4 @@
 // TODO : Alhora de descarregar dades del llibre de visites s'hauria de anar fet amb una tasca de 1 amb 1, i al arribar  a 5 pares. Al anar desplaçan-te cap avall en descarregues 5 més d'un en un.
 // TODO : Fer-ho tot full optim
 // TODO : Maquetar valoracions
+// TODO : Al fer play a una valoració s'hauria de parar la música
