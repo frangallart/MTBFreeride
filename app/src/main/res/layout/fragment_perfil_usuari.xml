@@ -6,10 +6,17 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/repeat"
+        android:alpha="0.1"></LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView2" >
+        android:id="@+id/scrollView2">
 
         <LinearLayout
             android:orientation="vertical"
@@ -99,7 +106,7 @@
                 android:inputType="textPassword"
                 android:background="@drawable/customapptheme_edit_text_holo_light"
                 android:visibility="gone"
-                android:hint="@string/novaContra"/>
+                android:hint="@string/novaContra" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -114,7 +121,7 @@
                 android:inputType="textPassword"
                 android:background="@drawable/customapptheme_edit_text_holo_light"
                 android:visibility="gone"
-                android:hint="@string/repetirContra"/>
+                android:hint="@string/repetirContra" />
 
         </LinearLayout>
     </ScrollView>
@@ -125,5 +132,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_gravity="center_vertical|center_horizontal"/>
+        android:layout_gravity="center_vertical|center_horizontal" />
+
 </FrameLayout>

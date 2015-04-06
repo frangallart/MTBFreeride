@@ -98,6 +98,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
         etUsuari.setTypeface(font);
         etPassword.setTypeface(font);
         tvSeparador.setTypeface(font);
+        tvRecuperarPass.setTypeface(font);
 
         btnLogin.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);

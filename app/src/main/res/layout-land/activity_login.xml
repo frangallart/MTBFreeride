@@ -7,6 +7,13 @@
     tools:context="net.infobosccoma.provesbar.LoginActivity"
     android:background="@drawable/gradien_lightblue">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/repeat"
+        android:alpha="0.1"></LinearLayout>
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -64,18 +71,6 @@
                     android:text="@string/login_sign_in"
                     android:textColor="#fff" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_recupera_pass"
-                    android:id="@+id/txtRecuperarPass"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:textStyle="bold"
-                    android:singleLine="false" />
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
@@ -117,6 +112,18 @@
                     android:text="@string/login_sign_up"
                     android:background="@drawable/customapptheme_btn_default_holo_light_dis"
                     android:textColor="@color/DarkGray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_recupera_pass"
+                    android:id="@+id/txtRecuperarPass"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:singleLine="false"
+                    android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
         </LinearLayout>

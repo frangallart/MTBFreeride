@@ -6,7 +6,7 @@
     <string name="login_password">Contrasenya</string>
     <string name="login_sign_in">ENTRA</string>
     <string name="login_sign_in_short">Entrar</string>
-    <string name="login_recupera_pass">Recuperar Contrasenya</string>
+    <string name="login_recupera_pass"><u>Recuperar contrasenya</u></string>
     <string name="login_recupera_info"></string>
     <string name="login_recupera_button">Sol·licitar</string>
 
@@ -52,4 +52,5 @@
     <string name="title_activity_recuperar_contrasenya">Recuperar Contrasenya</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="str_recuperar_pass">A continuació, escriu el teu nick i t\'enviarem un correu al teu compte associat, amb la contrasenya.\nMoltes gràcies.</string>
 </resources>
