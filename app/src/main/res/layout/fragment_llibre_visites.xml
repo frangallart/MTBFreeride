@@ -6,6 +6,13 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/repeat"
+        android:alpha="0.1"></LinearLayout>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
