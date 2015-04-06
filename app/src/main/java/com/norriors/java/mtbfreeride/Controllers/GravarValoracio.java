@@ -77,17 +77,10 @@ public class GravarValoracio extends ActionBarActivity {
         btnPenjaSo = (Button) findViewById(R.id.btnPenjaSo);
         bar = (ProgressBar) findViewById(R.id.bar);
 
-        //btnGravar.setText("Start Recording");
-
         btnGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onRecord(mStartRecording);
-                if (mStartRecording) {
-                    //btnGravar.setText("Stop recording");
-                } else {
-                    //btnGravar.setText("Start recording");
-                }
                 mStartRecording = !mStartRecording;
             }
         });
@@ -131,7 +124,7 @@ public class GravarValoracio extends ActionBarActivity {
         switch (itemId) {
             case android.R.id.home:
                 finish();
-                // Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+                MainActivity.musicConfiguration();
                 break;
         }
         return true;
