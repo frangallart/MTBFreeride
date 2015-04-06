@@ -22,12 +22,20 @@
             android:layout_marginTop="5dp"
             />
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvNomUser"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="15dp"/>
+            android:layout_height="80dp"
+            android:id="@+id/text">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvNomUser"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
