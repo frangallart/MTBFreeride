@@ -30,7 +30,7 @@ public class ImageTool {
     }
 
     public Bitmap convertImageToByte(String path){
-        return decodeSampledBitmapFromFile(path, 300, 300);
+        return decodeSampledBitmapFromFile(path, 220, 220);
     }
 
     public static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight) {
@@ -79,7 +79,7 @@ public class ImageTool {
         byte[] byteArray;
         // Passem la imatge a una cadena de bytes
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image.compress(Bitmap.CompressFormat.JPEG, 60, stream);
         byteArray = stream.toByteArray();
 
        return Base64.encodeToString(byteArray, Base64.DEFAULT);

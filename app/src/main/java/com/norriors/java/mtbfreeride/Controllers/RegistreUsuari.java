@@ -406,7 +406,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
             // Passem la imatge a una cadena de bytes
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            resized.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            resized.compress(Bitmap.CompressFormat.JPEG, 60, stream);
             byteArray = stream.toByteArray();
         }
 

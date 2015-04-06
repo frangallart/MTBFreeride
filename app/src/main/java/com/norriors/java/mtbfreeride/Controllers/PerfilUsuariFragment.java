@@ -461,7 +461,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
             if (resized != null) {
                 // Passem la imatge a una cadena de bytes
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                resized.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                resized.compress(Bitmap.CompressFormat.JPEG, 60, stream);
                 byteArray = stream.toByteArray();
             }
         }

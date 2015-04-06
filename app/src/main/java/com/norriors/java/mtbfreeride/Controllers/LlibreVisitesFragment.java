@@ -53,6 +53,8 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     private boolean totsUsuaris;
     private int pos_inicial;
     private int pos_final;
+    private boolean pararTask;
+    private List<DescarregarDades> task;
 
 
     public static LlibreVisitesFragment newInstance() {
@@ -69,6 +71,8 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         this.totsUsuaris = false;
         this.pos_inicial = 1;
+        this.pararTask = false;
+        this.task = new ArrayList<DescarregarDades>();
     }
 
     @Override
@@ -90,7 +94,8 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
                 if (!totsUsuaris) {
                     pos_final = pos_inicial + 5;
                     while (pos_inicial < (pos_final)) {
-                        new DescarregarDades().execute(pos_inicial);
+                        task.add(new DescarregarDades());
+                        task.get(pos_inicial).execute(pos_inicial);
                         pos_inicial++;
                     }
                 }
@@ -102,12 +107,33 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
 
         llibre_progress = (ProgressBar) rootView.findViewById(R.id.llibre_progress);
 
-        downloadVisites = new DescarregarDades();
-        downloadVisites.execute(0);
-
+        task.add(new DescarregarDades());
+        task.get(0).execute(0);
 
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        for (int i = 0; i < task.size(); i++){
+            task.get(i).cancel(true);
+        }
+        this.task.clear();
+    }
+
+    @Override
+    public void onResume() {
+        super.onPause();
+        if (!totsUsuaris) {
+            adapterVisites.clear();
+
+            for (int i = 0; i < (pos_final); i++) {
+                task.add(new DescarregarDades());
+                task.get(i).execute(i);
+            }
+        }
     }
 
     private void refreshData() {
@@ -140,7 +166,6 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
             HttpResponse httpresponse = null;
             try {
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);
-
                 // Aquesta clau s'utilitza per saber quina visita hem de carregar
                 parametres.add(new BasicNameValuePair("item", params[0].toString()));
                 httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
