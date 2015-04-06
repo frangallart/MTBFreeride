@@ -15,7 +15,7 @@
 
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
@@ -28,7 +28,7 @@
                 android:id="@+id/btnGravar"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/background_togglebutton_gravar"
-                android:layout_marginBottom="35dp"
+                android:layout_marginRight="55dp"
                 android:textOff="@string/togglebutton_valoracio"
                 android:textOn="@string/togglebutton_valoracio" />
 
@@ -38,7 +38,7 @@
                 android:id="@+id/btnPlay"
                 android:layout_gravity="center_horizontal|center|center_vertical"
                 android:background="@drawable/background_tooglebutton_play_valoracio"
-                android:layout_marginBottom="35dp" />
+                android:layout_marginRight="55dp" />
 
             <Button
                 android:layout_width="50dp"

@@ -190,6 +190,22 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    public static void musicComentaris(boolean music){
+        if (music){
+            mediaPlayer.start();
+        }else{
+            mediaPlayer.pause();
+        }
+    }
+
+    public static void musicConfiguration(){
+        if (so){
+            mediaPlayer.start();
+        }else{
+            mediaPlayer.pause();
+        }
+    }
+
     /**
      * Mètode que recull el resultat de l'activity
      * @param requestCode

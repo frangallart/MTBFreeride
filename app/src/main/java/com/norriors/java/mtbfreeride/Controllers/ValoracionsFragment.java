@@ -44,7 +44,9 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,7 +88,6 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment impleme
         switch (item.getItemId()) {
 
             case R.id.action_editUser:
-                MainActivity.music(true);
                 mediaPlayer.reset();
                 Intent intent = new Intent(getActivity(), GravarValoracio.class);
                 getActivity().startActivityForResult(intent, 0);
@@ -141,7 +142,7 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment impleme
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        MainActivity.music(true);
+        MainActivity.musicConfiguration();
     }
 
 
@@ -222,17 +223,18 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment impleme
         protected void onPostExecute(ArrayList<Opinions> llista) {
             opinions_progress.setVisibility(View.GONE);
             try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
                 byte[] data = Base64.decode(llista.get(0).getSo(), Base64.DEFAULT);
-                File path = new File(getActivity().getCacheDir() + "/musicfile.3gp");
+                File path = new File(getActivity().getCacheDir() + File.separator +  dateFormat.format(new Date()) + "musicfile.3gp");
                 FileOutputStream fos = new FileOutputStream(path);
                 fos.write(data);
                 fos.close();
-                mediaPlayer.setDataSource(getActivity().getCacheDir() + "/musicfile.3gp");
+                mediaPlayer.setDataSource(getActivity().getCacheDir() + File.separator +  dateFormat.format(new Date()) + "musicfile.3gp");
                 mediaPlayer.prepare();
                 mediaPlayer.start();
 
                 if (mediaPlayer.isPlaying()) {
-                    MainActivity.music(false);
+                    MainActivity.musicComentaris(false);
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
