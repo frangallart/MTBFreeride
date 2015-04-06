@@ -7,8 +7,8 @@
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
 
-    <dimen name="photo_user_registerH">169dp</dimen>
-    <dimen name="photo_user_registerW">169dp</dimen>
+    <dimen name="photo_user_registerH">160dp</dimen>
+    <dimen name="photo_user_registerW">160dp</dimen>
 
     <dimen name="photo_user_visitesH">70dp</dimen>
     <dimen name="photo_user_visitesW">70dp</dimen>

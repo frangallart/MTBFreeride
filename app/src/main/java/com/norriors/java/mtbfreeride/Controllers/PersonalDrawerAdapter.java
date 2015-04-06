@@ -76,7 +76,7 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> implements 
                 drawerHolder.headerLayout.addView(drawerHolder.icon);
 
                 LinearLayout.LayoutParams layParams = new LinearLayout.LayoutParams((int) getContext().getResources().getDimension(R.dimen.photo_user_registerH), (int) getContext().getResources().getDimension(R.dimen.photo_user_registerH));
-                layParams.setMargins(0,-20,0,30);
+                layParams.setMargins(0,30,0,20);
                 layParams.gravity = Gravity.CENTER;
                 drawerHolder.icon.setLayoutParams(layParams);
             }
@@ -88,6 +88,7 @@ public class PersonalDrawerAdapter extends ArrayAdapter<DrawerItems> implements 
 
         if (position == 1) {
             drawerHolder.title.setText(dItem.getTitle());
+            drawerHolder.title.setVisibility(View.VISIBLE);
         } else {
             drawerHolder.ItemName.setText(dItem.getTitle());
         }

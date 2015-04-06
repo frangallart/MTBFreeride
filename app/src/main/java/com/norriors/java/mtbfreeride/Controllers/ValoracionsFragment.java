@@ -52,15 +52,15 @@ import java.util.List;
  * <p/>
  * En aquesta classe podem escoltar totes les valoracions dels usuaris
  */
-public class ValoracionsFragment extends android.support.v4.app.Fragment {
+public class ValoracionsFragment extends android.support.v4.app.Fragment implements MediaPlayer.OnCompletionListener {
 
     private ArrayList<Opinions> dades;
     private ListView lstValoracions;
     private ValoracionsAdapter adapterVisites;
     private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/valoracions.php";
     private static final String URL_SO = "http://provesrasp.ddns.net/aplicacio/valoracions_so.php";
-    private DescarregarDades downloadOpinions;
     private ProgressBar opinions_progress;
+    private MediaPlayer mediaPlayer;
 
 
     public static ValoracionsFragment newInstance() {
@@ -86,6 +86,8 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         switch (item.getItemId()) {
 
             case R.id.action_editUser:
+                MainActivity.music(true);
+                mediaPlayer.reset();
                 Intent intent = new Intent(getActivity(), GravarValoracio.class);
                 getActivity().startActivityForResult(intent, 0);
                 return true;
@@ -117,12 +119,11 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnCompletionListener(this);
+
         // Inflate the layout for this fragment
         return rootView;
-    }
-
-    public void descarregaDades() {
-        new DescarregarDades().execute(URL_DATA);
     }
 
     @Override
@@ -136,6 +137,11 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         }
         adapterVisites = new ValoracionsAdapter(getActivity(), dades);
         lstValoracions.setAdapter(adapterVisites);
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        MainActivity.music(true);
     }
 
 
@@ -188,6 +194,7 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mediaPlayer.reset();
             opinions_progress.setVisibility(View.VISIBLE);
         }
 
@@ -220,10 +227,13 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment {
                 FileOutputStream fos = new FileOutputStream(path);
                 fos.write(data);
                 fos.close();
-                MediaPlayer mediaPlayer = new MediaPlayer();
                 mediaPlayer.setDataSource(getActivity().getCacheDir() + "/musicfile.3gp");
                 mediaPlayer.prepare();
                 mediaPlayer.start();
+
+                if (mediaPlayer.isPlaying()) {
+                    MainActivity.music(false);
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

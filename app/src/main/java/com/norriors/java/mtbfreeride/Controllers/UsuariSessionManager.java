@@ -50,19 +50,19 @@ public class UsuariSessionManager {
     public static final String KEY_NAME = "name";
 
     // User name (make variable public to access from outside)
-    public static final String KEY_REAL_NAME = "real_name";
+    public static String KEY_REAL_NAME = "real_name";
 
     // User surname1 (make variable public to access from outside)
-    public static final String KEY_SURNAME1 = "surname1";
+    public static String KEY_SURNAME1 = "surname1";
 
     // User surname2 (make variable public to access from outside)
-    public static final String KEY_SURNAME2 = "surname2";
+    public static String KEY_SURNAME2 = "surname2";
 
     // User pass (make variable public to access from outside)
-    public static final String KEY_PASS = "pass";
+    public static String KEY_PASS = "pass";
 
     // Email address (make variable public to access from outside)
-    public static final String KEY_EMAIL = "email";
+    public static String KEY_EMAIL = "email";
 
     // User image
     public static final String KEY_IMAGE = "image";

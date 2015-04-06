@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Base64;
 import android.view.ContextMenu;
@@ -271,9 +272,9 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
 
                     if (resized != null) {
                         //Guardem les noves dades al shared preferences
-                        sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(resized));
+                        sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(resized));
                     } else {
-                        sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
+                        sessioUsuari.createUserLoginSession(dadesUsuari.get(UsuariSessionManager.KEY_NAME), txtNom.getText().toString(), txtPrimerCognom.getText().toString(), txtSegonCognom.getText().toString(), txtPass.getText().toString(), txtEmail.getText().toString(), imgTool.getImageString(novaImatge));
                     }
 
                     if (!this.txtNom.getText().toString().matches("") && !this.txtPrimerCognom.getText().toString().matches("")
@@ -324,42 +325,9 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
                  * Deshabilita l'edició dels camps
                  */
                 case R.id.action_cancelChange:
-
-                    //Mostrem missatge de canvis cancel·lats
-                    toast = toast.makeText(getActivity().getBaseContext(), "Canvis cancel·lats", Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    //Posem els camps que hi teniem guardats al shared preferences i els tornem a posar com a deshabilitats per evitar l'edició
-                    txtNom.setText(dadesUsuari.get(UsuariSessionManager.KEY_REAL_NAME));
-                    txtNom.setEnabled(false);
-
-                    txtPrimerCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME1));
-                    txtPrimerCognom.setEnabled(false);
-
-                    txtSegonCognom.setText(dadesUsuari.get(UsuariSessionManager.KEY_SURNAME2));
-                    txtSegonCognom.setEnabled(false);
-
-                    txtEmail.setText(dadesUsuari.get(UsuariSessionManager.KEY_EMAIL));
-                    txtEmail.setEnabled(false);
-
-                    txtPass.setText("");
-                    txtPass.setEnabled(false);
-                    txtPass.setVisibility(View.GONE);
-
-                    txtPassRepeteix.setText("");
-                    txtPassRepeteix.setEnabled(false);
-                    txtPassRepeteix.setVisibility(View.GONE);
-
-                    //Posem la imatge com deshabilitat i establim la imatge que hi havia per defecte
-                    imgUser.setEnabled(false);
-
-                    //Com els canvis ja estan guardats, tornem a deixar invisibles els items de gaurdar i cancel·lar
-                    itemSave.setVisible(false);
-                    itemCancel.setVisible(false);
-
-                    //Tornem a posar el item d'editar com a visible
-                    itemEdit.setVisible(true);
-
+                    android.support.v4.app.FragmentTransaction t = getFragmentManager().beginTransaction();
+                    Fragment currentFragment = ModalitatsFragment.newInstance();
+                    t.replace(R.id.container, currentFragment, "fragment").addToBackStack("tag4").commit();
                     return true;
 
                 default:
