@@ -3,23 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.norriors.java.mtbfreeride.Controllers.GravarValoracio"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center_horizontal|center_vertical"
+    android:background="@drawable/gradien_lightblue">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/gradien_lightblue">
+        android:background="@drawable/repeat"
+        android:alpha="0.1"></RelativeLayout>
 
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:background="@drawable/layout_gravar_valoracio">
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:background="@drawable/layout_gravar_valoracio"
+                android:gravity="center_vertical|center_horizontal">
 
             <ToggleButton
                 android:layout_width="50dp"
@@ -46,10 +51,8 @@
                 android:id="@+id/btnPenjaSo"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/background_togglebutton_pujar_valoracio" />
-        </LinearLayout>
-
-
-    </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/bar"

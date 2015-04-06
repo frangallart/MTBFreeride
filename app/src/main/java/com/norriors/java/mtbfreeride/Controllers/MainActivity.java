@@ -63,6 +63,8 @@ public class MainActivity extends ActionBarActivity
     private static MediaPlayer mediaPlayer;
     private static boolean so;
 
+    private AssetFileDescriptor music;
+
     private android.support.v4.app.FragmentTransaction t;
 
     @Override
@@ -91,10 +93,11 @@ public class MainActivity extends ActionBarActivity
         }
 
         mediaPlayer = new MediaPlayer();
+        mediaPlayer.setLooping(true);
 
         if (sessioUsuari.checkLogin()) {
             try {
-                AssetFileDescriptor music = getAssets().openFd("Sons/music.mp3");
+                music = getAssets().openFd("Sons/music.mp3");
                 mediaPlayer.setDataSource(music.getFileDescriptor(), music.getStartOffset(), music.getLength());
                 mediaPlayer.prepare();
                 mediaPlayer.start();

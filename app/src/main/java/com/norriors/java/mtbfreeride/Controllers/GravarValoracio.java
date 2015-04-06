@@ -104,10 +104,15 @@ public class GravarValoracio extends ActionBarActivity {
         btnPenjaSo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nomGravacio != null) {
-                    new PenjaValoracio().execute();
+                if (InternetUtil.isOnline(GravarValoracio.this)) {
+                    if (nomGravacio != null) {
+                        new PenjaValoracio().execute();
+                    } else {
+                        Toast.makeText(GravarValoracio.this, "Has de gravar una valoració", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(GravarValoracio.this, "Has de gravar una valoració", Toast.LENGTH_SHORT).show();
+                    InternetUtil.showAlertDialog(GravarValoracio.this, "Servei de connexió",
+                            "El teu dispositiu no té connexió a Internet.");
                 }
             }
         });

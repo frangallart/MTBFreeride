@@ -223,18 +223,20 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment impleme
         protected void onPostExecute(ArrayList<Opinions> llista) {
             opinions_progress.setVisibility(View.GONE);
             try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-                byte[] data = Base64.decode(llista.get(0).getSo(), Base64.DEFAULT);
-                File path = new File(getActivity().getCacheDir() + File.separator +  dateFormat.format(new Date()) + "musicfile.3gp");
-                FileOutputStream fos = new FileOutputStream(path);
-                fos.write(data);
-                fos.close();
-                mediaPlayer.setDataSource(getActivity().getCacheDir() + File.separator +  dateFormat.format(new Date()) + "musicfile.3gp");
-                mediaPlayer.prepare();
-                mediaPlayer.start();
+                if (llista != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                    byte[] data = Base64.decode(llista.get(0).getSo(), Base64.DEFAULT);
+                    File path = new File(getActivity().getCacheDir() + File.separator + dateFormat.format(new Date()) + "musicfile.3gp");
+                    FileOutputStream fos = new FileOutputStream(path);
+                    fos.write(data);
+                    fos.close();
+                    mediaPlayer.setDataSource(getActivity().getCacheDir() + File.separator + dateFormat.format(new Date()) + "musicfile.3gp");
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
 
-                if (mediaPlayer.isPlaying()) {
-                    MainActivity.musicComentaris(false);
+                    if (mediaPlayer.isPlaying()) {
+                        MainActivity.musicComentaris(false);
+                    }
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
