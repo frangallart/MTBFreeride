@@ -67,6 +67,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
     private EditText etPassword;
     private View mProgressView;
     private TextView tvSeparador;
+    private TextView tvRecuperarPass;
     private Button btnLogin;
     private Button btnSignUp;
 
@@ -91,6 +92,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnSignUp = (Button) findViewById(R.id.btnRegistre);
         tvSeparador = (TextView) findViewById(R.id.tvSeparador);
+        tvRecuperarPass = (TextView) findViewById(R.id.txtRecuperarPass);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "Fonts/Open_Sans/OpenSans-Regular.ttf");
         etUsuari.setTypeface(font);
@@ -100,6 +102,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
         btnLogin.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
         etPassword.setOnKeyListener(this);
+        tvRecuperarPass.setOnClickListener(this);
     }
 
     /**
@@ -117,9 +120,12 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
                     new UserLoginTask(etUsuari.getText().toString(), etPassword.getText().toString()).execute();
                     break;
                 case (R.id.btnRegistre):
-                    Intent intent = new Intent(LoginUsuari.this, RegistreUsuari.class);
-                    startActivity(intent);
+                    Intent registre = new Intent(LoginUsuari.this, RegistreUsuari.class);
+                    startActivity(registre);
                     break;
+                case (R.id.txtRecuperarPass):
+                    Intent pass = new Intent(LoginUsuari.this, RecuperarContrasenya.class);
+                    startActivity(pass);
             }
         } else {
             InternetUtil.showAlertDialog(LoginUsuari.this, "Servei de connexió",
@@ -157,8 +163,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Tasca asíncrona per validar l'usuari del login
      */
     public class UserLoginTask extends AsyncTask<String, Void, ArrayList<User>> {
 
@@ -194,7 +199,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
                 httppostreq.setEntity(new UrlEncodedFormEntity(parametres));
                 httpresponse = httpclient.execute(httppostreq);
                 String responseText = EntityUtils.toString(httpresponse.getEntity());
-                // Retorno la llista de punts
+
                 usuaris = tractarJSON(responseText);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -223,6 +228,7 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
                 // Add new Flag to start new Activity
                 act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(act);
+                finish();
             } else {
                 err_login();
                 Toast toast = Toast.makeText(getApplicationContext(), "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_SHORT);
@@ -231,7 +237,6 @@ public class LoginUsuari extends ActionBarActivity implements OnClickListener, O
             }
 
             mProgressView.setVisibility(View.GONE);
-            finish();
         }
 
         private ArrayList<User> tractarJSON(String json) {

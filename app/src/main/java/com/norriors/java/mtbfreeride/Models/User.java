@@ -58,6 +58,14 @@ public class User {
         this.email = email;
     }
 
+    public User(String nom, String cognom1, String cognom2, String password, String email) {
+        this.nom = nom;
+        this.cognom1 = cognom1;
+        this.cognom2 = cognom2;
+        this.password = password;
+        this.email = email;
+    }
+
     /**
      * Getter i Setters
      */

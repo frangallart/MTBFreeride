@@ -4,11 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.camera2"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.camera2" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -30,29 +30,30 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Controllers.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:parentActivityName=".Controllers.MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:parentActivityName=".Controllers.MainActivity" />
         <activity
             android:name=".Controllers.RegistreUsuari"
-            android:label="@string/title_activity_registre_usuari"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".Controllers.LoginUsuari">
-        </activity>
-        <activity
-            android:name=".Controllers.ModalitatDetallActivity"
-            android:label="@string/title_activity_detall_modalitat"
-            android:parentActivityName=".Controllers.MainActivity">
+            android:label="@string/title_activity_registre_usuari"
+            android:parentActivityName=".Controllers.LoginUsuari" >
         </activity>
         <activity
             android:name=".Controllers.GravarValoracio"
-            android:label="@string/title_activity_detall_gravar_valoracio">
+            android:label="@string/title_activity_detall_gravar_valoracio" >
         </activity>
         <activity
             android:name=".Controllers.ModalitatVideo"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_detall_gravar_valoracio"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".Controllers.RecuperarContrasenya"
+            android:label="@string/title_activity_recuperar_contrasenya"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
     </application>
 

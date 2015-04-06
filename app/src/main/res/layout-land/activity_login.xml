@@ -64,6 +64,18 @@
                     android:text="@string/login_sign_in"
                     android:textColor="#fff" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_recupera_pass"
+                    android:id="@+id/txtRecuperarPass"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:textStyle="bold"
+                    android:singleLine="false" />
+
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
