@@ -13,7 +13,6 @@
 package com.norriors.java.mtbfreeride.Controllers;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,24 +64,19 @@ public class ValoracionsAdapter extends ArrayAdapter<Opinions> {
             opinionsAdapter = new ValoracionsAdapter(context, dades);
             LayoutInflater inflater = context.getLayoutInflater();
             element = inflater.inflate(R.layout.activity_valoracions_adapter, null);
-            //opinionsAdapter.imgLlibreVisites = (ImageView) element.findViewById(R.id.imgLlibreVisites);
             opinionsAdapter.txtData = (TextView) element.findViewById(R.id.txtDate);
             opinionsAdapter.txtNomUsuari = (TextView) element.findViewById(R.id.tvNomUser);
             opinionsAdapter.layoutValoracio = (LinearLayout) element.findViewById(R.id.layoutValoracio);
-            //opinionsAdapter.txtVisites = (TextView) element.findViewById(R.id.txtVisites);
-
             element.setTag(opinionsAdapter);
+
         } else {
             opinionsAdapter = (ValoracionsAdapter) element.getTag();
         }
 
-        //opinionsAdapter.imgLlibreVisites.setImageBitmap(ImageTool.getBitmap(opinions.getImg()));
         opinionsAdapter.txtData.setText("" + opinions.getData());
         opinionsAdapter.txtData.setTypeface(font);
         opinionsAdapter.txtNomUsuari.setText(opinions.getUser());
         opinionsAdapter.txtNomUsuari.setTypeface(font);
-        if (position % 2 == 0)
-            opinionsAdapter.layoutValoracio.setBackgroundColor(Color.LTGRAY);
 
         return element;
     }
