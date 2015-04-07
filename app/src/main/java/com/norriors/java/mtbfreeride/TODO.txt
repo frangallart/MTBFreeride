@@ -1,1 +1,6 @@
 // TODO : Fer-ho tot full optim
+// TODO : Coses a millorar :
+    - Tirar enrera
+    - Foto invertida
+    - Espais items navigation drawer i llibre visites
+    -
