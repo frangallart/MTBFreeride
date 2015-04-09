@@ -57,7 +57,7 @@ public class GravarValoracio extends ActionBarActivity {
     private ToggleButton btnGravar;
     private boolean mStartRecording = true;
     private boolean mStartPlaying = true;
-    private final String URL = "http://provesrasp.ddns.net/aplicacio/insertValoracio.php";
+    private final String URL = "http://mtbfreeride.hostoi.com/insertValoracio.php";
     private ProgressBar bar;
 
     public GravarValoracio() {

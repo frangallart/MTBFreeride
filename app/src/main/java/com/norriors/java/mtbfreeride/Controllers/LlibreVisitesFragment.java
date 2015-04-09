@@ -47,7 +47,7 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
     private ArrayList<UserVisites> dades;
     private ListView lstVisites;
     private LlibreVisitesAdapter adapterVisites;
-    private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/llibreVisites.php";
+    private static final String URL_DATA = "http://mtbfreeride.hostoi.com/llibreVisites.php";
     private DescarregarDades downloadVisites;
     private ProgressBar llibre_progress;
     private boolean totsUsuaris;
@@ -125,7 +125,7 @@ public class LlibreVisitesFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onResume() {
-        super.onPause();
+        super.onResume();
         if (!totsUsuaris) {
             adapterVisites.clear();
 

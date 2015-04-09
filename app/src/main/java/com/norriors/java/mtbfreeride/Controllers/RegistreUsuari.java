@@ -99,7 +99,7 @@ public class RegistreUsuari extends ActionBarActivity implements OnClickListener
 
     private ProgressBar bar;
 
-    private final String URL = "http://provesrasp.ddns.net/aplicacio/insertUsuari.php";
+    private final String URL = "http://mtbfreeride.hostoi.com/insertUsuari.php";
     private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Override

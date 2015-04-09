@@ -115,7 +115,7 @@ public class RecuperarContrasenya extends ActionBarActivity implements View.OnCl
         protected ArrayList<User> doInBackground(String... strings) {
             ArrayList<User> usuaris = null;
             DefaultHttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppostreq = new HttpPost("http://provesrasp.ddns.net/aplicacio/recuperaPass.php");
+            HttpPost httppostreq = new HttpPost("http://mtbfreeride.hostoi.com/recuperaPass.php");
             HttpResponse httpresponse = null;
             try {
                 List<NameValuePair> parametres = new ArrayList<NameValuePair>(1);

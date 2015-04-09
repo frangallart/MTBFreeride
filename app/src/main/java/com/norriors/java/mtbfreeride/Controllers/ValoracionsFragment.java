@@ -59,8 +59,8 @@ public class ValoracionsFragment extends android.support.v4.app.Fragment impleme
     private ArrayList<Opinions> dades;
     private ListView lstValoracions;
     private ValoracionsAdapter adapterVisites;
-    private static final String URL_DATA = "http://provesrasp.ddns.net/aplicacio/valoracions.php";
-    private static final String URL_SO = "http://provesrasp.ddns.net/aplicacio/valoracions_so.php";
+    private static final String URL_DATA = "http://mtbfreeride.hostoi.com/valoracions.php";
+    private static final String URL_SO = "http://mtbfreeride.hostoi.com/valoracions_so.php";
     private ProgressBar opinions_progress;
     private MediaPlayer mediaPlayer;
 

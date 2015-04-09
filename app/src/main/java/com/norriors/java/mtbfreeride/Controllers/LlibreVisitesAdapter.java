@@ -91,7 +91,7 @@ public class LlibreVisitesAdapter extends ArrayAdapter<UserVisites> {
         llibre.txtData.setTypeface(font);
         llibre.txtNomUsuari.setText(usuari.getUser());
         llibre.txtNomUsuari.setTypeface(font);
-        llibre.txtVisites.setText("Visites: " + usuari.getTotal());
+        llibre.txtVisites.setText("Visites: " + usuari.getNumVisites());
         llibre.txtVisites.setTypeface(font);
 
         return element;

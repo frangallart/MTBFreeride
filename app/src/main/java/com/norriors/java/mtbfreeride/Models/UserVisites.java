@@ -21,14 +21,14 @@ public class UserVisites {
 
     private String user;
     private String img;
-    private int total;
+    private int numVisites;
     private String data;
 
-    public UserVisites(String user, String img, String data, String total) {
+    public UserVisites(String user, String img, String data, String numVisites) {
         this.user = user;
         this.img = img;
         this.data = data;
-        this.total = Integer.parseInt(total);
+        this.numVisites = Integer.parseInt(numVisites);
     }
 
     public String getUser() {
@@ -47,12 +47,12 @@ public class UserVisites {
         this.img = img;
     }
 
-    public int getTotal() {
-        return total;
+    public int getNumVisites() {
+        return numVisites;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setNumVisites(int total) {
+        this.numVisites = total;
     }
 
     public String getData() {

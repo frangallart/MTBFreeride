@@ -56,7 +56,7 @@ import java.util.List;
  */
 public class LoginUsuari extends ActionBarActivity implements OnClickListener, OnKeyListener {
 
-    private static final String URL = "http://provesrasp.ddns.net/aplicacio/usuaris.php";
+    private static final String URL = "http://mtbfreeride.hostoi.com/usuaris.php";
 
     private UserLoginTask mAuthTask = null;
 

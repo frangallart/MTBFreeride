@@ -100,7 +100,7 @@ public class PerfilUsuariFragment extends android.support.v4.app.Fragment {
     private MenuItem itemCancel;
 
     //Constants
-    private static final String URL = "http://provesrasp.ddns.net/aplicacio/modificaDadesPerfil.php";
+    private static final String URL = "http://mtbfreeride.hostoi.com/modificaDadesPerfil.php";
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int TAKE_PHOTO_CODE = 2;
     private static final String PATH_IMATGES = Environment.getExternalStorageDirectory() + File.separator + "mtbfreeride";
