@@ -3,4 +3,4 @@
     - Tirar enrera
     - Foto invertida
     - Espais items navigation drawer i llibre visites
-    -
+    - ProgressBar al carregar un vídeo
